@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\MediaLibrary\Models\Media;
 
 class HomeController extends Controller
 {

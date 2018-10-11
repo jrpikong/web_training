@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group row">
@@ -168,6 +168,32 @@
                                 @if ($errors->has('img_digital_signature'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('img_digital_signature') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image Identity Card') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="img_identity" type="file" class="form-control{{ $errors->has('img_identity') ? ' is-invalid' : '' }}" name="img_identity" value="{{ old('img_identity') }}" required autofocus>
+                                @if ($errors->has('img_identity'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('img_identity') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Grade Point Average') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="grade_point_average" type="text" class="form-control{{ $errors->has('grade_point_average') ? ' is-invalid' : '' }}" name="grade_point_average" value="{{ old('grade_point_average') }}" required autofocus>
+                                @if ($errors->has('grade_point_average'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('grade_point_average') }}</strong>
                                     </span>
                                 @endif
                             </div>

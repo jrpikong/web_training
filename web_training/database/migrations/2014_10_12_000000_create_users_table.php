@@ -24,10 +24,6 @@ class CreateUsersTable extends Migration
             $table->string('university');
             $table->string('id_identity');
             $table->string('id_university');
-            $table->text('img_profile');
-            $table->text('img_student_card');
-            $table->text('img_digital_signature');
-            $table->text('img_identity');
             $table->string('grade_point_average');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
