@@ -27,7 +27,7 @@
                             The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
 
                         <div class="text-right">
-                            <form method="POST" action="{{ route('term_and_condition') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('term_and_condition_pos') }}" enctype="multipart/form-data">
                             @csrf
                                 <div class="form-group row">
                                     <label for="name" class="col-md-9 col-form-label text-md-right">{{ __('Digital Signature') }}</label>
