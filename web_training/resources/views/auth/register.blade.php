@@ -12,7 +12,7 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Full Name') }}</label>
 
                             <div class="col-md-6">
                                 <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Province Of Birth') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Place Of Birth') }}</label>
 
                             <div class="col-md-6">
                                 <select id="province_of_birth" class="form-control{{ $errors->has('province_of_birth') ? ' is-invalid' : '' }}" name="province_of_birth" value="{{ old('province_of_birth') }}" required autofocus>
@@ -85,14 +85,8 @@
                                         <strong>{{ $errors->first('province_of_birth') }}</strong>
                                     </span>
                                 @endif
-                            </div>
-                        </div>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Place Of Birth') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="place_of_birth" type="text" class="form-control{{ $errors->has('place_of_birth') ? ' is-invalid' : '' }}" name="place_of_birth" value="{{ old('place_of_birth') }}" required autofocus>
+                                <input id="place_of_birth" style="margin-top: 15px" type="text" class="form-control{{ $errors->has('place_of_birth') ? ' is-invalid' : '' }}" name="place_of_birth" value="{{ old('place_of_birth') }}" placeholder="specific place of birth" required autofocus>
 
                                 @if ($errors->has('place_of_birth'))
                                     <span class="invalid-feedback" role="alert">
@@ -122,30 +116,47 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
 
                             <div class="col-md-6">
-                                <select id="provinces" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}" name="province" value="{{ old('province') }}" required autofocus>
-                                    @foreach($provinces as $province)
-                                        <option value="{{$province->id}}">{{ $province->name }}</option>
-                                    @endforeach
-                                </select>
-                                @if ($errors->has('province'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('province') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('city') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="cities" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" required autofocus>
-                                </select>
-                                @if ($errors->has('city'))
-                                    <span class="invalid-feedback" role="alert">
+                                <div style="margin-top: 15px">
+                                    <select id="provinces" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}" name="province" value="{{ old('province') }}" required autofocus>
+                                        @foreach($provinces as $province)
+                                            <option value="{{$province->id}}">{{ $province->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if ($errors->has('province'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('province') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                                <div style="margin-top: 15px">
+                                    <select id="cities"  class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" required autofocus>
+                                    </select>
+                                    @if ($errors->has('city'))
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('city') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
+                                </div>
+
+                                <div style="margin-top: 15px">
+                                    <select id="districts" style="margin-top: 15px" class="form-control{{ $errors->has('districts') ? ' is-invalid' : '' }}" name="districts" value="{{ old('districts') }}" required autofocus>
+                                    </select>
+                                    @if ($errors->has('districts'))
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('districts') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+                                <div style="margin-top: 15px">
+                                    <input type="text" id="postal_code" style="margin-top: 15px" placeholder="postal code" class="form-control{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" name="postal_code" value="{{ old('postal_code') }}" required autofocus>
+                                    @if ($errors->has('postal_code'))
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('postal_code') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
                             </div>
                         </div>
 
@@ -153,9 +164,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
-                                <textarea id="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus>
-
-                                </textarea>
+                                <textarea id="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus></textarea>
                                 @if ($errors->has('address'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -371,6 +380,7 @@
             $('#province_of_birth').select2();
             const provinces = $('#provinces')
             const cities = $('#cities')
+            const districts = $('#districts')
             provinces.select2().on('select2:select', getCity);
 
             function getCity(event)
@@ -382,7 +392,17 @@
                         if (response) {
 
                             cities.empty().select2({
+                                placeholder: "Select a State",
                                 data: $.map(response.cities, function (item) {
+                                    return {
+                                        text: item.name,
+                                        id: item.id
+                                    }
+                                })
+                            });
+
+                            districts.empty().select2({
+                                data: $.map(response.districts, function (item) {
                                     return {
                                         text: item.name,
                                         id: item.id

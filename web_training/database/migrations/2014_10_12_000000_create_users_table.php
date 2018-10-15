@@ -21,6 +21,10 @@ class CreateUsersTable extends Migration
             $table->string('province_of_birth');
             $table->string('place_of_birth');
             $table->string('gender');
+            $table->string('province');
+            $table->string('city');
+            $table->string('districts');
+            $table->string('postal_code');
             $table->text('address');
             $table->string('phone_number');
             $table->string('university');

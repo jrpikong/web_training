@@ -22,7 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/cities', function (Request $request) {
     $indonesia = new \Laravolt\Indonesia\Indonesia();
     if ($request->has('province')) {
-        $data = $indonesia->findProvince($request->province, ['cities']);
+        $data = $indonesia->findProvince($request->province, ['cities','districts']);
         return response()->json($data);
     }
 });

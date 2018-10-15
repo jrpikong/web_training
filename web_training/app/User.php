@@ -20,7 +20,12 @@ class User extends Authenticatable implements HasMedia
      * @var array
      */
     protected $fillable = [
-        'name','nic_name','birth_date','province_of_birth','place_of_birth','gender','address','phone_number',
+        'name','nic_name','birth_date','province_of_birth','place_of_birth','gender',
+        'province',
+        'city',
+        'districts',
+        'postal_code',
+        'address','phone_number',
         'university','id_identity','id_university','img_profile',
         'img_student_card','img_digital_signature','img_identity','grade_point_average','email','password','status','grade_test',
     ];
