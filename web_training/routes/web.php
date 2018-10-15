@@ -18,3 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/term_and_condition', 'HomeController@term_and_condition')->name('term_and_condition');
+Route::post('/term_and_condition', 'HomeController@term_and_condition_post');

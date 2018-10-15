@@ -28,4 +28,21 @@ class HomeController extends Controller
         $user = Auth::user();
         return view('home',compact('user'));
     }
+
+    public function term_and_condition()
+    {
+        return view('term_and_condition');
+    }
+
+    public function term_and_condition_post(Request $request)
+    {
+        if($request->has('img_digital_signature') === true){
+            $user = Auth::user();
+            $user->status = 1;
+            $user->save();
+
+            $user->addMediaFromRequest('img_digital_signature')->toMediaCollection('img_digital_signature');
+            return view('preview_user',compact('user'));
+        }
+    }
 }
