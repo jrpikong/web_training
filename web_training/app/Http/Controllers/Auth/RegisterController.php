@@ -116,7 +116,7 @@ class RegisterController extends Controller
             'id_university' => $data['id_university'],
             'grade_point_average' => $data['grade_point_average'],
             'password' => Hash::make($data['password']),
-            'status' => 1,
+            'status' => 0,
         ]);
         if (isset($data['img_profile'])) {
             $user->addMediaFromRequest('img_profile')->toMediaCollection('img_profile');
@@ -124,12 +124,9 @@ class RegisterController extends Controller
         if (isset($data['img_student_card'])) {
             $user->addMediaFromRequest('img_student_card')->toMediaCollection('img_student_card');
         }
-//        if (isset($data['img_digital_signature'])) {
-//            $user->addMediaFromRequest('img_digital_signature')->toMediaCollection('img_digital_signature');
-//        }
         if (isset($data['img_identity'])) {
             $user->addMediaFromRequest('img_identity')->toMediaCollection('img_identity');
         }
-        return $user;
+         return $user;
     }
 }

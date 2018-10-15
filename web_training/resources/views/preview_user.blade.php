@@ -27,20 +27,16 @@
                             The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
 
                         <div class="text-right">
-                            <form method="POST" action="{{ route('term_and_condition') }}" enctype="multipart/form-data">
-                            @csrf
-                                <div class="form-group row">
-                                    <label for="name" class="col-md-9 col-form-label text-md-right">{{ __('Digital Signature') }}</label>
+                            <img src="{{asset($user->getFirstMediaUrl('img_digital_signature'))}}" class="img-thumbnail">
+                        </div>
 
-                                    <div class="col-md-3">
-                                        <input id="img_digital_signature" type="file" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="img_digital_signature" value="{{ old('img_digital_signature') }}" required autofocus>
-                                    </div>
-                                </div>
-
+                        <div class="text-right">
+                            <form method="get" action="{{ route('home') }}" enctype="multipart/form-data">
+                                @csrf
                                 <div class="form-group row mb-0">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-primary">
-                                            {{ __('SIGN IT') }}
+                                            {{ __('OK SIGN IT') }}
                                         </button>
                                     </div>
                                 </div>
