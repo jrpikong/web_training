@@ -26,14 +26,63 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nick Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="nic_name" type="text" class="form-control{{ $errors->has('nic_name') ? ' is-invalid' : '' }}" name="nic_name" value="{{ old('nic_name') }}" required autofocus>
+
+                                @if ($errors->has('nic_name'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('nic_name') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Birth Date') }}</label>
 
                             <div class="col-md-6">
-                                <input id="birth_date" type="date" class="form-control{{ $errors->has('birth_date') ? ' is-invalid' : '' }}" name="birth_date" value="{{ old('birth_date') }}" required autofocus>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input id="date" type="text" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" required autofocus>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <select id="month" class="form-control{{ $errors->has('month') ? ' is-invalid' : '' }}" name="month" value="{{ old('month') }}" required autofocus>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input id="year" type="text" class="form-control{{ $errors->has('year') ? ' is-invalid' : '' }}" name="year" value="{{ old('year') }}" required autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                @if ($errors->has('birth_date'))
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Province Of Birth') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="province_of_birth" class="form-control{{ $errors->has('province_of_birth') ? ' is-invalid' : '' }}" name="province_of_birth" value="{{ old('province_of_birth') }}" required autofocus>
+                                    @foreach($provinces as $province)
+                                        <option value="{{$province->id}}">{{$province->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('province_of_birth'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('birth_date') }}</strong>
+                                        <strong>{{ $errors->first('province_of_birth') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -70,10 +119,43 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="provinces" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}" name="province" value="{{ old('province') }}" required autofocus>
+                                    @foreach($provinces as $province)
+                                        <option value="{{$province->id}}">{{ $province->name }}</option>
+                                    @endforeach
+                                </select>
+                                @if ($errors->has('province'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('province') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('city') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="cities" class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" required autofocus>
+                                </select>
+                                @if ($errors->has('city'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('city') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="address" type="text" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus>
+                                <textarea id="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus>
+
+                                </textarea>
                                 @if ($errors->has('address'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('address') }}</strong>
@@ -100,6 +182,31 @@
 
                             <div class="col-md-6">
                                 <input id="university" type="text" class="form-control{{ $errors->has('university') ? ' is-invalid' : '' }}" name="university" value="{{ old('university') }}" required autofocus>
+                                @if ($errors->has('university'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('university') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Type Of University') }}</label>
+
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input id="university_negri" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Negri" required>
+                                    <label class="form-check-label" for="university_negri">
+                                        Negeri
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input id="university_swasta" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Swasta" required>
+                                    <label class="form-check-label" for="university_swasta">
+                                        Swasta
+                                    </label>
+                                </div>
+
                                 @if ($errors->has('university'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('university') }}</strong>
@@ -160,18 +267,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image Digital Signature') }}</label>
+                        {{--<div class="form-group row">--}}
+                            {{--<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image Digital Signature') }}</label>--}}
 
-                            <div class="col-md-6">
-                                <input id="img_digital_signature" type="file" class="form-control{{ $errors->has('img_digital_signature') ? ' is-invalid' : '' }}" name="img_digital_signature" value="{{ old('img_digital_signature') }}" required autofocus>
-                                @if ($errors->has('img_digital_signature'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('img_digital_signature') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                            {{--<div class="col-md-6">--}}
+                                {{--<input id="img_digital_signature" type="file" class="form-control{{ $errors->has('img_digital_signature') ? ' is-invalid' : '' }}" name="img_digital_signature" value="{{ old('img_digital_signature') }}" required autofocus>--}}
+                                {{--@if ($errors->has('img_digital_signature'))--}}
+                                    {{--<span class="invalid-feedback" role="alert">--}}
+                                        {{--<strong>{{ $errors->first('img_digital_signature') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image Identity Card') }}</label>
@@ -190,7 +297,14 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Grade Point Average') }}</label>
 
                             <div class="col-md-6">
-                                <input id="grade_point_average" type="text" class="form-control{{ $errors->has('grade_point_average') ? ' is-invalid' : '' }}" name="grade_point_average" value="{{ old('grade_point_average') }}" required autofocus>
+                                <select id="grade_point_average" class="form-control{{ $errors->has('grade_point_average') ? ' is-invalid' : '' }}" name="grade_point_average" value="{{ old('grade_point_average') }}" required autofocus>
+                                    <option value="< 2">< 2</option>
+                                    <option value="2 - 2,5">2 - 2,5</option>
+                                    <option value="> 2,5 - 3">> 2,5 - 3</option>
+                                    <option value="> 3 - 3,5">> 3 - 3,5</option>
+                                    <option value="> 3,5 - 4">> 3,5 - 4 </option>
+                                </select>
+
                                 @if ($errors->has('grade_point_average'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('grade_point_average') }}</strong>
@@ -249,3 +363,43 @@
     </div>
 </div>
 @endsection
+
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            $('#province_of_birth').select2();
+            const provinces = $('#provinces')
+            const cities = $('#cities')
+            provinces.select2().on('select2:select', getCity);
+
+            function getCity(event)
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/cities?province='+event.params.data.id,
+                    success: function(event, response) {
+                        if (response) {
+
+                            cities.empty().select2({
+                                data: $.map(response.cities, function (item) {
+                                    return {
+                                        text: item.name,
+                                        id: item.id
+                                    }
+                                })
+                            });
+
+                        } else {
+                            console.log('should not add this category');
+                        }
+                    }.bind(null, event),
+                    error: function() {
+                        alert('Failed to assign category!');
+                    }
+                });
+            }
+        })
+    </script>
+
+@endpush

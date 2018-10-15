@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Http\Request;
@@ -15,4 +16,29 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::get('/cities', function (Request $request) {
+    $indonesia = new \Laravolt\Indonesia\Indonesia();
+    if ($request->has('province')) {
+        $data = $indonesia->findProvince($request->province, ['cities']);
+        return response()->json($data);
+    }
+});
+
+Route::get('/districts', function (Request $request) {
+    $indonesia = new \Laravolt\Indonesia\Indonesia();
+    if ($request->has('city')) {
+        $data = $indonesia->findCity($request->city, ['districts']);
+        return response()->json($data);
+    }
+});
+
+Route::get('/villages', function (Request $request) {
+    $indonesia = new \Laravolt\Indonesia\Indonesia();
+    if ($request->has('district')) {
+        $data = $indonesia->findDistrict($request->district, ['villages']);
+        return response()->json($data);
+    }
 });

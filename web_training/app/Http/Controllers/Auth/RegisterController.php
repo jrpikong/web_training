@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Laravolt\Indonesia\Indonesia;
 
 class RegisterController extends Controller
 {
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/term_and_condition';
 
     /**
      * Create a new controller instance.
@@ -39,7 +40,20 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->indonesia = new Indonesia();
     }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm()
+    {
+        $provinces = $this->indonesia->allProvinces();
+        return view('auth.register',compact('provinces'));
+    }
+
 
     /**
      * Get a validator for an incoming registration request.
@@ -51,18 +65,25 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
+            'nic_name' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
-            'birth_date' => 'required',
+            'date' => 'required',
+            'month' => 'required',
+            'year' => 'required',
+            'province_of_birth' => 'required',
             'place_of_birth' => 'required',
             'gender' => 'required',
+            'province' => 'required',
+            'city' => 'required',
             'address' => 'required',
             'phone_number' => 'required',
             'university' => 'required',
+            'type_of_university' => 'required',
             'id_identity' => 'required',
             'id_university' => 'required',
             'img_profile' => 'required|mimes:jpeg,jpg,png',
             'img_student_card' => 'required|mimes:jpeg,jpg,png',
-            'img_digital_signature' => 'required|mimes:jpeg,jpg,png',
+//            'img_digital_signature' => 'required|mimes:jpeg,jpg,png',
             'img_identity' => 'required|mimes:jpeg,jpg,png',
             'grade_point_average' => 'required',
             'password' => 'required|string|min:6|confirmed',
@@ -79,17 +100,23 @@ class RegisterController extends Controller
     {
         $user =  User::create([
             'name' => $data['name'],
+            'nic_name' => $data['nic_name'],
             'email' => $data['email'],
-            'birth_date' => $data['birth_date'],
+            'birth_date' => $data['year'].'-'.$data['month'].'-'.$data['date'],
+            'province_of_birth' => $data['province_of_birth'],
             'place_of_birth' => $data['place_of_birth'],
             'gender' => $data['gender'],
+            'province' => $data['province'],
+            'city' => $data['city'],
             'address' => $data['address'],
             'phone_number' => $data['phone_number'],
             'university' => $data['university'],
+            'type_of_university' => $data['type_of_university'],
             'id_identity' => $data['id_identity'],
             'id_university' => $data['id_university'],
             'grade_point_average' => $data['grade_point_average'],
             'password' => Hash::make($data['password']),
+            'status' => 1,
         ]);
         if (isset($data['img_profile'])) {
             $user->addMediaFromRequest('img_profile')->toMediaCollection('img_profile');
@@ -97,9 +124,9 @@ class RegisterController extends Controller
         if (isset($data['img_student_card'])) {
             $user->addMediaFromRequest('img_student_card')->toMediaCollection('img_student_card');
         }
-        if (isset($data['img_digital_signature'])) {
-            $user->addMediaFromRequest('img_digital_signature')->toMediaCollection('img_digital_signature');
-        }
+//        if (isset($data['img_digital_signature'])) {
+//            $user->addMediaFromRequest('img_digital_signature')->toMediaCollection('img_digital_signature');
+//        }
         if (isset($data['img_identity'])) {
             $user->addMediaFromRequest('img_identity')->toMediaCollection('img_identity');
         }

@@ -28,4 +28,9 @@ class HomeController extends Controller
         $user = Auth::user();
         return view('home',compact('user'));
     }
+
+    public function term_and_condition()
+    {
+        return $this->validate('term_and_condition');
+    }
 }
