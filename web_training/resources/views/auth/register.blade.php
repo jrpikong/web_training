@@ -113,11 +113,12 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
 
                             <div class="col-md-6">
                                 <div>
                                     <select id="provinces" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}" name="province" value="{{ old('province') }}" required autofocus>
+                                        <option value="">select your province</option>
                                         @foreach($provinces as $province)
                                             <option value="{{$province->id}}">{{ $province->name }}</option>
                                         @endforeach
@@ -130,6 +131,7 @@
                                 </div>
                                 <div style="margin-top: 15px">
                                     <select id="cities"  class="form-control{{ $errors->has('city') ? ' is-invalid' : '' }}" name="city" value="{{ old('city') }}" required autofocus>
+                                        <option value="">select your city</option>
                                     </select>
                                     @if ($errors->has('city'))
                                         <span class="invalid-feedback" role="alert">
@@ -140,6 +142,7 @@
 
                                 <div style="margin-top: 15px">
                                     <select id="districts" style="margin-top: 15px" class="form-control{{ $errors->has('districts') ? ' is-invalid' : '' }}" name="districts" value="{{ old('districts') }}" required autofocus>
+                                        <option value="">select your districts</option>
                                     </select>
                                     @if ($errors->has('districts'))
                                         <span class="invalid-feedback" role="alert">
@@ -149,7 +152,7 @@
                                 </div>
 
                                 <div style="margin-top: 15px">
-                                    <input type="text" id="postal_code" style="margin-top: 15px" placeholder="postal code" class="form-control{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" name="postal_code" value="{{ old('postal_code') }}" required autofocus>
+                                    <input type="text" id="postal_code" style="margin-top: 15px" placeholder="fill your postal code" class="form-control{{ $errors->has('postal_code') ? ' is-invalid' : '' }}" name="postal_code" value="{{ old('postal_code') }}" required autofocus>
                                     @if ($errors->has('postal_code'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('postal_code') }}</strong>
@@ -161,7 +164,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Address') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('') }}</label>
 
                             <div class="col-md-6">
                                 <textarea id="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus></textarea>
@@ -276,19 +279,6 @@
                             </div>
                         </div>
 
-                        {{--<div class="form-group row">--}}
-                            {{--<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image Digital Signature') }}</label>--}}
-
-                            {{--<div class="col-md-6">--}}
-                                {{--<input id="img_digital_signature" type="file" class="form-control{{ $errors->has('img_digital_signature') ? ' is-invalid' : '' }}" name="img_digital_signature" value="{{ old('img_digital_signature') }}" required autofocus>--}}
-                                {{--@if ($errors->has('img_digital_signature'))--}}
-                                    {{--<span class="invalid-feedback" role="alert">--}}
-                                        {{--<strong>{{ $errors->first('img_digital_signature') }}</strong>--}}
-                                    {{--</span>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image Identity Card') }}</label>
 
@@ -381,7 +371,11 @@
             const provinces = $('#provinces')
             const cities = $('#cities')
             const districts = $('#districts')
-            provinces.select2().on('select2:select', getCity);
+            provinces.select2(
+                {   placeholder: "select your province",
+                    allowClear: true
+                }
+            ).on('select2:select', getCity);
 
             function getCity(event)
             {
@@ -392,7 +386,7 @@
                         if (response) {
 
                             cities.empty().select2({
-                                placeholder: "Select a State",
+                                placeholder: "select your city",
                                 data: $.map(response.cities, function (item) {
                                     return {
                                         text: item.name,
@@ -402,6 +396,7 @@
                             });
 
                             districts.empty().select2({
+                                placeholder: "select your districts",
                                 data: $.map(response.districts, function (item) {
                                     return {
                                         text: item.name,
