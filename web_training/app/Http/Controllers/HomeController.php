@@ -38,6 +38,9 @@ class HomeController extends Controller
     {
         if($request->has('img_digital_signature') === true){
             $user = Auth::user();
+            $user->status = 1;
+            $user->save();
+
             $user->addMediaFromRequest('img_digital_signature')->toMediaCollection('img_digital_signature');
             return view('preview_user',compact('user'));
         }
