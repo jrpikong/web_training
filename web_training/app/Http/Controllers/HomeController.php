@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravolt\Indonesia\Indonesia;
 use Spatie\MediaLibrary\Models\Media;
 
 class HomeController extends Controller
@@ -26,7 +27,14 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('home',compact('user'));
+        $indonesia = new Indonesia();
+        $province = $indonesia->findProvince($user->province);
+        $province = $province->name;
+        $city = $indonesia->findCity($user->city);
+        $city = $city->name;
+        $disctric = $indonesia->findDistrict($user->districts);
+        $disctric = $disctric->name;
+        return view('home',compact('user','province','city','disctric'));
     }
 
     public function term_and_condition()
