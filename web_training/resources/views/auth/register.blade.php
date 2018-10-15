@@ -116,7 +116,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Province') }}</label>
 
                             <div class="col-md-6">
-                                <div style="margin-top: 15px">
+                                <div>
                                     <select id="provinces" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}" name="province" value="{{ old('province') }}" required autofocus>
                                         @foreach($provinces as $province)
                                             <option value="{{$province->id}}">{{ $province->name }}</option>
