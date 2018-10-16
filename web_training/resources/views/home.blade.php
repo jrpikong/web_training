@@ -15,7 +15,7 @@
 
                     <div class="text-center">
                         <h1 class="text-uppercase">Welcome</h1>
-                        <img src="{{$user->getFirstMediaUrl('img_profile','thumb')}}" class="img-thumbnail" style="hight:151px; width: 114px">
+                        <img src="{{$user->getFirstMediaUrl('img_profile','thumb')}}" class="img-thumbnail" style="hight:151px!important; width: 114px!important;">
                         <h3>Please. Choose what do you want todo !</h3>
                     </div>
                     <hr>
