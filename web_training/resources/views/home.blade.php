@@ -5,7 +5,6 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header"></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -15,7 +14,7 @@
                     @endif
 
                     <div class="text-center">
-                        <h2>Welcome</h2>
+                        <h1 class="text-uppercase">Welcome</h1>
                         <img src="{{$user->getFirstMediaUrl('img_profile','thumb')}}" class="img-thumbnail">
                         <h3>Please. Choose what do you want todo !</h3>
                     </div>
