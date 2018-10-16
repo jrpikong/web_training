@@ -13,8 +13,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <table class="table table-bordered">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
                         <tr>
                             <td>Nama Lengkap</td>
                             <td>=</td>
@@ -91,6 +91,7 @@
                             <td><img src="{{$user->getFirstMediaUrl('img_digital_signature')}}" class="img-thumbnail"></td>
                         </tr>
                     </table>
+                        </div>
                 </div>
             </div>
         </div>
