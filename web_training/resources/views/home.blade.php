@@ -15,6 +15,7 @@
                     @endif
 
                     <div class="text-center">
+                        <h2>Welcome</h2>
                         <img src="{{$user->getFirstMediaUrl('img_profile','thumb')}}" class="img-thumbnail">
                         <h3>Please. Choose what do you want todo !</h3>
                     </div>
