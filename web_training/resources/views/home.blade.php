@@ -76,11 +76,6 @@
                             <td><img src="{{$user->getFirstMediaUrl('img_profile','thumb')}}" class="img-thumbnail"></td>
                         </tr>
                         <tr>
-                            <td>Digital Signature</td>
-                            <td>=</td>
-                            <td><img src="{{$user->getFirstMediaUrl('img_digital_signature')}}" class="img-thumbnail"></td>
-                        </tr>
-                        <tr>
                             <td>Foto kartu mahasiswa</td>
                             <td>=</td>
                             <td><img src="{{$user->getFirstMediaUrl('img_student_card')}}" class="img-thumbnail"></td>
@@ -89,6 +84,11 @@
                             <td>Upload scan KTP</td>
                             <td>=</td>
                             <td><img src="{{$user->getFirstMediaUrl('img_identity')}}" class="img-thumbnail"></td>
+                        </tr>
+                        <tr>
+                            <td>Digital Signature</td>
+                            <td>=</td>
+                            <td><img src="{{$user->getFirstMediaUrl('img_digital_signature')}}" class="img-thumbnail"></td>
                         </tr>
                     </table>
                 </div>
