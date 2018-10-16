@@ -13,85 +13,35 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                        <tr>
-                            <td>Nama Lengkap</td>
-                            <td>=</td>
-                            <td>{{$user->name}}</td>
-                        </tr>
-                        <tr>
-                            <td>Nama Panggilian</td>
-                            <td>=</td>
-                            <td>{{$user->nic_name}}</td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td>=</td>
-                            <td>{{$user->email}}</td>
-                        </tr>
-                        <tr>
-                            <td>Nomor HP / WA</td>
-                            <td>=</td>
-                            <td>{{$user->phone_number }}</td>
-                        </tr>
-                        <tr>
-                            <td>TTL</td>
-                            <td>=</td>
-                            <td>{{$user->place_of_birth}} - {{$user->birth_date}}</td>
-                        </tr>
-                        <tr>
-                            <td>Gender</td>
-                            <td>=</td>
-                            <td>{{$user->gender}}</td>
-                        </tr>
-                        <tr>
-                            <td>Nama Universitas</td>
-                            <td>=</td>
-                            <td>{{$user->university}}</td>
-                        </tr>
-                        <tr>
-                            <td>Nomor KTP</td>
-                            <td>=</td>
-                            <td>{{$user->id_identity}}</td>
-                        </tr>
-                        <tr>
-                            <td>Nomor Identitas Mahasiswa</td>
-                            <td>=</td>
-                            <td>{{$user->id_university}}</td>
-                        </tr>
-                        <tr>
-                            <td>IPK</td>
-                            <td>=</td>
-                            <td>{{$user->grade_point_average}}</td>
-                        </tr>
-                        <tr>
-                            <td>Alamat</td>
-                            <td>=</td>
-                            <td>{{ $province.' - '.$city.' - '.$disctric }} - {{$user->address}} {{$user->postal_code}}</td>
-                        </tr>
-                        <tr>
-                            <td>Foto diri</td>
-                            <td>=</td>
-                            <td><img src="{{$user->getFirstMediaUrl('img_profile','thumb')}}" class="img-thumbnail"></td>
-                        </tr>
-                        <tr>
-                            <td>Foto kartu mahasiswa</td>
-                            <td>=</td>
-                            <td><img src="{{$user->getFirstMediaUrl('img_student_card')}}" class="img-thumbnail"></td>
-                        </tr>
-                        <tr>
-                            <td>Upload scan KTP</td>
-                            <td>=</td>
-                            <td><img src="{{$user->getFirstMediaUrl('img_identity')}}" class="img-thumbnail"></td>
-                        </tr>
-                        <tr>
-                            <td>Digital Signature</td>
-                            <td>=</td>
-                            <td><img src="{{$user->getFirstMediaUrl('img_digital_signature')}}" class="img-thumbnail"></td>
-                        </tr>
-                    </table>
+
+                    <div class="text-center">
+                        <img src="{{$user->getFirstMediaUrl('img_profile','thumb')}}" class="img-thumbnail">
+                        <h3>Please. Choose what do you want todo !</h3>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Personality Test</h4>
+                                </div>
+                            </div>
                         </div>
+                        <div class="col-md-4 text-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Transaction</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4>Training</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
