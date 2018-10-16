@@ -78,7 +78,7 @@ class RegisterController extends Controller
 //            'districts' => 'required',
 //            'postal_code' => 'required',
 //            'address' => 'required',
-//            'phone_number' => 'required',
+            'phone_number' => 'required|unique:users',
 //            'university' => 'required',
 //            'type_of_university' => 'required',
 //            'id_identity' => 'required',
