@@ -96,17 +96,12 @@
                                             </li>
                                             <li class="dropdown">
                                                 <a class="dropdown-item dropdown-toggle" href="#">
-                                                    Pages
+                                                    Materi
                                                 </a>
                                             </li>
                                             <li class="dropdown">
-                                                <a class="dropdown-item dropdown-toggle" href="#">
-                                                    Portfolio
-                                                </a>
-                                            </li>
-                                            <li class="dropdown">
-                                                <a class="dropdown-item dropdown-toggle" href="#">
-                                                    Blog
+                                                <a class="dropdown-item dropdown-toggle active" href="/register">
+                                                    Register
                                                 </a>
                                             </li>
                                         </ul>
@@ -241,7 +236,7 @@
                              style="color: #b5b5b5;">Trusted by over <strong>30,000</strong> satisfied users.</div>
 
                         <a class="tp-caption btn btn-primary font-weight-bold"
-                           href="#"
+                           href="/register"
                            data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
                            data-x="center"
                            data-y="center" data-voffset="['65','65','65','210']"
@@ -256,7 +251,20 @@
                 </ul>
             </div>
         </div>
+        <div class="home-intro mb-0" id="home-intro">
+            <div class="container">
 
+                <div class="row text-center">
+                    <div class="col">
+                        <p class="mb-0">
+                            The fastest way to grow your business with the leader in <span class="highlighted-word text-color-light font-weight-semibold text-5">Technology</span>
+                            <span>Check out our options and features included.</span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <div class="container py-4">
             <div class="row pt-4 mt-5">
                 <div class="col">
@@ -345,10 +353,10 @@
             <div class="container">
                 <div class="row align-items-center justify-content-center justify-content-lg-between pb-5 pb-lg-0">
                     <div class="col-lg-5 order-2 order-lg-1 pt-4 pt-lg-0 pb-5 pb-lg-0 mt-5 mt-lg-0 appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="200">
-                        <h2 class="font-weight-bold text-color-light text-7 mb-2">Who We Are</h2>
+                        <h2 class="font-weight-bold text-color-light text-7 mb-2">JOIN SAMSUNG STUDENT AMBASADOR</h2>
                         <p class="lead font-weight-light text-color-light text-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit massa enim. Nullam id varius nunc.</p>
                         <p class="font-weight-light text-color-light text-2 mb-4 opacity-7">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc. Vivamus bibendun magna ex, et faucibus lacus venenatis eget</p>
-                        <a href="#" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">LEARN MORE</a>
+                        <a href="#" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
                     </div>
                     <div class="col-9 offset-lg-1 col-lg-5 order-1 order-lg-2 scale-2">
                         <img class="img-fluid box-shadow-1 my-2 border-radius" src="{{asset('porto/img/gallery/gallery-1.jpg')}}" alt="">
