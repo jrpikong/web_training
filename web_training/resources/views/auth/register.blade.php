@@ -1,5 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.login_main')
 
+@push('style')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+@endpush
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -365,6 +368,7 @@
 
 
 @push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
         $(document).ready(function () {
             $('#province_of_birth').select2();
@@ -384,7 +388,7 @@
                     url: '/api/cities?province='+event.params.data.id,
                     success: function(event, response) {
                         if (response) {
-
+                            console.log(response);
                             cities.empty().select2({
                                 placeholder: "select your city",
                                 data: $.map(response.cities, function (item) {
