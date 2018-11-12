@@ -48,3 +48,8 @@
     </div>
 </div>
 @endsection
+
+
+@push('script')
+    <script src="{{asset('limitless/assets/js/app.js')}}"></script>
+@endpush

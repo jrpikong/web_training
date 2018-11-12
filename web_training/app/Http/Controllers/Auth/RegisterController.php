@@ -82,7 +82,7 @@ class RegisterController extends Controller
 //            'university' => 'required',
 //            'type_of_university' => 'required',
 //            'id_identity' => 'required',
-//            'id_university' => 'required',
+//            'id_university' => 'requiotal View Minggu Inired',
 //            'img_profile' => 'required|mimes:jpeg,jpg,png',
 //            'img_student_card' => 'required|mimes:jpeg,jpg,png',
 //            'img_identity' => 'required|mimes:jpeg,jpg,png',
