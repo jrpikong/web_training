@@ -18,7 +18,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Full Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name" placeholder="fill your full name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
@@ -32,7 +32,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nick Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="nic_name" type="text" class="form-control{{ $errors->has('nic_name') ? ' is-invalid' : '' }}" name="nic_name" value="{{ old('nic_name') }}" required autofocus>
+                                <input id="nic_name" type="text" placeholder="fill your nic name" class="form-control{{ $errors->has('nic_name') ? ' is-invalid' : '' }}" name="nic_name" value="{{ old('nic_name') }}" required autofocus>
 
                                 @if ($errors->has('nic_name'))
                                     <span class="invalid-feedback" role="alert">
@@ -48,7 +48,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input id="date" type="text" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" required autofocus>
+                                        <input id="date" type="text" placeholder="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" required autofocus>
                                     </div>
                                     <div class="col-md-4">
                                         <select id="month" class="form-control{{ $errors->has('month') ? ' is-invalid' : '' }}" name="month" value="{{ old('month') }}" required autofocus>
@@ -67,7 +67,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <input id="year" type="text" class="form-control{{ $errors->has('year') ? ' is-invalid' : '' }}" name="year" value="{{ old('year') }}" required autofocus>
+                                        <input id="year" type="text" placeholder="year" class="form-control{{ $errors->has('year') ? ' is-invalid' : '' }}" name="year" value="{{ old('year') }}" required autofocus>
                                     </div>
                                 </div>
                             </div>
@@ -145,11 +145,22 @@
 
                                 <div style="margin-top: 15px">
                                     <select id="districts" style="margin-top: 15px" class="form-control{{ $errors->has('districts') ? ' is-invalid' : '' }}" name="districts" value="{{ old('districts') }}" required autofocus>
-                                        <option value="">select your districts</option>
+                                        <option value="">select your district</option>
                                     </select>
                                     @if ($errors->has('districts'))
                                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('districts') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+
+
+
+                                <div style="margin-top: 15px">
+                                    <textarea id="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" placeholder="fill your specific address" required autofocus></textarea>
+                                    @if ($errors->has('address'))
+                                        <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('address') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -166,24 +177,24 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('') }}</label>
+                        {{--<div class="form-group row">--}}
+                            {{--<label for="name" class="col-md-4 col-form-label text-md-right">{{ __('') }}</label>--}}
 
-                            <div class="col-md-6">
-                                <textarea id="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus></textarea>
-                                @if ($errors->has('address'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('address') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                            {{--<div class="col-md-6">--}}
+                                {{--<textarea id="address" class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" name="address" value="{{ old('address') }}" required autofocus>fill your specific address</textarea>--}}
+                                {{--@if ($errors->has('address'))--}}
+                                    {{--<span class="invalid-feedback" role="alert">--}}
+                                        {{--<strong>{{ $errors->first('address') }}</strong>--}}
+                                    {{--</span>--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
 
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Phone Number') }}</label>
 
                             <div class="col-md-6">
-                                <input id="phone_number" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required autofocus>
+                                <input id="phone_number" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" placeholder="fill your phone number" value="{{ old('phone_number') }}" required autofocus>
                                 @if ($errors->has('phone_number'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('phone_number') }}</strong>
@@ -196,7 +207,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('University') }}</label>
 
                             <div class="col-md-6">
-                                <input id="university" type="text" class="form-control{{ $errors->has('university') ? ' is-invalid' : '' }}" name="university" value="{{ old('university') }}" required autofocus>
+                                <input id="university" type="text" class="form-control{{ $errors->has('university') ? ' is-invalid' : '' }}" placeholder="fill your university" name="university" value="{{ old('university') }}" required autofocus>
                                 @if ($errors->has('university'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('university') }}</strong>
@@ -234,7 +245,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('ID Identity') }}</label>
 
                             <div class="col-md-6">
-                                <input id="id_identity" type="text" class="form-control{{ $errors->has('id_identity') ? ' is-invalid' : '' }}" name="id_identity" value="{{ old('id_identity') }}" required autofocus>
+                                <input id="id_identity" type="text" placeholder="fill your id identity" class="form-control{{ $errors->has('id_identity') ? ' is-invalid' : '' }}" name="id_identity" value="{{ old('id_identity') }}" required autofocus>
                                 @if ($errors->has('id_identity'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('id_identity') }}</strong>
@@ -247,7 +258,7 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('ID University') }}</label>
 
                             <div class="col-md-6">
-                                <input id="id_university" type="text" class="form-control{{ $errors->has('id_university') ? ' is-invalid' : '' }}" name="id_university" value="{{ old('id_university') }}" required autofocus>
+                                <input id="id_university" type="text" placeholder="fill your  id university" class="form-control{{ $errors->has('id_university') ? ' is-invalid' : '' }}" name="id_university" value="{{ old('id_university') }}" required autofocus>
                                 @if ($errors->has('id_university'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('id_university') }}</strong>
@@ -319,7 +330,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" placeholder="fill your email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
@@ -333,7 +344,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                <input id="password" type="password" placeholder="fill your password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
@@ -347,7 +358,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" placeholder="fill your confirm password" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
 
