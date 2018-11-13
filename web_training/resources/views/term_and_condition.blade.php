@@ -1,11 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.front')
 
 @section('content')
+
+    <section class="page-header page-header-modern page-header-background page-header-background-sm custom-page-header parallax mt-0" data-plugin-parallax data-plugin-options="{'speed': 1.5}" data-image-src="{{asset('porto/img/slides/slide-corporate-7-2.jpg')}}">
+
+    </section>
+
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center pt-1 pb-4 mb-3">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Term And Conditioj') }}</div>
+                    <div class="card-header">{{ __('Term And Condition') }}</div>
 
                     <div class="card-body">
                         <h3>What is Lorem Ipsum?</h3>
@@ -29,11 +34,23 @@
                         <div class="text-right">
                             <form method="POST" action="{{ route('term_and_condition_pos') }}" enctype="multipart/form-data">
                             @csrf
+
                                 <div class="form-group row">
                                     <label for="name" class="col-md-9 col-form-label text-md-right">{{ __('Digital Signature') }}</label>
 
                                     <div class="col-md-3">
                                         <input id="img_digital_signature" type="file" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="img_digital_signature" value="{{ old('img_digital_signature') }}" required autofocus>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-0">
+                                    <div class="col-md-6 offset-md-4">
+                                        <div class="form-check">
+                                            <input id="accept" type="checkbox" class="form-check-input{{ $errors->has('accept') ? ' is-invalid' : '' }}" name="accept" value="{{ old('accept') }}" value="Universitas Swasta" required>
+                                            <label class="form-check-label" for="accept">
+                                                Accept
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
 

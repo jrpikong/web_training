@@ -1,8 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.front')
 
 @section('content')
+    <section class="page-header page-header-modern page-header-background page-header-background-sm custom-page-header parallax mt-0" data-plugin-parallax data-plugin-options="{'speed': 1.5}" data-image-src="{{asset('porto/img/slides/slide-corporate-7-2.jpg')}}">
+
+    </section>
+
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center pt-1 pb-4 mb-3">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">{{ __('Term And Conditioj') }}</div>
@@ -30,8 +34,8 @@
                             <img src="{{asset($user->getFirstMediaUrl('img_digital_signature'))}}" class="img-thumbnail">
                         </div>
 
-                        <div class="text-right">
-                            <form method="get" action="{{ route('home') }}" enctype="multipart/form-data">
+                        <div class="text-right mt-5">
+                            <form method="get" action="{{ route('home') }}" class="contact-form custom-contact-form-style-1" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group row mb-0">
                                     <div class="col-md-12">
