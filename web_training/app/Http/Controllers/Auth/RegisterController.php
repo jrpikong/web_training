@@ -113,11 +113,15 @@ class RegisterController extends Controller
             'postal_code' => $data['postal_code'],
             'address' => $data['address'],
             'phone_number' => $data['phone_number'],
+            'lulusan' => $data['lulusan'],
             'university' => $data['university'],
+            'majors' => $data['majors'],
+            'entry_year' => $data['entry_year'],
+            'grade_point_average' => $data['grade_point_average'],
+            'id_university' => $data['id_university'],
+            'bank_account' => $data['bank_account'],
             'type_of_university' => $data['type_of_university'],
             'id_identity' => $data['id_identity'],
-            'id_university' => $data['id_university'],
-            'grade_point_average' => $data['grade_point_average'],
             'password' => Hash::make($data['password']),
             'status' => 0,
         ]);
@@ -129,6 +133,9 @@ class RegisterController extends Controller
         }
         if (isset($data['img_identity'])) {
             $user->addMediaFromRequest('img_identity')->toMediaCollection('img_identity');
+        }
+        if (isset($data['img_npwp'])) {
+            $user->addMediaFromRequest('img_npwp')->toMediaCollection('img_npwp');
         }
          return $user;
     }
