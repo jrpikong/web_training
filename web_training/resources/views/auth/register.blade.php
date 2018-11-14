@@ -283,32 +283,6 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Type Of University') }}</label>
-
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input id="university_negri" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Negri" required>
-                            <label class="form-check-label" for="university_negri">
-                                Negeri
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input id="university_swasta" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Swasta" required>
-                            <label class="form-check-label" for="university_swasta">
-                                Swasta
-                            </label>
-                        </div>
-
-                        @if ($errors->has('university'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('university') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="form-group row">
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('ID University') }}</label>
 
                     <div class="col-md-6">
