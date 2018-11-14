@@ -48,21 +48,6 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('admin_members') }}" class="nav-link">
-                        <i class="icon-traffic-lights"></i>
-                        <span>Users</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('admin_sliders') }}" class="nav-link">
-                        <i class="icon-traffic-lights"></i>
-                        <span>Sliders</span>
-                    </a>
-                </li>
-
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="icon-traffic-lights"></i>
@@ -76,15 +61,29 @@
                         <span>Training</span>
                     </a>
                 </li>
+                @if(Auth::user()->id == 10)
+                    <li class="nav-item">
+                        <a href="{{ route('admin_members') }}" class="nav-link">
+                            <i class="icon-traffic-lights"></i>
+                            <span>All Member</span>
+                        </a>
+                    </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('admin_sliders') }}" class="nav-link">
+                            <i class="icon-traffic-lights"></i>
+                            <span>Sliders</span>
+                        </a>
+                    </li>
 
-                <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-stack"></i> <span> Setting</span></a>
+                    <li class="nav-item nav-item-submenu">
+                        <a href="#" class="nav-link"><i class="icon-stack"></i> <span> Setting</span></a>
 
-                    <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
-                        <li class="nav-item"><a href="#" class="nav-link">switch Biller</a></li>
-                    </ul>
-                </li>
+                        <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
+                            <li class="nav-item"><a href="#" class="nav-link">switch Biller</a></li>
+                        </ul>
+                    </li>
+                @endif
                 <!-- /main -->
 
             </ul>

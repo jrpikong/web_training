@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(Auth::user()->id == 10)
+        @include('dashboard')
+    @endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
