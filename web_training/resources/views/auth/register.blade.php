@@ -202,6 +202,7 @@
                     <div class="col-md-6">
                         <div>
                             <select id="lulusan" class="form-control{{ $errors->has('lulusan') ? ' is-invalid' : '' }}" name="lulusan" value="{{ old('lulusan') }}" required autofocus>
+                                <option value="">choose your educational degree</option>
                                 <option value="D3">D3</option>
                                 <option value="S1">S1</option>
                                 <option value="S2">S2</option>
@@ -223,6 +224,26 @@
                             @endif
                         </div>
 
+                        <div class="form-check">
+                            <input id="university_negri" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Negri" required>
+                            <label class="form-check-label" for="university_negri">
+                                Negeri
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input id="university_swasta" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Swasta" required>
+                            <label class="form-check-label" for="university_swasta">
+                                Swasta
+                            </label>
+                        </div>
+
+                        @if ($errors->has('university'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('university') }}</strong>
+                            </span>
+                        @endif
+
                         <div style="margin-top: 15px">
                             <input id="majors" type="text" class="form-control{{ $errors->has('majors') ? ' is-invalid' : '' }}" placeholder="fill your majors" name="majors" value="{{ old('majors') }}" required autofocus>
                             @if ($errors->has('majors'))
@@ -243,6 +264,7 @@
 
                         <div style="margin-top: 15px">
                             <select id="grade_point_average" class="form-control{{ $errors->has('grade_point_average') ? ' is-invalid' : '' }}" name="grade_point_average" value="{{ old('grade_point_average') }}" required autofocus>
+                                <option value="">choose your grade point average</option>
                                 <option value="< 2">< 2</option>
                                 <option value="2 - 2,5">2 - 2,5</option>
                                 <option value="> 2,5 - 3">> 2,5 - 3</option>
@@ -257,6 +279,32 @@
                             @endif
                         </div>
 
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Type Of University') }}</label>
+
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input id="university_negri" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Negri" required>
+                            <label class="form-check-label" for="university_negri">
+                                Negeri
+                            </label>
+                        </div>
+
+                        <div class="form-check">
+                            <input id="university_swasta" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Swasta" required>
+                            <label class="form-check-label" for="university_swasta">
+                                Swasta
+                            </label>
+                        </div>
+
+                        @if ($errors->has('university'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('university') }}</strong>
+                            </span>
+                        @endif
                     </div>
                 </div>
 
@@ -283,32 +331,6 @@
                         @if ($errors->has('bank_account'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('bank_account') }}</strong>
-                            </span>
-                        @endif
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Type Of University') }}</label>
-
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input id="university_negri" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Negri" required>
-                            <label class="form-check-label" for="university_negri">
-                                Negeri
-                            </label>
-                        </div>
-
-                        <div class="form-check">
-                            <input id="university_swasta" type="radio" class="form-check-input{{ $errors->has('university') ? ' is-invalid' : '' }}" name="type_of_university" value="{{ old('university') }}" value="Universitas Swasta" required>
-                            <label class="form-check-label" for="university_swasta">
-                                Swasta
-                            </label>
-                        </div>
-
-                        @if ($errors->has('university'))
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('university') }}</strong>
                             </span>
                         @endif
                     </div>
