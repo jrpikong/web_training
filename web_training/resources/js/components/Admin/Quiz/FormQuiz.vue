@@ -7,21 +7,21 @@
         <div class="card-body">
             <p class="mb-4">Examples of standard form controls supported in an example form layout. Individual form controls automatically receive some global styling. All textual <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, and <code>&lt;select&gt;</code> elements with <code>.form-control</code> are set to <code>width: 100%;</code> by default. Wrap labels and controls in <code>.form-group</code> for optimum spacing. Labels in horizontal form require <code>.col-form-label</code> class.</p>
 
-            <form action="#">
+            <form @submit.prevent="sumbitForm">
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Deskripsi Kuis</legend>
 
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Lama Waktu Pengerjaan</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" v-model="waktu_pengerjaan">
+                            <input type="number" class="form-control" v-model="waktu_pengerjaan" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Status Kuis</label>
                         <div class="col-lg-10">
-                            <select name="status" class="form-control form-control-uniform" v-model="status_kuis">
+                            <select name="status" class="form-control form-control-uniform" v-model="status_kuis" required>
                                 <option value="">Status Kis</option>
                                 <option value="Aktif">Aktif</option>
                                 <option value="Tidak Aktif">Tidak Aktif</option>
@@ -32,7 +32,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Tipe Kuis</label>
                         <div class="col-lg-10">
-                            <select name="type" class="form-control form-control-uniform" v-model="tipe_kuis">
+                            <select name="type" class="form-control form-control-uniform" v-model="tipe_kuis" required>
                                 <option value="">Tipe Kuis</option>
                                 <option value="Personal Test">Personal Test</option>
                                 <option value="Training Tes">Training Tes</option>
@@ -64,7 +64,7 @@
                                 <div class="row">
                                     <label class="col-form-label col-lg-6">Status Soal</label>
                                     <div class="col-lg-6">
-                                        <select class="form-control form-control-uniform" v-model="question.status_soal" name="questions[][status_soal]">
+                                        <select class="form-control form-control-uniform" v-model="question.status_soal" name="questions[][status_soal]" required>
                                             <option value="">Status Soal</option>
                                             <option value="Aktif">Aktif</option>
                                             <option value="Tidak Aktif">Tidak Aktif</option>
@@ -76,7 +76,7 @@
                                 <div class="row">
                                     <label class="col-form-label col-lg-4">Kunci Jawaban</label>
                                     <div class="col-lg-8">
-                                        <select class="form-control form-control-uniform"  v-model="question.jawaban" name="questions[][jawaban]>">
+                                        <select class="form-control form-control-uniform"  v-model="question.jawaban" name="questions[][jawaban]>" required>
                                             <option value="">Isi Kunci Jawaban</option>
                                             <option value="A">A</option>
                                             <option value="B">B</option>
@@ -91,16 +91,16 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Pertanyaan</label>
                             <div class="col-lg-10">
-                                <input type="text" class="form-control" v-model="question.pertanyaan" name="questions[][pertanyaan]">
+                                <input type="text" class="form-control" v-model="question.pertanyaan" name="questions[][pertanyaan]" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Pilihan A</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" v-model="question.pilihan_a" name="questions[][pilihan_a][text]">
+                                <input type="text" class="form-control" v-model="question.pilihan_a" name="questions[][pilihan_a]" required>
                             </div>
                             <div class="col-md-1">
-                                <select class="form-control" v-model="question.type_of_choice_a" name="questions[][type_of_choice_a][type_of_choice]">
+                                <select class="form-control" v-model="question.type_of_choice_a" name="questions[][type_of_choice_a]" required>
                                     <option value="Sanguinis">Sanguinis</option>
                                     <option value="Melankolis">Melankolis</option>
                                     <option value="Kolerik">Kolerik</option>
@@ -111,10 +111,10 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Pilihan B</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" v-model="question.pilihan_b" name="questions[][pilihan_b][text]">
+                                <input type="text" class="form-control" v-model="question.pilihan_b" name="questions[][pilihan_b]" required>
                             </div>
                             <div class="col-md-1">
-                                <select class="form-control" v-model="question.type_of_choice_b" name="questions[][type_of_choice_b][type_of_choice]">
+                                <select class="form-control" v-model="question.type_of_choice_b" name="questions[][type_of_choice_b]" required>
                                     <option value="Sanguinis">Sanguinis</option>
                                     <option value="Melankolis">Melankolis</option>
                                     <option value="Kolerik">Kolerik</option>
@@ -125,10 +125,10 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Pilihan C</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" v-model="question.pilihan_c" name="questions[][pilihan_c][text]">
+                                <input type="text" class="form-control" v-model="question.pilihan_c" name="questions[][pilihan_c]" required>
                             </div>
                             <div class="col-md-1">
-                                <select class="form-control" v-model="question.type_of_choice_c" name="questions[][type_of_choice_c][type_of_choice]">
+                                <select class="form-control" v-model="question.type_of_choice_c" name="questions[][type_of_choice_c]" required>
                                     <option value="Sanguinis">Sanguinis</option>
                                     <option value="Melankolis">Melankolis</option>
                                     <option value="Kolerik">Kolerik</option>
@@ -139,10 +139,10 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Pilihan D</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" v-model="question.pilihan_d" name="questions[][pilihan_d][text]">
+                                <input type="text" class="form-control" v-model="question.pilihan_d" name="questions[][pilihan_d]" required>
                             </div>
                             <div class="col-md-1">
-                                <select class="form-control" v-model="question.type_of_choice_d" name="questions[][type_of_choice_d][type_of_choice]">
+                                <select class="form-control" v-model="question.type_of_choice_d" name="questions[][type_of_choice_d]" required>
                                     <option value="Sanguinis">Sanguinis</option>
                                     <option value="Melankolis">Melankolis</option>
                                     <option value="Kolerik">Kolerik</option>
@@ -160,7 +160,7 @@
                     <button type="button" v-on:click="addNewApartment" class="btn btn-success">
                         Tambah Pertanyaan +
                     </button>
-                    <button type="submit" class="btn btn-primary" v-on:click.prevent="sumbitForm">Submit <i class="icon-paperplane ml-2"></i></button>
+                    <button type="submit" class="btn btn-primary">Submit <i class="icon-paperplane ml-2"></i></button>
                 </div>
             </form>
         </div>
@@ -172,22 +172,22 @@
         name: "FormQuiz",
         data : function () {
             return {
-                waktu_pengerjaan: "",
-                status_kuis: "",
-                tipe_kuis: "",
+                waktu_pengerjaan: '',
+                status_kuis: '',
+                tipe_kuis: '',
                 questions:[],
                 question: {
                     status_soal: '',
                     jawaban: '',
                     pertanyaan: '',
                     pilihan_a: '',
-                    type_of_choice_a: '',
+                    type_of_choice_a: 'Sanguinis',
                     pilihan_b: '',
-                    type_of_choice_b: '',
+                    type_of_choice_b: 'Melankolis',
                     pilihan_c: '',
-                    type_of_choice_c: '',
+                    type_of_choice_c: 'Kolerik',
                     pilihan_d: '',
-                    type_of_choice_d: ''
+                    type_of_choice_d: 'Plegmati'
                 }
 
             }

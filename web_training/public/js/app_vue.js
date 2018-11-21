@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(3);
+var bind = __webpack_require__(4);
 var isBuffer = __webpack_require__(19);
 
 /*global toString:true*/
@@ -402,6 +402,115 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -424,10 +533,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(5);
+    adapter = __webpack_require__(6);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(5);
+    adapter = __webpack_require__(6);
   }
   return adapter;
 }
@@ -502,10 +611,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -523,7 +632,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -713,7 +822,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -724,7 +833,7 @@ var settle = __webpack_require__(22);
 var buildURL = __webpack_require__(24);
 var parseHeaders = __webpack_require__(25);
 var isURLSameOrigin = __webpack_require__(26);
-var createError = __webpack_require__(6);
+var createError = __webpack_require__(7);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
 
 module.exports = function xhrAdapter(config) {
@@ -900,7 +1009,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -925,7 +1034,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -937,7 +1046,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -963,120 +1072,11 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(48);
+module.exports = __webpack_require__(59);
 
 
 /***/ }),
@@ -1102,8 +1102,8 @@ window.Vue = __webpack_require__(36);
 
 Vue.component('example-component', __webpack_require__(39));
 Vue.component('list-member', __webpack_require__(42));
-Vue.component('list-quiz', __webpack_require__(61));
-Vue.component('form-quiz', __webpack_require__(64));
+Vue.component('list-quiz', __webpack_require__(48));
+Vue.component('form-quiz', __webpack_require__(51));
 
 var app_vue = new Vue({
   el: '#app'
@@ -31241,9 +31241,9 @@ module.exports = __webpack_require__(18);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(3);
+var bind = __webpack_require__(4);
 var Axios = __webpack_require__(20);
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 
 /**
  * Create an instance of Axios
@@ -31276,9 +31276,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(8);
+axios.Cancel = __webpack_require__(9);
 axios.CancelToken = __webpack_require__(34);
-axios.isCancel = __webpack_require__(7);
+axios.isCancel = __webpack_require__(8);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -31326,7 +31326,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(2);
+var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(29);
 var dispatchRequest = __webpack_require__(30);
@@ -31431,7 +31431,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(6);
+var createError = __webpack_require__(7);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -31864,8 +31864,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(31);
-var isCancel = __webpack_require__(7);
-var defaults = __webpack_require__(2);
+var isCancel = __webpack_require__(8);
+var defaults = __webpack_require__(3);
 var isAbsoluteURL = __webpack_require__(32);
 var combineURLs = __webpack_require__(33);
 
@@ -32024,7 +32024,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(8);
+var Cancel = __webpack_require__(9);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -43342,14 +43342,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(5)))
 
 /***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(40)
 /* template */
@@ -43468,7 +43468,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
 var __vue_script__ = __webpack_require__(43)
 /* template */
@@ -44556,13 +44556,267 @@ if (false) {
 
 /***/ }),
 /* 48 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(49)
+/* template */
+var __vue_template__ = __webpack_require__(50)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Admin/Quiz/ListQuiz.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-73b0a99c", Component.options)
+  } else {
+    hotAPI.reload("data-v-73b0a99c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
-/* 49 */,
+/* 49 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "ListQuiz"
+});
+
+/***/ }),
 /* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card my-3" }, [
+      _c("div", { staticClass: "card-header header-elements-inline" }, [
+        _c("h5", { staticClass: "card-title" }, [_vm._v("List Members")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "header-elements" }, [
+          _c(
+            "ul",
+            {
+              staticClass:
+                "pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0"
+            },
+            [
+              _c("li", { staticClass: "page-item" }, [
+                _c(
+                  "a",
+                  { staticClass: "page-link", attrs: { href: "add_quiz" } },
+                  [
+                    _c("i", { staticClass: "icon-file-plus2" }),
+                    _vm._v(" Add New")
+                  ]
+                )
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive" }, [
+        _c("table", { staticClass: "table table-xs table-bordered" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Email")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Gender")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Phone Number")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Postal Code")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Address")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Action")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("tbody")
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-73b0a99c", module.exports)
+  }
+}
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(52)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(57)
+/* template */
+var __vue_template__ = __webpack_require__(58)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-13318158"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Admin/Quiz/FormQuiz.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-13318158", Component.options)
+  } else {
+    hotAPI.reload("data-v-13318158", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(53);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(55)("ada1a686", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13318158\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormQuiz.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13318158\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormQuiz.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(54)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 54 */
 /***/ (function(module, exports) {
 
 /*
@@ -44644,12 +44898,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -44668,7 +44917,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(57)
+var listToStyles = __webpack_require__(56)
 
 /*
 type StyleObject = {
@@ -44877,7 +45126,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 57 */
+/* 56 */
 /***/ (function(module, exports) {
 
 /**
@@ -44910,271 +45159,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 58 */,
-/* 59 */,
-/* 60 */,
-/* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(9)
-/* script */
-var __vue_script__ = __webpack_require__(62)
-/* template */
-var __vue_template__ = __webpack_require__(63)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Admin/Quiz/ListQuiz.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-73b0a99c", Component.options)
-  } else {
-    hotAPI.reload("data-v-73b0a99c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 62 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: "ListQuiz"
-});
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card my-3" }, [
-      _c("div", { staticClass: "card-header header-elements-inline" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v("List Members")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "header-elements" }, [
-          _c(
-            "ul",
-            {
-              staticClass:
-                "pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0"
-            },
-            [
-              _c("li", { staticClass: "page-item" }, [
-                _c(
-                  "a",
-                  { staticClass: "page-link", attrs: { href: "add_quiz" } },
-                  [
-                    _c("i", { staticClass: "icon-file-plus2" }),
-                    _vm._v(" Add New")
-                  ]
-                )
-              ])
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-xs table-bordered" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v("#")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Name")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Email")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Gender")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Phone Number")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Postal Code")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Address")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Action")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody")
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-73b0a99c", module.exports)
-  }
-}
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(65)
-}
-var normalizeComponent = __webpack_require__(9)
-/* script */
-var __vue_script__ = __webpack_require__(67)
-/* template */
-var __vue_template__ = __webpack_require__(68)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-13318158"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Admin/Quiz/FormQuiz.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-13318158", Component.options)
-  } else {
-    hotAPI.reload("data-v-13318158", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 65 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(66);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(56)("ada1a686", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13318158\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormQuiz.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13318158\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormQuiz.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 66 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(50)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 67 */
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45353,22 +45338,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: "FormQuiz",
     data: function data() {
         return {
-            waktu_pengerjaan: "",
-            status_kuis: "",
-            tipe_kuis: "",
+            waktu_pengerjaan: '',
+            status_kuis: '',
+            tipe_kuis: '',
             questions: [],
             question: {
                 status_soal: '',
                 jawaban: '',
                 pertanyaan: '',
                 pilihan_a: '',
-                type_of_choice_a: '',
+                type_of_choice_a: 'Sanguinis',
                 pilihan_b: '',
-                type_of_choice_b: '',
+                type_of_choice_b: 'Melankolis',
                 pilihan_c: '',
-                type_of_choice_c: '',
+                type_of_choice_c: 'Kolerik',
                 pilihan_d: '',
-                type_of_choice_d: ''
+                type_of_choice_d: 'Plegmati'
             }
 
         };
@@ -45395,7 +45380,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 68 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -45408,740 +45393,767 @@ var render = function() {
     _c("div", { staticClass: "card-body" }, [
       _vm._m(1),
       _vm._v(" "),
-      _c("form", { attrs: { action: "#" } }, [
-        _c("fieldset", { staticClass: "mb-3" }, [
-          _c(
-            "legend",
-            { staticClass: "text-uppercase font-size-sm font-weight-bold" },
-            [_vm._v("Deskripsi Kuis")]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c("label", { staticClass: "col-form-label col-lg-2" }, [
-              _vm._v("Lama Waktu Pengerjaan")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-10" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.waktu_pengerjaan,
-                    expression: "waktu_pengerjaan"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.waktu_pengerjaan },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.waktu_pengerjaan = $event.target.value
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c("label", { staticClass: "col-form-label col-lg-2" }, [
-              _vm._v("Status Kuis")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-10" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.status_kuis,
-                      expression: "status_kuis"
-                    }
-                  ],
-                  staticClass: "form-control form-control-uniform",
-                  attrs: { name: "status" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.status_kuis = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [
-                    _vm._v("Status Kis")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "Aktif" } }, [
-                    _vm._v("Aktif")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "Tidak Aktif" } }, [
-                    _vm._v("Tidak Aktif")
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group row" }, [
-            _c("label", { staticClass: "col-form-label col-lg-2" }, [
-              _vm._v("Tipe Kuis")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-10" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.tipe_kuis,
-                      expression: "tipe_kuis"
-                    }
-                  ],
-                  staticClass: "form-control form-control-uniform",
-                  attrs: { name: "type" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.tipe_kuis = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [_vm._v("Tipe Kuis")]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "Personal Test" } }, [
-                    _vm._v("Personal Test")
-                  ]),
-                  _vm._v(" "),
-                  _c("option", { attrs: { value: "Training Tes" } }, [
-                    _vm._v("Training Tes")
-                  ])
-                ]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "fieldset",
-          { staticClass: "mb-3" },
-          [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.sumbitForm($event)
+            }
+          }
+        },
+        [
+          _c("fieldset", { staticClass: "mb-3" }, [
             _c(
               "legend",
               { staticClass: "text-uppercase font-size-sm font-weight-bold" },
-              [_vm._v("Soal Ujian")]
+              [_vm._v("Deskripsi Kuis")]
             ),
             _vm._v(" "),
-            _vm._l(_vm.questions, function(question, index) {
-              return _c("div", { key: index }, [
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-1" }, [
-                        _c("h1", [_vm._v(_vm._s(index + 1))])
+            _c("div", { staticClass: "form-group row" }, [
+              _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                _vm._v("Lama Waktu Pengerjaan")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-10" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.waktu_pengerjaan,
+                      expression: "waktu_pengerjaan"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number", required: "" },
+                  domProps: { value: _vm.waktu_pengerjaan },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.waktu_pengerjaan = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                _vm._v("Status Kuis")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-10" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.status_kuis,
+                        expression: "status_kuis"
+                      }
+                    ],
+                    staticClass: "form-control form-control-uniform",
+                    attrs: { name: "status", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.status_kuis = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("Status Kis")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Aktif" } }, [
+                      _vm._v("Aktif")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Tidak Aktif" } }, [
+                      _vm._v("Tidak Aktif")
+                    ])
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                _vm._v("Tipe Kuis")
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-10" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tipe_kuis,
+                        expression: "tipe_kuis"
+                      }
+                    ],
+                    staticClass: "form-control form-control-uniform",
+                    attrs: { name: "type", required: "" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.tipe_kuis = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("Tipe Kuis")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Personal Test" } }, [
+                      _vm._v("Personal Test")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "Training Tes" } }, [
+                      _vm._v("Training Tes")
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "fieldset",
+            { staticClass: "mb-3" },
+            [
+              _c(
+                "legend",
+                { staticClass: "text-uppercase font-size-sm font-weight-bold" },
+                [_vm._v("Soal Ujian")]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.questions, function(question, index) {
+                return _c("div", { key: index }, [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-1" }, [
+                          _c("h1", [_vm._v(_vm._s(index + 1))])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-11" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.removeApartment(index)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                        Hapus Soal\n                                    "
+                              )
+                            ]
+                          )
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-11" }, [
+                      _c("hr")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "row" }, [
                         _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                _vm.removeApartment(index)
+                          "label",
+                          { staticClass: "col-form-label col-lg-6" },
+                          [_vm._v("Status Soal")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-6" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: question.status_soal,
+                                  expression: "question.status_soal"
+                                }
+                              ],
+                              staticClass: "form-control form-control-uniform",
+                              attrs: {
+                                name: "questions[][status_soal]",
+                                required: ""
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    question,
+                                    "status_soal",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
                               }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                        Hapus Soal\n                                    "
-                            )
-                          ]
-                        )
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Status Soal")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "Aktif" } }, [
+                                _vm._v("Aktif")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "option",
+                                { attrs: { value: "Tidak Aktif" } },
+                                [_vm._v("Tidak Aktif")]
+                              )
+                            ]
+                          )
+                        ])
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("hr")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("label", { staticClass: "col-form-label col-lg-6" }, [
-                        _vm._v("Status Soal")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "row" }, [
                         _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: question.status_soal,
-                                expression: "question.status_soal"
+                          "label",
+                          { staticClass: "col-form-label col-lg-4" },
+                          [_vm._v("Kunci Jawaban")]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-8" }, [
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: question.jawaban,
+                                  expression: "question.jawaban"
+                                }
+                              ],
+                              staticClass: "form-control form-control-uniform",
+                              attrs: {
+                                name: "questions[][jawaban]>",
+                                required: ""
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    question,
+                                    "jawaban",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
                               }
-                            ],
-                            staticClass: "form-control form-control-uniform",
-                            attrs: { name: "questions[][status_soal]" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  question,
-                                  "status_soal",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Status Soal")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Aktif" } }, [
-                              _vm._v("Aktif")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "Tidak Aktif" } }, [
-                              _vm._v("Tidak Aktif")
-                            ])
-                          ]
-                        )
+                            },
+                            [
+                              _c("option", { attrs: { value: "" } }, [
+                                _vm._v("Isi Kunci Jawaban")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "A" } }, [
+                                _vm._v("A")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "B" } }, [
+                                _vm._v("B")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "C" } }, [
+                                _vm._v("C")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "D" } }, [
+                                _vm._v("D")
+                              ])
+                            ]
+                          )
+                        ])
                       ])
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("label", { staticClass: "col-form-label col-lg-4" }, [
-                        _vm._v("Kunci Jawaban")
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-8" }, [
-                        _c(
-                          "select",
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                      _vm._v("Pertanyaan")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-10" }, [
+                      _c("input", {
+                        directives: [
                           {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: question.jawaban,
-                                expression: "question.jawaban"
-                              }
-                            ],
-                            staticClass: "form-control form-control-uniform",
-                            attrs: { name: "questions[][jawaban]>" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  question,
-                                  "jawaban",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
+                            name: "model",
+                            rawName: "v-model",
+                            value: question.pertanyaan,
+                            expression: "question.pertanyaan"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "questions[][pertanyaan]",
+                          required: ""
+                        },
+                        domProps: { value: question.pertanyaan },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Isi Kunci Jawaban")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "A" } }, [
-                              _vm._v("A")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "B" } }, [
-                              _vm._v("B")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "C" } }, [
-                              _vm._v("C")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "D" } }, [
-                              _vm._v("D")
-                            ])
-                          ]
-                        )
-                      ])
+                            _vm.$set(
+                              question,
+                              "pertanyaan",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
                     ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                    _vm._v("Pertanyaan")
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-10" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: question.pertanyaan,
-                          expression: "question.pertanyaan"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", name: "questions[][pertanyaan]" },
-                      domProps: { value: question.pertanyaan },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(question, "pertanyaan", $event.target.value)
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                    _vm._v("Pilihan A")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-9" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: question.pilihan_a,
-                          expression: "question.pilihan_a"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        name: "questions[][pilihan_a][text]"
-                      },
-                      domProps: { value: question.pilihan_a },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(question, "pilihan_a", $event.target.value)
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-1" }, [
-                    _c(
-                      "select",
-                      {
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                      _vm._v("Pilihan A")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: question.type_of_choice_a,
-                            expression: "question.type_of_choice_a"
+                            value: question.pilihan_a,
+                            expression: "question.pilihan_a"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          name: "questions[][type_of_choice_a][type_of_choice]"
+                          type: "text",
+                          name: "questions[][pilihan_a]",
+                          required: ""
                         },
+                        domProps: { value: question.pilihan_a },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              question,
-                              "type_of_choice_a",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(question, "pilihan_a", $event.target.value)
                           }
                         }
-                      },
-                      [
-                        _c("option", { attrs: { value: "Sanguinis" } }, [
-                          _vm._v("Sanguinis")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Melankolis" } }, [
-                          _vm._v("Melankolis")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Kolerik" } }, [
-                          _vm._v("Kolerik")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Plegmati" } }, [
-                          _vm._v("Plegmati")
-                        ])
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                    _vm._v("Pilihan B")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-9" }, [
-                    _c("input", {
-                      directives: [
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-1" }, [
+                      _c(
+                        "select",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: question.pilihan_b,
-                          expression: "question.pilihan_b"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        name: "questions[][pilihan_b][text]"
-                      },
-                      domProps: { value: question.pilihan_b },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: question.type_of_choice_a,
+                              expression: "question.type_of_choice_a"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "questions[][type_of_choice_a]",
+                            required: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                question,
+                                "type_of_choice_a",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
                           }
-                          _vm.$set(question, "pilihan_b", $event.target.value)
-                        }
-                      }
-                    })
+                        },
+                        [
+                          _c("option", { attrs: { value: "Sanguinis" } }, [
+                            _vm._v("Sanguinis")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Melankolis" } }, [
+                            _vm._v("Melankolis")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Kolerik" } }, [
+                            _vm._v("Kolerik")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Plegmati" } }, [
+                            _vm._v("Plegmati")
+                          ])
+                        ]
+                      )
+                    ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-1" }, [
-                    _c(
-                      "select",
-                      {
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                      _vm._v("Pilihan B")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: question.type_of_choice_b,
-                            expression: "question.type_of_choice_b"
+                            value: question.pilihan_b,
+                            expression: "question.pilihan_b"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          name: "questions[][type_of_choice_b][type_of_choice]"
+                          type: "text",
+                          name: "questions[][pilihan_b]",
+                          required: ""
                         },
+                        domProps: { value: question.pilihan_b },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              question,
-                              "type_of_choice_b",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(question, "pilihan_b", $event.target.value)
                           }
                         }
-                      },
-                      [
-                        _c("option", { attrs: { value: "Sanguinis" } }, [
-                          _vm._v("Sanguinis")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Melankolis" } }, [
-                          _vm._v("Melankolis")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Kolerik" } }, [
-                          _vm._v("Kolerik")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Plegmati" } }, [
-                          _vm._v("Plegmati")
-                        ])
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                    _vm._v("Pilihan C")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-9" }, [
-                    _c("input", {
-                      directives: [
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-1" }, [
+                      _c(
+                        "select",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: question.pilihan_c,
-                          expression: "question.pilihan_c"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        name: "questions[][pilihan_c][text]"
-                      },
-                      domProps: { value: question.pilihan_c },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: question.type_of_choice_b,
+                              expression: "question.type_of_choice_b"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "questions[][type_of_choice_b]",
+                            required: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                question,
+                                "type_of_choice_b",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
                           }
-                          _vm.$set(question, "pilihan_c", $event.target.value)
-                        }
-                      }
-                    })
+                        },
+                        [
+                          _c("option", { attrs: { value: "Sanguinis" } }, [
+                            _vm._v("Sanguinis")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Melankolis" } }, [
+                            _vm._v("Melankolis")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Kolerik" } }, [
+                            _vm._v("Kolerik")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Plegmati" } }, [
+                            _vm._v("Plegmati")
+                          ])
+                        ]
+                      )
+                    ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-1" }, [
-                    _c(
-                      "select",
-                      {
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                      _vm._v("Pilihan C")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: question.type_of_choice_c,
-                            expression: "question.type_of_choice_c"
+                            value: question.pilihan_c,
+                            expression: "question.pilihan_c"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          name: "questions[][type_of_choice_c][type_of_choice]"
+                          type: "text",
+                          name: "questions[][pilihan_c]",
+                          required: ""
                         },
+                        domProps: { value: question.pilihan_c },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              question,
-                              "type_of_choice_c",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(question, "pilihan_c", $event.target.value)
                           }
                         }
-                      },
-                      [
-                        _c("option", { attrs: { value: "Sanguinis" } }, [
-                          _vm._v("Sanguinis")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Melankolis" } }, [
-                          _vm._v("Melankolis")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Kolerik" } }, [
-                          _vm._v("Kolerik")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Plegmati" } }, [
-                          _vm._v("Plegmati")
-                        ])
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group row" }, [
-                  _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                    _vm._v("Pilihan D")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-9" }, [
-                    _c("input", {
-                      directives: [
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-1" }, [
+                      _c(
+                        "select",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: question.pilihan_d,
-                          expression: "question.pilihan_d"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        name: "questions[][pilihan_d][text]"
-                      },
-                      domProps: { value: question.pilihan_d },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: question.type_of_choice_c,
+                              expression: "question.type_of_choice_c"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "questions[][type_of_choice_c]",
+                            required: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                question,
+                                "type_of_choice_c",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
                           }
-                          _vm.$set(question, "pilihan_d", $event.target.value)
-                        }
-                      }
-                    })
+                        },
+                        [
+                          _c("option", { attrs: { value: "Sanguinis" } }, [
+                            _vm._v("Sanguinis")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Melankolis" } }, [
+                            _vm._v("Melankolis")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Kolerik" } }, [
+                            _vm._v("Kolerik")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Plegmati" } }, [
+                            _vm._v("Plegmati")
+                          ])
+                        ]
+                      )
+                    ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-md-1" }, [
-                    _c(
-                      "select",
-                      {
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                      _vm._v("Pilihan D")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-9" }, [
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: question.type_of_choice_d,
-                            expression: "question.type_of_choice_d"
+                            value: question.pilihan_d,
+                            expression: "question.pilihan_d"
                           }
                         ],
                         staticClass: "form-control",
                         attrs: {
-                          name: "questions[][type_of_choice_d][type_of_choice]"
+                          type: "text",
+                          name: "questions[][pilihan_d]",
+                          required: ""
                         },
+                        domProps: { value: question.pilihan_d },
                         on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              question,
-                              "type_of_choice_d",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(question, "pilihan_d", $event.target.value)
                           }
                         }
-                      },
-                      [
-                        _c("option", { attrs: { value: "Sanguinis" } }, [
-                          _vm._v("Sanguinis")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Melankolis" } }, [
-                          _vm._v("Melankolis")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Kolerik" } }, [
-                          _vm._v("Kolerik")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "Plegmati" } }, [
-                          _vm._v("Plegmati")
-                        ])
-                      ]
-                    )
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-1" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: question.type_of_choice_d,
+                              expression: "question.type_of_choice_d"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            name: "questions[][type_of_choice_d]",
+                            required: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                question,
+                                "type_of_choice_d",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "Sanguinis" } }, [
+                            _vm._v("Sanguinis")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Melankolis" } }, [
+                            _vm._v("Melankolis")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Kolerik" } }, [
+                            _vm._v("Kolerik")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "Plegmati" } }, [
+                            _vm._v("Plegmati")
+                          ])
+                        ]
+                      )
+                    ])
                   ])
                 ])
-              ])
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "text-right" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-success",
-              attrs: { type: "button" },
-              on: { click: _vm.addNewApartment }
-            },
-            [
-              _vm._v(
-                "\n                    Tambah Pertanyaan +\n                "
-              )
-            ]
+              })
+            ],
+            2
           ),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { type: "submit" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  return _vm.sumbitForm($event)
-                }
-              }
-            },
-            [
-              _vm._v("Submit "),
-              _c("i", { staticClass: "icon-paperplane ml-2" })
-            ]
-          )
-        ])
-      ])
+          _c("div", { staticClass: "text-right" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success",
+                attrs: { type: "button" },
+                on: { click: _vm.addNewApartment }
+              },
+              [
+                _vm._v(
+                  "\n                    Tambah Pertanyaan +\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(2)
+          ])
+        ]
+      )
     ])
   ])
 }
@@ -46177,6 +46189,16 @@ var staticRenderFns = [
       _c("code", [_vm._v(".col-form-label")]),
       _vm._v(" class.")
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+      [_vm._v("Submit "), _c("i", { staticClass: "icon-paperplane ml-2" })]
+    )
   }
 ]
 render._withStripped = true
@@ -46187,6 +46209,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-13318158", module.exports)
   }
 }
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);
