@@ -1,0 +1,219 @@
+<template>
+    <div class="card my-3">
+        <div class="card-header header-elements-inline">
+            <h5 class="card-title">Basic form inputs</h5>
+        </div>
+
+        <div class="card-body">
+            <p class="mb-4">Examples of standard form controls supported in an example form layout. Individual form controls automatically receive some global styling. All textual <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, and <code>&lt;select&gt;</code> elements with <code>.form-control</code> are set to <code>width: 100%;</code> by default. Wrap labels and controls in <code>.form-group</code> for optimum spacing. Labels in horizontal form require <code>.col-form-label</code> class.</p>
+
+            <form action="#">
+                <fieldset class="mb-3">
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Deskripsi Kuis</legend>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Lama Waktu Pengerjaan</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="waktu_pengerjaan">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Status Kuis</label>
+                        <div class="col-lg-10">
+                            <select name="status" class="form-control form-control-uniform" v-model="status_kuis">
+                                <option value="">Status Kis</option>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Tidak Aktif">Tidak Aktif</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Tipe Kuis</label>
+                        <div class="col-lg-10">
+                            <select name="type" class="form-control form-control-uniform" v-model="tipe_kuis">
+                                <option value="">Tipe Kuis</option>
+                                <option value="Personal Test">Personal Test</option>
+                                <option value="Training Tes">Training Tes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <fieldset class="mb-3">
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Soal Ujian</legend>
+                    <div v-for="(question,index) in questions" :key="index">
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <h1>{{ index+1 }}</h1>
+                                    </div>
+                                    <div class="col-md-11">
+                                        <button type="button" v-on:click="removeApartment(index)" class="btn btn-danger">
+                                            Hapus Soal
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <label class="col-form-label col-lg-6">Status Soal</label>
+                                    <div class="col-lg-6">
+                                        <select class="form-control form-control-uniform" v-model="question.status_soal" name="questions[][status_soal]">
+                                            <option value="">Status Soal</option>
+                                            <option value="Aktif">Aktif</option>
+                                            <option value="Tidak Aktif">Tidak Aktif</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <label class="col-form-label col-lg-4">Kunci Jawaban</label>
+                                    <div class="col-lg-8">
+                                        <select class="form-control form-control-uniform"  v-model="question.jawaban" name="questions[][jawaban]>">
+                                            <option value="">Isi Kunci Jawaban</option>
+                                            <option value="A">A</option>
+                                            <option value="B">B</option>
+                                            <option value="C">C</option>
+                                            <option value="D">D</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2">Pertanyaan</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" v-model="question.pertanyaan" name="questions[][pertanyaan]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2">Pilihan A</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" v-model="question.pilihan_a" name="questions[][pilihan_a][text]">
+                            </div>
+                            <div class="col-md-1">
+                                <select class="form-control" v-model="question.type_of_choice_a" name="questions[][type_of_choice_a][type_of_choice]">
+                                    <option value="Sanguinis">Sanguinis</option>
+                                    <option value="Melankolis">Melankolis</option>
+                                    <option value="Kolerik">Kolerik</option>
+                                    <option value="Plegmati">Plegmati</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2">Pilihan B</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" v-model="question.pilihan_b" name="questions[][pilihan_b][text]">
+                            </div>
+                            <div class="col-md-1">
+                                <select class="form-control" v-model="question.type_of_choice_b" name="questions[][type_of_choice_b][type_of_choice]">
+                                    <option value="Sanguinis">Sanguinis</option>
+                                    <option value="Melankolis">Melankolis</option>
+                                    <option value="Kolerik">Kolerik</option>
+                                    <option value="Plegmati">Plegmati</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2">Pilihan C</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" v-model="question.pilihan_c" name="questions[][pilihan_c][text]">
+                            </div>
+                            <div class="col-md-1">
+                                <select class="form-control" v-model="question.type_of_choice_c" name="questions[][type_of_choice_c][type_of_choice]">
+                                    <option value="Sanguinis">Sanguinis</option>
+                                    <option value="Melankolis">Melankolis</option>
+                                    <option value="Kolerik">Kolerik</option>
+                                    <option value="Plegmati">Plegmati</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2">Pilihan D</label>
+                            <div class="col-lg-9">
+                                <input type="text" class="form-control" v-model="question.pilihan_d" name="questions[][pilihan_d][text]">
+                            </div>
+                            <div class="col-md-1">
+                                <select class="form-control" v-model="question.type_of_choice_d" name="questions[][type_of_choice_d][type_of_choice]">
+                                    <option value="Sanguinis">Sanguinis</option>
+                                    <option value="Melankolis">Melankolis</option>
+                                    <option value="Kolerik">Kolerik</option>
+                                    <option value="Plegmati">Plegmati</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </fieldset>
+
+                <div class="text-right">
+                    <button type="button" v-on:click="addNewApartment" class="btn btn-success">
+                        Tambah Pertanyaan +
+                    </button>
+                    <button type="submit" class="btn btn-primary" v-on:click.prevent="sumbitForm">Submit <i class="icon-paperplane ml-2"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "FormQuiz",
+        data : function () {
+            return {
+                waktu_pengerjaan: "",
+                status_kuis: "",
+                tipe_kuis: "",
+                questions:[],
+                question: {
+                    status_soal: '',
+                    jawaban: '',
+                    pertanyaan: '',
+                    pilihan_a: '',
+                    type_of_choice_a: '',
+                    pilihan_b: '',
+                    type_of_choice_b: '',
+                    pilihan_c: '',
+                    type_of_choice_c: '',
+                    pilihan_d: '',
+                    type_of_choice_d: ''
+                }
+
+            }
+        },
+        methods: {
+            addNewApartment: function () {
+                this.questions.push(Vue.util.extend({}, this.question))
+            },
+            removeApartment: function (index) {
+                Vue.delete(this.questions, index);
+            },
+            sumbitForm: function () {
+                let dataForm = {
+                    waktu_pengerjaan: this.waktu_pengerjaan,
+                    status_kuis: this.status_kuis,
+                    tipe_kuis: this.status_kuis,
+                    questions: this.questions
+                };
+                axios.post('post_quiz',dataForm).then((response) => {
+                    console.log(response);
+                });
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
