@@ -26,4 +26,15 @@ Route::prefix('/admin')->group(function () {
     Route::get('/get_members', 'MemberController@getMember');
     Route::get('/get_member/{id}', 'MemberController@getMemberByID');
     Route::get('/sliders','SliderController@index')->name('admin_sliders');
+
+
+    /*Quize*/
+    Route::get('/list_quiz','QuizController@index')->name('list_quiz');
+    Route::get('/add_quiz','QuizController@form')->name('add_quiz');
+    Route::post('/post_quiz','QuizController@submitSoal')->name('post_quiz');
+
 });
+
+
+Route::get('/start_quiz','QuizController@startQuiz')->name('start_quiz');
+Route::get('/get_quiz','QuizController@getQiz')->name('get_quiz');

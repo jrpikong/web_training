@@ -49,7 +49,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('start_quiz') }}" class="nav-link">
                         <i class="icon-traffic-lights"></i>
                         <span>Kuis</span>
                     </a>
@@ -62,6 +62,12 @@
                     </a>
                 </li>
                 @if(Auth::user()->id == 10)
+                    <li class="nav-item">
+                        <a href="{{ route('list_quiz') }}" class="nav-link">
+                            <i class="icon-traffic-lights"></i>
+                            <span>All Quiz</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('admin_members') }}" class="nav-link">
                             <i class="icon-traffic-lights"></i>
