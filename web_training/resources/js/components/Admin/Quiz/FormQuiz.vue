@@ -1,12 +1,16 @@
 <template>
-    <div class="card my-3">
+    <div>
+        <div :class="'alert alert-'+alert_info+' border-0 alert-dismissible'" v-if="alert">
+            <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+            <span class="font-weight-semibold">Info!</span> {{ message }}
+        </div>
+
+        <div v-else class="card my-3">
         <div class="card-header header-elements-inline">
             <h5 class="card-title">Basic form inputs</h5>
         </div>
 
         <div class="card-body">
-            <p class="mb-4">Examples of standard form controls supported in an example form layout. Individual form controls automatically receive some global styling. All textual <code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code>, and <code>&lt;select&gt;</code> elements with <code>.form-control</code> are set to <code>width: 100%;</code> by default. Wrap labels and controls in <code>.form-group</code> for optimum spacing. Labels in horizontal form require <code>.col-form-label</code> class.</p>
-
             <form @submit.prevent="sumbitForm">
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Deskripsi Kuis</legend>
@@ -76,7 +80,7 @@
                                 <div class="row">
                                     <label class="col-form-label col-lg-4">Kunci Jawaban</label>
                                     <div class="col-lg-8">
-                                        <select class="form-control form-control-uniform"  v-model="question.jawaban" name="questions[][jawaban]>" required>
+                                        <select class="form-control form-control-uniform"  v-model="question.jawaban" name="questions[][jawaban]" required>
                                             <option value="">Isi Kunci Jawaban</option>
                                             <option value="A">A</option>
                                             <option value="B">B</option>
@@ -165,6 +169,7 @@
             </form>
         </div>
     </div>
+    </div>
 </template>
 
 <script>
@@ -172,6 +177,9 @@
         name: "FormQuiz",
         data : function () {
             return {
+                alert: false,
+                alert_info: 'danger',
+                message: '',
                 waktu_pengerjaan: '',
                 status_kuis: '',
                 tipe_kuis: '',
@@ -203,11 +211,20 @@
                 let dataForm = {
                     waktu_pengerjaan: this.waktu_pengerjaan,
                     status_kuis: this.status_kuis,
-                    tipe_kuis: this.status_kuis,
+                    tipe_kuis: this.tipe_kuis,
                     questions: this.questions
                 };
                 axios.post('post_quiz',dataForm).then((response) => {
-                    console.log(response);
+                    this.alert = true;
+                    if(response.data){
+                        this.alert_info = 'primary';
+                        this.message = response.data.message;
+                        if(response.data.status === '00') {
+                            setTimeout(function () {
+                                window.location = '/admin/list_quiz';
+                            }, 400)
+                        }
+                    }
                 });
             }
         }

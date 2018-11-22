@@ -49,7 +49,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('start_quiz') }}" class="nav-link">
                         <i class="icon-traffic-lights"></i>
                         <span>Kuis</span>
                     </a>

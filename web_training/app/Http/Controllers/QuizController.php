@@ -66,7 +66,7 @@ class QuizController extends Controller
 
     public function getQiz(Request $request)
     {
-        $quizzes = Quiz::with('quiz_detail')->get();
+        $quizzes = Quiz::with('quiz_detail')->where('type','=',$request->type)->first();
 
         return response()->json([
             'status' => '00',
@@ -74,4 +74,12 @@ class QuizController extends Controller
             'data' => $quizzes,
         ]);
     }
+
+    /*Users*/
+
+
+    public function startQuiz(){
+        return view('quiz_personal_test');
+    }
+
 }

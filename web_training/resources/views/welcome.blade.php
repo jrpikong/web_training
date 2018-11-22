@@ -217,9 +217,21 @@
                     <p class="font-weight-light text-color-light text-2 mb-4 opacity-7">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc. Vivamus bibendun magna ex, et faucibus lacus venenatis eget</p>
                     <a href="#" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
                 </div>
-                <div class="col-9 offset-lg-1 col-lg-5 order-1 order-lg-2 scale-2">
-                    <img class="img-fluid box-shadow-1 my-2 border-radius" src="{{asset('porto/img/gallery/gallery-1.jpg')}}" alt="">
+                <div class="col-md-6 col-lg-5 offset-lg-1 order-1 order-lg-2 scale-2">
+                    <div class="owl-carousel owl-theme nav-style-1 stage-margin mb-0" data-plugin-options="{'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 1}, '1200': {'items': 1}}, 'margin': 25, 'loop': true, 'nav': true, 'dots': false, 'stagePadding': 40}">
+                        <div class="p-4">
+                            <iframe style="width: 100%; height: auto; object-fit: cover"  src="https://www.youtube.com/embed/U1qLerI9Kzo" frameborder="1" allowfullscreen></iframe>
+
+                        </div>
+                        <div class="p-4">
+                            <iframe style="width: 100%; height: auto; object-fit: cover" src="https://www.youtube.com/embed/be7QGWQnJVg" frameborder="1" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-4">
+                            <iframe style="width: 100%; height: auto; object-fit: cover" src="https://www.youtube.com/embed/WOPehPhfHS4" frameborder="1" allowfullscreen></iframe>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </section>

@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(3);
 var isBuffer = __webpack_require__(19);
 
 /*global toString:true*/
@@ -402,115 +402,6 @@ module.exports = g;
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -533,10 +424,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(5);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(5);
   }
   return adapter;
 }
@@ -611,10 +502,10 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -632,7 +523,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -822,7 +713,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -833,7 +724,7 @@ var settle = __webpack_require__(22);
 var buildURL = __webpack_require__(24);
 var parseHeaders = __webpack_require__(25);
 var isURLSameOrigin = __webpack_require__(26);
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(6);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(27);
 
 module.exports = function xhrAdapter(config) {
@@ -1009,7 +900,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1034,7 +925,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1046,7 +937,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1072,11 +963,120 @@ module.exports = Cancel;
 
 
 /***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(59);
+module.exports = __webpack_require__(48);
 
 
 /***/ }),
@@ -1102,8 +1102,9 @@ window.Vue = __webpack_require__(36);
 
 Vue.component('example-component', __webpack_require__(39));
 Vue.component('list-member', __webpack_require__(42));
-Vue.component('list-quiz', __webpack_require__(48));
-Vue.component('form-quiz', __webpack_require__(51));
+Vue.component('list-quiz', __webpack_require__(61));
+Vue.component('form-quiz', __webpack_require__(64));
+Vue.component('start-quiz', __webpack_require__(69));
 
 var app_vue = new Vue({
   el: '#app'
@@ -31241,9 +31242,9 @@ module.exports = __webpack_require__(18);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(4);
+var bind = __webpack_require__(3);
 var Axios = __webpack_require__(20);
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 
 /**
  * Create an instance of Axios
@@ -31276,9 +31277,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(9);
+axios.Cancel = __webpack_require__(8);
 axios.CancelToken = __webpack_require__(34);
-axios.isCancel = __webpack_require__(8);
+axios.isCancel = __webpack_require__(7);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -31326,7 +31327,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(3);
+var defaults = __webpack_require__(2);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(29);
 var dispatchRequest = __webpack_require__(30);
@@ -31431,7 +31432,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(6);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -31864,8 +31865,8 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(31);
-var isCancel = __webpack_require__(8);
-var defaults = __webpack_require__(3);
+var isCancel = __webpack_require__(7);
+var defaults = __webpack_require__(2);
 var isAbsoluteURL = __webpack_require__(32);
 var combineURLs = __webpack_require__(33);
 
@@ -32024,7 +32025,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(9);
+var Cancel = __webpack_require__(8);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -43342,14 +43343,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(4)))
 
 /***/ }),
 /* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(9)
 /* script */
 var __vue_script__ = __webpack_require__(40)
 /* template */
@@ -43468,7 +43469,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(2)
+var normalizeComponent = __webpack_require__(9)
 /* script */
 var __vue_script__ = __webpack_require__(43)
 /* template */
@@ -44556,267 +44557,13 @@ if (false) {
 
 /***/ }),
 /* 48 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-var disposed = false
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(49)
-/* template */
-var __vue_template__ = __webpack_require__(50)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Admin/Quiz/ListQuiz.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-73b0a99c", Component.options)
-  } else {
-    hotAPI.reload("data-v-73b0a99c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
+// removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 49 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: "ListQuiz"
-});
-
-/***/ }),
+/* 49 */,
 /* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card my-3" }, [
-      _c("div", { staticClass: "card-header header-elements-inline" }, [
-        _c("h5", { staticClass: "card-title" }, [_vm._v("List Members")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "header-elements" }, [
-          _c(
-            "ul",
-            {
-              staticClass:
-                "pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0"
-            },
-            [
-              _c("li", { staticClass: "page-item" }, [
-                _c(
-                  "a",
-                  { staticClass: "page-link", attrs: { href: "add_quiz" } },
-                  [
-                    _c("i", { staticClass: "icon-file-plus2" }),
-                    _vm._v(" Add New")
-                  ]
-                )
-              ])
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "table-responsive" }, [
-        _c("table", { staticClass: "table table-xs table-bordered" }, [
-          _c("thead", [
-            _c("tr", [
-              _c("th", [_vm._v("#")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Name")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Email")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Gender")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Phone Number")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Postal Code")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Address")]),
-              _vm._v(" "),
-              _c("th", [_vm._v("Action")])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tbody")
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-73b0a99c", module.exports)
-  }
-}
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(52)
-}
-var normalizeComponent = __webpack_require__(2)
-/* script */
-var __vue_script__ = __webpack_require__(57)
-/* template */
-var __vue_template__ = __webpack_require__(58)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = "data-v-13318158"
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/Admin/Quiz/FormQuiz.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-13318158", Component.options)
-  } else {
-    hotAPI.reload("data-v-13318158", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(53);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(55)("ada1a686", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13318158\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormQuiz.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13318158\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormQuiz.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(54)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 54 */
 /***/ (function(module, exports) {
 
 /*
@@ -44898,7 +44645,12 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 55 */
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -44917,7 +44669,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(56)
+var listToStyles = __webpack_require__(57)
 
 /*
 type StyleObject = {
@@ -45126,7 +44878,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports) {
 
 /**
@@ -45159,11 +44911,280 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 57 */
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(62)
+/* template */
+var __vue_template__ = __webpack_require__(63)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Admin/Quiz/ListQuiz.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-73b0a99c", Component.options)
+  } else {
+    hotAPI.reload("data-v-73b0a99c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 62 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "ListQuiz"
+});
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card my-3" }, [
+      _c("div", { staticClass: "card-header header-elements-inline" }, [
+        _c("h5", { staticClass: "card-title" }, [_vm._v("List Members")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "header-elements" }, [
+          _c(
+            "ul",
+            {
+              staticClass:
+                "pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0"
+            },
+            [
+              _c("li", { staticClass: "page-item" }, [
+                _c(
+                  "a",
+                  { staticClass: "page-link", attrs: { href: "add_quiz" } },
+                  [
+                    _c("i", { staticClass: "icon-file-plus2" }),
+                    _vm._v(" Add New")
+                  ]
+                )
+              ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "table-responsive" }, [
+        _c("table", { staticClass: "table table-xs table-bordered" }, [
+          _c("thead", [
+            _c("tr", [
+              _c("th", [_vm._v("#")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Email")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Gender")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Phone Number")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Postal Code")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Address")]),
+              _vm._v(" "),
+              _c("th", [_vm._v("Action")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("tbody")
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-73b0a99c", module.exports)
+  }
+}
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(65)
+}
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(67)
+/* template */
+var __vue_template__ = __webpack_require__(68)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-13318158"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Admin/Quiz/FormQuiz.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-13318158", Component.options)
+  } else {
+    hotAPI.reload("data-v-13318158", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 65 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(66);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(56)("ada1a686", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13318158\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormQuiz.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-13318158\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FormQuiz.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(50)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 67 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -45338,6 +45359,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     name: "FormQuiz",
     data: function data() {
         return {
+            alert: false,
+            alert_info: 'danger',
+            message: '',
             waktu_pengerjaan: '',
             status_kuis: '',
             tipe_kuis: '',
@@ -45366,371 +45390,83 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Vue.delete(this.questions, index);
         },
         sumbitForm: function sumbitForm() {
+            var _this = this;
+
             var dataForm = {
                 waktu_pengerjaan: this.waktu_pengerjaan,
                 status_kuis: this.status_kuis,
-                tipe_kuis: this.status_kuis,
+                tipe_kuis: this.tipe_kuis,
                 questions: this.questions
             };
             axios.post('post_quiz', dataForm).then(function (response) {
-                console.log(response);
+                _this.alert = true;
+                if (response.data) {
+                    _this.alert_info = 'primary';
+                    _this.message = response.data.message;
+                    if (response.data.status === '00') {
+                        setTimeout(function () {
+                            window.location = '/admin/list_quiz';
+                        }, 400);
+                    }
+                }
             });
         }
     }
 });
 
 /***/ }),
-/* 58 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card my-3" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _vm._m(1),
-      _vm._v(" "),
-      _c(
-        "form",
-        {
-          on: {
-            submit: function($event) {
-              $event.preventDefault()
-              return _vm.sumbitForm($event)
-            }
-          }
-        },
-        [
-          _c("fieldset", { staticClass: "mb-3" }, [
-            _c(
-              "legend",
-              { staticClass: "text-uppercase font-size-sm font-weight-bold" },
-              [_vm._v("Deskripsi Kuis")]
-            ),
+  return _c("div", [
+    _vm.alert
+      ? _c(
+          "div",
+          {
+            class:
+              "alert alert-" + _vm.alert_info + " border-0 alert-dismissible"
+          },
+          [
+            _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                _vm._v("Lama Waktu Pengerjaan")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-10" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.waktu_pengerjaan,
-                      expression: "waktu_pengerjaan"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "number", required: "" },
-                  domProps: { value: _vm.waktu_pengerjaan },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.waktu_pengerjaan = $event.target.value
-                    }
-                  }
-                })
-              ])
+            _c("span", { staticClass: "font-weight-semibold" }, [
+              _vm._v("Info!")
             ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                _vm._v("Status Kuis")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-10" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.status_kuis,
-                        expression: "status_kuis"
-                      }
-                    ],
-                    staticClass: "form-control form-control-uniform",
-                    attrs: { name: "status", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.status_kuis = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Status Kis")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Aktif" } }, [
-                      _vm._v("Aktif")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Tidak Aktif" } }, [
-                      _vm._v("Tidak Aktif")
-                    ])
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group row" }, [
-              _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                _vm._v("Tipe Kuis")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-10" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.tipe_kuis,
-                        expression: "tipe_kuis"
-                      }
-                    ],
-                    staticClass: "form-control form-control-uniform",
-                    attrs: { name: "type", required: "" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.tipe_kuis = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [
-                      _vm._v("Tipe Kuis")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Personal Test" } }, [
-                      _vm._v("Personal Test")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "Training Tes" } }, [
-                      _vm._v("Training Tes")
-                    ])
-                  ]
-                )
-              ])
-            ])
-          ]),
+            _vm._v(" " + _vm._s(_vm.message) + "\n    ")
+          ]
+        )
+      : _c("div", { staticClass: "card my-3" }, [
+          _vm._m(1),
           _vm._v(" "),
-          _c(
-            "fieldset",
-            { staticClass: "mb-3" },
-            [
-              _c(
-                "legend",
-                { staticClass: "text-uppercase font-size-sm font-weight-bold" },
-                [_vm._v("Soal Ujian")]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.questions, function(question, index) {
-                return _c("div", { key: index }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-1" }, [
-                          _c("h1", [_vm._v(_vm._s(index + 1))])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-11" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  _vm.removeApartment(index)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        Hapus Soal\n                                    "
-                              )
-                            ]
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("hr")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c(
-                          "label",
-                          { staticClass: "col-form-label col-lg-6" },
-                          [_vm._v("Status Soal")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-lg-6" }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: question.status_soal,
-                                  expression: "question.status_soal"
-                                }
-                              ],
-                              staticClass: "form-control form-control-uniform",
-                              attrs: {
-                                name: "questions[][status_soal]",
-                                required: ""
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    question,
-                                    "status_soal",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "" } }, [
-                                _vm._v("Status Soal")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "Aktif" } }, [
-                                _vm._v("Aktif")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "option",
-                                { attrs: { value: "Tidak Aktif" } },
-                                [_vm._v("Tidak Aktif")]
-                              )
-                            ]
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-4" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c(
-                          "label",
-                          { staticClass: "col-form-label col-lg-4" },
-                          [_vm._v("Kunci Jawaban")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-lg-8" }, [
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: question.jawaban,
-                                  expression: "question.jawaban"
-                                }
-                              ],
-                              staticClass: "form-control form-control-uniform",
-                              attrs: {
-                                name: "questions[][jawaban]>",
-                                required: ""
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    question,
-                                    "jawaban",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c("option", { attrs: { value: "" } }, [
-                                _vm._v("Isi Kunci Jawaban")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "A" } }, [
-                                _vm._v("A")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "B" } }, [
-                                _vm._v("B")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "C" } }, [
-                                _vm._v("C")
-                              ]),
-                              _vm._v(" "),
-                              _c("option", { attrs: { value: "D" } }, [
-                                _vm._v("D")
-                              ])
-                            ]
-                          )
-                        ])
-                      ])
-                    ])
-                  ]),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.sumbitForm($event)
+                  }
+                }
+              },
+              [
+                _c("fieldset", { staticClass: "mb-3" }, [
+                  _c(
+                    "legend",
+                    {
+                      staticClass:
+                        "text-uppercase font-size-sm font-weight-bold"
+                    },
+                    [_vm._v("Deskripsi Kuis")]
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row" }, [
                     _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                      _vm._v("Pertanyaan")
+                      _vm._v("Lama Waktu Pengerjaan")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-lg-10" }, [
@@ -45739,27 +45475,19 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: question.pertanyaan,
-                            expression: "question.pertanyaan"
+                            value: _vm.waktu_pengerjaan,
+                            expression: "waktu_pengerjaan"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "questions[][pertanyaan]",
-                          required: ""
-                        },
-                        domProps: { value: question.pertanyaan },
+                        attrs: { type: "number", required: "" },
+                        domProps: { value: _vm.waktu_pengerjaan },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(
-                              question,
-                              "pertanyaan",
-                              $event.target.value
-                            )
+                            _vm.waktu_pengerjaan = $event.target.value
                           }
                         }
                       })
@@ -45768,38 +45496,10 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row" }, [
                     _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                      _vm._v("Pilihan A")
+                      _vm._v("Status Kuis")
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: question.pilihan_a,
-                            expression: "question.pilihan_a"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "questions[][pilihan_a]",
-                          required: ""
-                        },
-                        domProps: { value: question.pilihan_a },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(question, "pilihan_a", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-1" }, [
+                    _c("div", { staticClass: "col-lg-10" }, [
                       _c(
                         "select",
                         {
@@ -45807,15 +45507,12 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: question.type_of_choice_a,
-                              expression: "question.type_of_choice_a"
+                              value: _vm.status_kuis,
+                              expression: "status_kuis"
                             }
                           ],
-                          staticClass: "form-control",
-                          attrs: {
-                            name: "questions[][type_of_choice_a]",
-                            required: ""
-                          },
+                          staticClass: "form-control form-control-uniform",
+                          attrs: { name: "status", required: "" },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -45826,31 +45523,23 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.$set(
-                                question,
-                                "type_of_choice_a",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
+                              _vm.status_kuis = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
                             }
                           }
                         },
                         [
-                          _c("option", { attrs: { value: "Sanguinis" } }, [
-                            _vm._v("Sanguinis")
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Status Kis")
                           ]),
                           _vm._v(" "),
-                          _c("option", { attrs: { value: "Melankolis" } }, [
-                            _vm._v("Melankolis")
+                          _c("option", { attrs: { value: "Aktif" } }, [
+                            _vm._v("Aktif")
                           ]),
                           _vm._v(" "),
-                          _c("option", { attrs: { value: "Kolerik" } }, [
-                            _vm._v("Kolerik")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Plegmati" } }, [
-                            _vm._v("Plegmati")
+                          _c("option", { attrs: { value: "Tidak Aktif" } }, [
+                            _vm._v("Tidak Aktif")
                           ])
                         ]
                       )
@@ -45859,38 +45548,10 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group row" }, [
                     _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                      _vm._v("Pilihan B")
+                      _vm._v("Tipe Kuis")
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: question.pilihan_b,
-                            expression: "question.pilihan_b"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "questions[][pilihan_b]",
-                          required: ""
-                        },
-                        domProps: { value: question.pilihan_b },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(question, "pilihan_b", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-1" }, [
+                    _c("div", { staticClass: "col-lg-10" }, [
                       _c(
                         "select",
                         {
@@ -45898,15 +45559,12 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: question.type_of_choice_b,
-                              expression: "question.type_of_choice_b"
+                              value: _vm.tipe_kuis,
+                              expression: "tipe_kuis"
                             }
                           ],
-                          staticClass: "form-control",
-                          attrs: {
-                            name: "questions[][type_of_choice_b]",
-                            required: ""
-                          },
+                          staticClass: "form-control form-control-uniform",
+                          attrs: { name: "type", required: "" },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -45917,244 +45575,697 @@ var render = function() {
                                   var val = "_value" in o ? o._value : o.value
                                   return val
                                 })
-                              _vm.$set(
-                                question,
-                                "type_of_choice_b",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
+                              _vm.tipe_kuis = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
                             }
                           }
                         },
                         [
-                          _c("option", { attrs: { value: "Sanguinis" } }, [
-                            _vm._v("Sanguinis")
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("Tipe Kuis")
                           ]),
                           _vm._v(" "),
-                          _c("option", { attrs: { value: "Melankolis" } }, [
-                            _vm._v("Melankolis")
+                          _c("option", { attrs: { value: "Personal Test" } }, [
+                            _vm._v("Personal Test")
                           ]),
                           _vm._v(" "),
-                          _c("option", { attrs: { value: "Kolerik" } }, [
-                            _vm._v("Kolerik")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Plegmati" } }, [
-                            _vm._v("Plegmati")
-                          ])
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                      _vm._v("Pilihan C")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: question.pilihan_c,
-                            expression: "question.pilihan_c"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "questions[][pilihan_c]",
-                          required: ""
-                        },
-                        domProps: { value: question.pilihan_c },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(question, "pilihan_c", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-1" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: question.type_of_choice_c,
-                              expression: "question.type_of_choice_c"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            name: "questions[][type_of_choice_c]",
-                            required: ""
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                question,
-                                "type_of_choice_c",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "Sanguinis" } }, [
-                            _vm._v("Sanguinis")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Melankolis" } }, [
-                            _vm._v("Melankolis")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Kolerik" } }, [
-                            _vm._v("Kolerik")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Plegmati" } }, [
-                            _vm._v("Plegmati")
-                          ])
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                      _vm._v("Pilihan D")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-9" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: question.pilihan_d,
-                            expression: "question.pilihan_d"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          name: "questions[][pilihan_d]",
-                          required: ""
-                        },
-                        domProps: { value: question.pilihan_d },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(question, "pilihan_d", $event.target.value)
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-1" }, [
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: question.type_of_choice_d,
-                              expression: "question.type_of_choice_d"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            name: "questions[][type_of_choice_d]",
-                            required: ""
-                          },
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                question,
-                                "type_of_choice_d",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c("option", { attrs: { value: "Sanguinis" } }, [
-                            _vm._v("Sanguinis")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Melankolis" } }, [
-                            _vm._v("Melankolis")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Kolerik" } }, [
-                            _vm._v("Kolerik")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "Plegmati" } }, [
-                            _vm._v("Plegmati")
+                          _c("option", { attrs: { value: "Training Tes" } }, [
+                            _vm._v("Training Tes")
                           ])
                         ]
                       )
                     ])
                   ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "fieldset",
+                  { staticClass: "mb-3" },
+                  [
+                    _c(
+                      "legend",
+                      {
+                        staticClass:
+                          "text-uppercase font-size-sm font-weight-bold"
+                      },
+                      [_vm._v("Soal Ujian")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.questions, function(question, index) {
+                      return _c("div", { key: index }, [
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-md-1" }, [
+                                _c("h1", [_vm._v(_vm._s(index + 1))])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-11" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-danger",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.removeApartment(index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        Hapus Soal\n                                    "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("hr")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "label",
+                                { staticClass: "col-form-label col-lg-6" },
+                                [_vm._v("Status Soal")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-lg-6" }, [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: question.status_soal,
+                                        expression: "question.status_soal"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-uniform",
+                                    attrs: {
+                                      name: "questions[][status_soal]",
+                                      required: ""
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          question,
+                                          "status_soal",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "" } }, [
+                                      _vm._v("Status Soal")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "Aktif" } },
+                                      [_vm._v("Aktif")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "option",
+                                      { attrs: { value: "Tidak Aktif" } },
+                                      [_vm._v("Tidak Aktif")]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-4" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "label",
+                                { staticClass: "col-form-label col-lg-4" },
+                                [_vm._v("Kunci Jawaban")]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-lg-8" }, [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: question.jawaban,
+                                        expression: "question.jawaban"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-uniform",
+                                    attrs: {
+                                      name: "questions[][jawaban]",
+                                      required: ""
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          question,
+                                          "jawaban",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("option", { attrs: { value: "" } }, [
+                                      _vm._v("Isi Kunci Jawaban")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "A" } }, [
+                                      _vm._v("A")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "B" } }, [
+                                      _vm._v("B")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "C" } }, [
+                                      _vm._v("C")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("option", { attrs: { value: "D" } }, [
+                                      _vm._v("D")
+                                    ])
+                                  ]
+                                )
+                              ])
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-form-label col-lg-2" },
+                            [_vm._v("Pertanyaan")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-10" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: question.pertanyaan,
+                                  expression: "question.pertanyaan"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "questions[][pertanyaan]",
+                                required: ""
+                              },
+                              domProps: { value: question.pertanyaan },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    question,
+                                    "pertanyaan",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-form-label col-lg-2" },
+                            [_vm._v("Pilihan A")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-9" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: question.pilihan_a,
+                                  expression: "question.pilihan_a"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "questions[][pilihan_a]",
+                                required: ""
+                              },
+                              domProps: { value: question.pilihan_a },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    question,
+                                    "pilihan_a",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-1" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: question.type_of_choice_a,
+                                    expression: "question.type_of_choice_a"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  name: "questions[][type_of_choice_a]",
+                                  required: ""
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      question,
+                                      "type_of_choice_a",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Sanguinis" } },
+                                  [_vm._v("Sanguinis")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Melankolis" } },
+                                  [_vm._v("Melankolis")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Kolerik" } }, [
+                                  _vm._v("Kolerik")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Plegmati" } }, [
+                                  _vm._v("Plegmati")
+                                ])
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-form-label col-lg-2" },
+                            [_vm._v("Pilihan B")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-9" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: question.pilihan_b,
+                                  expression: "question.pilihan_b"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "questions[][pilihan_b]",
+                                required: ""
+                              },
+                              domProps: { value: question.pilihan_b },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    question,
+                                    "pilihan_b",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-1" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: question.type_of_choice_b,
+                                    expression: "question.type_of_choice_b"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  name: "questions[][type_of_choice_b]",
+                                  required: ""
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      question,
+                                      "type_of_choice_b",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Sanguinis" } },
+                                  [_vm._v("Sanguinis")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Melankolis" } },
+                                  [_vm._v("Melankolis")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Kolerik" } }, [
+                                  _vm._v("Kolerik")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Plegmati" } }, [
+                                  _vm._v("Plegmati")
+                                ])
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-form-label col-lg-2" },
+                            [_vm._v("Pilihan C")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-9" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: question.pilihan_c,
+                                  expression: "question.pilihan_c"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "questions[][pilihan_c]",
+                                required: ""
+                              },
+                              domProps: { value: question.pilihan_c },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    question,
+                                    "pilihan_c",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-1" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: question.type_of_choice_c,
+                                    expression: "question.type_of_choice_c"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  name: "questions[][type_of_choice_c]",
+                                  required: ""
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      question,
+                                      "type_of_choice_c",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Sanguinis" } },
+                                  [_vm._v("Sanguinis")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Melankolis" } },
+                                  [_vm._v("Melankolis")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Kolerik" } }, [
+                                  _vm._v("Kolerik")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Plegmati" } }, [
+                                  _vm._v("Plegmati")
+                                ])
+                              ]
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-form-label col-lg-2" },
+                            [_vm._v("Pilihan D")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-9" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: question.pilihan_d,
+                                  expression: "question.pilihan_d"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "text",
+                                name: "questions[][pilihan_d]",
+                                required: ""
+                              },
+                              domProps: { value: question.pilihan_d },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    question,
+                                    "pilihan_d",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-1" }, [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: question.type_of_choice_d,
+                                    expression: "question.type_of_choice_d"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  name: "questions[][type_of_choice_d]",
+                                  required: ""
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      question,
+                                      "type_of_choice_d",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Sanguinis" } },
+                                  [_vm._v("Sanguinis")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "option",
+                                  { attrs: { value: "Melankolis" } },
+                                  [_vm._v("Melankolis")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Kolerik" } }, [
+                                  _vm._v("Kolerik")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "Plegmati" } }, [
+                                  _vm._v("Plegmati")
+                                ])
+                              ]
+                            )
+                          ])
+                        ])
+                      ])
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "text-right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
+                      on: { click: _vm.addNewApartment }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Tambah Pertanyaan +\n                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(2)
                 ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "text-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success",
-                attrs: { type: "button" },
-                on: { click: _vm.addNewApartment }
-              },
-              [
-                _vm._v(
-                  "\n                    Tambah Pertanyaan +\n                "
-                )
               ]
-            ),
-            _vm._v(" "),
-            _vm._m(2)
+            )
           ])
-        ]
-      )
-    ])
+        ])
   ])
 }
 var staticRenderFns = [
@@ -46162,32 +46273,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header header-elements-inline" }, [
-      _c("h5", { staticClass: "card-title" }, [_vm._v("Basic form inputs")])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: { type: "button", "data-dismiss": "alert" }
+      },
+      [_c("span", [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mb-4" }, [
-      _vm._v(
-        "Examples of standard form controls supported in an example form layout. Individual form controls automatically receive some global styling. All textual "
-      ),
-      _c("code", [_vm._v("<input>")]),
-      _vm._v(", "),
-      _c("code", [_vm._v("<textarea>")]),
-      _vm._v(", and "),
-      _c("code", [_vm._v("<select>")]),
-      _vm._v(" elements with "),
-      _c("code", [_vm._v(".form-control")]),
-      _vm._v(" are set to "),
-      _c("code", [_vm._v("width: 100%;")]),
-      _vm._v(" by default. Wrap labels and controls in "),
-      _c("code", [_vm._v(".form-group")]),
-      _vm._v(" for optimum spacing. Labels in horizontal form require "),
-      _c("code", [_vm._v(".col-form-label")]),
-      _vm._v(" class.")
+    return _c("div", { staticClass: "card-header header-elements-inline" }, [
+      _c("h5", { staticClass: "card-title" }, [_vm._v("Basic form inputs")])
     ])
   },
   function() {
@@ -46211,10 +46311,595 @@ if (false) {
 }
 
 /***/ }),
-/* 59 */
-/***/ (function(module, exports) {
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(70)
+}
+var normalizeComponent = __webpack_require__(9)
+/* script */
+var __vue_script__ = __webpack_require__(72)
+/* template */
+var __vue_template__ = __webpack_require__(73)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-38a33936"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Front/StartQuiz.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-38a33936", Component.options)
+  } else {
+    hotAPI.reload("data-v-38a33936", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(71);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(56)("b776dbe0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38a33936\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./StartQuiz.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-38a33936\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./StartQuiz.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(50)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_countdown__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_countdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuejs_countdown__);
+
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "StartQuiz",
+    data: function data() {
+        return {
+            items: [],
+            loading: true,
+            answer: {
+                choice: [],
+                id: []
+            },
+            answers: [],
+            date: ''
+        };
+    },
+    created: function created() {
+        this.getQuestion();
+    },
+
+    components: { Countdown: __WEBPACK_IMPORTED_MODULE_1_vuejs_countdown___default.a },
+    methods: {
+        getQuestion: function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                var _this = this;
+
+                return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                setTimeout(function () {
+                                    var now = new Date();
+
+                                    _this.date = now.format("m d");
+
+                                    var data = {
+                                        'type': 'Personal Test'
+                                    };
+                                    axios.get('get_quiz', { params: data }).then(function (response) {
+                                        _this.items = response.data.data;
+                                        _this.loading = false;
+                                    });
+                                }, 500);
+
+                            case 1:
+                            case 'end':
+                                return _context.stop();
+                        }
+                    }
+                }, _callee, this);
+            }));
+
+            function getQuestion() {
+                return _ref.apply(this, arguments);
+            }
+
+            return getQuestion;
+        }()
+    }
+});
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.loading
+      ? _c("div", { staticClass: "text-center" }, [
+          _c("i", { staticClass: "icon-spinner10 spinner text-info" }),
+          _vm._v(" Loading ...")
+        ])
+      : _c("div", { staticClass: "card my-3" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.sumbitForm($event)
+                  }
+                }
+              },
+              [
+                _c(
+                  "fieldset",
+                  { staticClass: "mb-3" },
+                  [
+                    _c(
+                      "legend",
+                      {
+                        staticClass:
+                          "text-uppercase font-size-sm font-weight-bold"
+                      },
+                      [_vm._v("Deskripsi Kuis")]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                        _vm._v("Lama Waktu Pengerjaan")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-lg-10" },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.items.waktu) +
+                              " Sisa waktu\n                            "
+                          ),
+                          _c("Countdown", {
+                            attrs: { end: "2018-11-21 08:50:22" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.items.quiz_detail, function(item, index) {
+                      return _c("div", { key: index }, [
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass:
+                                "d-block font-weight-semibold col-md-12"
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(index + 1) +
+                                  ". " +
+                                  _vm._s(item.questions)
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c("ul", { staticClass: "soal" }, [
+                              _c("li", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-check form-check-inline"
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "form-check-label" },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.answer.choice[index],
+                                              expression: "answer.choice[index]"
+                                            }
+                                          ],
+                                          staticClass: "form-check-input",
+                                          attrs: {
+                                            type: "radio",
+                                            name:
+                                              "answers[" + index + "][jawaban]"
+                                          },
+                                          domProps: {
+                                            value: item.type_of_choice_a,
+                                            checked: _vm._q(
+                                              _vm.answer.choice[index],
+                                              item.type_of_choice_a
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.answer.choice,
+                                                index,
+                                                item.type_of_choice_a
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(
+                                          "\n                                                A. " +
+                                            _vm._s(item.choice_a) +
+                                            "\n                                            "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-check form-check-inline"
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "form-check-label" },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.answer.choice[index],
+                                              expression: "answer.choice[index]"
+                                            }
+                                          ],
+                                          staticClass: "form-check-input",
+                                          attrs: {
+                                            type: "radio",
+                                            name:
+                                              "answers[" + index + "][jawaban]"
+                                          },
+                                          domProps: {
+                                            value: item.type_of_choice_b,
+                                            checked: _vm._q(
+                                              _vm.answer.choice[index],
+                                              item.type_of_choice_b
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.answer.choice,
+                                                index,
+                                                item.type_of_choice_b
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(
+                                          "\n                                                B. " +
+                                            _vm._s(item.choice_b) +
+                                            "\n                                            "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-check form-check-inline"
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "form-check-label" },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.answer.choice[index],
+                                              expression: "answer.choice[index]"
+                                            }
+                                          ],
+                                          staticClass: "form-check-input",
+                                          attrs: {
+                                            type: "radio",
+                                            name:
+                                              "answers[" + index + "][jawaban]"
+                                          },
+                                          domProps: {
+                                            value: item.type_of_choice_c,
+                                            checked: _vm._q(
+                                              _vm.answer.choice[index],
+                                              item.type_of_choice_c
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.answer.choice,
+                                                index,
+                                                item.type_of_choice_c
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(
+                                          "\n                                                C. " +
+                                            _vm._s(item.choice_c) +
+                                            "\n                                            "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "form-check form-check-inline"
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "form-check-label" },
+                                      [
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.answer.choice[index],
+                                              expression: "answer.choice[index]"
+                                            }
+                                          ],
+                                          staticClass: "form-check-input",
+                                          attrs: {
+                                            type: "radio",
+                                            name:
+                                              "answers[" + index + "][jawaban]"
+                                          },
+                                          domProps: {
+                                            value: item.type_of_choice_d,
+                                            checked: _vm._q(
+                                              _vm.answer.choice[index],
+                                              item.type_of_choice_d
+                                            )
+                                          },
+                                          on: {
+                                            change: function($event) {
+                                              _vm.$set(
+                                                _vm.answer.choice,
+                                                index,
+                                                item.type_of_choice_d
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(
+                                          "\n                                                D. " +
+                                            _vm._s(item.choice_d) +
+                                            "\n                                            "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ])
+                        ])
+                      ])
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]
+            )
+          ])
+        ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header header-elements-inline" }, [
+      _c("h5", { staticClass: "card-title" }, [
+        _vm._v("Soal Ujian Test Kepribadian")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-right" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Submit "), _c("i", { staticClass: "icon-paperplane ml-2" })]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-38a33936", module.exports)
+  }
+}
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():"function"==typeof define&&define.amd?define("vuejs-countdown",[],e):"object"==typeof exports?exports["vuejs-countdown"]=e():t["vuejs-countdown"]=e()}("undefined"!=typeof self?self:this,function(){return function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var n={};return e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=1)}([function(t,e,n){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var r=null;e.default={name:"vuejsCountDown",props:{deadline:{type:String},end:{type:String},stop:{type:Boolean}},data:function(){return{now:Math.trunc((new Date).getTime()/1e3),date:null,diff:0}},created:function(){var t=this;if(!this.deadline&&!this.end)throw new Error("Missing props 'deadline' or 'end'");var e=this.deadline?this.deadline:this.end;if(this.date=Math.trunc(Date.parse(e.replace(/-/g,"/"))/1e3),!this.date)throw new Error("Invalid props value, correct the 'deadline' or 'end'");r=setInterval(function(){t.now=Math.trunc((new Date).getTime()/1e3)},1e3)},computed:{seconds:function(){return Math.trunc(this.diff)%60},minutes:function(){return Math.trunc(this.diff/60)%60},hours:function(){return Math.trunc(this.diff/60/60)%24},days:function(){return Math.trunc(this.diff/60/60/24)}},watch:{now:function(t){this.diff=this.date-this.now,(this.diff<=0||this.stop)&&(this.diff=0,clearInterval(r))}},filters:{twoDigits:function(t){return t.toString().length<=1?"0"+t.toString():t.toString()}},destroyed:function(){clearInterval(r)}}},function(t,e,n){"use strict";function r(t){n(2)}Object.defineProperty(e,"__esModule",{value:!0});var o=n(0),i=n.n(o);for(var s in o)"default"!==s&&function(t){n.d(e,t,function(){return o[t]})}(s);var a=n(8),u=n(7),c=r,d=u(i.a,a.a,!1,c,null,null);e.default=d.exports},function(t,e,n){var r=n(3);"string"==typeof r&&(r=[[t.i,r,""]]),r.locals&&(t.exports=r.locals);n(5)("630d476e",r,!0,{})},function(t,e,n){e=t.exports=n(4)(!1),e.push([t.i,'.vuejs-countdown{padding:0;margin:0}.vuejs-countdown li{display:inline-block;margin:0 8px;text-align:center;position:relative}.vuejs-countdown li p{margin:0}.vuejs-countdown li:after{content:":";position:absolute;top:0;right:-13px;font-size:32px}.vuejs-countdown li:first-of-type{margin-left:0}.vuejs-countdown li:last-of-type{margin-right:0}.vuejs-countdown li:last-of-type:after{content:""}.vuejs-countdown .digit{font-size:32px;font-weight:600;line-height:1.4;margin-bottom:0}.vuejs-countdown .text{text-transform:uppercase;margin-bottom:0;font-size:10px}',""])},function(t,e){function n(t,e){var n=t[1]||"",o=t[3];if(!o)return n;if(e&&"function"==typeof btoa){var i=r(o);return[n].concat(o.sources.map(function(t){return"/*# sourceURL="+o.sourceRoot+t+" */"})).concat([i]).join("\n")}return[n].join("\n")}function r(t){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(t))))+" */"}t.exports=function(t){var e=[];return e.toString=function(){return this.map(function(e){var r=n(e,t);return e[2]?"@media "+e[2]+"{"+r+"}":r}).join("")},e.i=function(t,n){"string"==typeof t&&(t=[[null,t,""]]);for(var r={},o=0;o<this.length;o++){var i=this[o][0];"number"==typeof i&&(r[i]=!0)}for(o=0;o<t.length;o++){var s=t[o];"number"==typeof s[0]&&r[s[0]]||(n&&!s[2]?s[2]=n:n&&(s[2]="("+s[2]+") and ("+n+")"),e.push(s))}},e}},function(t,e,n){function r(t){for(var e=0;e<t.length;e++){var n=t[e],r=d[n.id];if(r){r.refs++;for(var o=0;o<r.parts.length;o++)r.parts[o](n.parts[o]);for(;o<n.parts.length;o++)r.parts.push(i(n.parts[o]));r.parts.length>n.parts.length&&(r.parts.length=n.parts.length)}else{for(var s=[],o=0;o<n.parts.length;o++)s.push(i(n.parts[o]));d[n.id]={id:n.id,refs:1,parts:s}}}}function o(){var t=document.createElement("style");return t.type="text/css",f.appendChild(t),t}function i(t){var e,n,r=document.querySelector("style["+m+'~="'+t.id+'"]');if(r){if(v)return h;r.parentNode.removeChild(r)}if(_){var i=p++;r=l||(l=o()),e=s.bind(null,r,i,!1),n=s.bind(null,r,i,!0)}else r=o(),e=a.bind(null,r),n=function(){r.parentNode.removeChild(r)};return e(t),function(r){if(r){if(r.css===t.css&&r.media===t.media&&r.sourceMap===t.sourceMap)return;e(t=r)}else n()}}function s(t,e,n,r){var o=n?"":r.css;if(t.styleSheet)t.styleSheet.cssText=y(e,o);else{var i=document.createTextNode(o),s=t.childNodes;s[e]&&t.removeChild(s[e]),s.length?t.insertBefore(i,s[e]):t.appendChild(i)}}function a(t,e){var n=e.css,r=e.media,o=e.sourceMap;if(r&&t.setAttribute("media",r),g.ssrId&&t.setAttribute(m,e.id),o&&(n+="\n/*# sourceURL="+o.sources[0]+" */",n+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(o))))+" */"),t.styleSheet)t.styleSheet.cssText=n;else{for(;t.firstChild;)t.removeChild(t.firstChild);t.appendChild(document.createTextNode(n))}}var u="undefined"!=typeof document;if("undefined"!=typeof DEBUG&&DEBUG&&!u)throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");var c=n(6),d={},f=u&&(document.head||document.getElementsByTagName("head")[0]),l=null,p=0,v=!1,h=function(){},g=null,m="data-vue-ssr-id",_="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase());t.exports=function(t,e,n,o){v=n,g=o||{};var i=c(t,e);return r(i),function(e){for(var n=[],o=0;o<i.length;o++){var s=i[o],a=d[s.id];a.refs--,n.push(a)}e?(i=c(t,e),r(i)):i=[];for(var o=0;o<n.length;o++){var a=n[o];if(0===a.refs){for(var u=0;u<a.parts.length;u++)a.parts[u]();delete d[a.id]}}}};var y=function(){var t=[];return function(e,n){return t[e]=n,t.filter(Boolean).join("\n")}}()},function(t,e){t.exports=function(t,e){for(var n=[],r={},o=0;o<e.length;o++){var i=e[o],s=i[0],a=i[1],u=i[2],c=i[3],d={id:t+":"+o,css:a,media:u,sourceMap:c};r[s]?r[s].parts.push(d):n.push(r[s]={id:s,parts:[d]})}return n}},function(t,e){t.exports=function(t,e,n,r,o,i){var s,a=t=t||{},u=typeof t.default;"object"!==u&&"function"!==u||(s=t,a=t.default);var c="function"==typeof a?a.options:a;e&&(c.render=e.render,c.staticRenderFns=e.staticRenderFns,c._compiled=!0),n&&(c.functional=!0),o&&(c._scopeId=o);var d;if(i?(d=function(t){t=t||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,t||"undefined"==typeof __VUE_SSR_CONTEXT__||(t=__VUE_SSR_CONTEXT__),r&&r.call(this,t),t&&t._registeredComponents&&t._registeredComponents.add(i)},c._ssrRegister=d):r&&(d=r),d){var f=c.functional,l=f?c.render:c.beforeCreate;f?(c._injectStyles=d,c.render=function(t,e){return d.call(e),l(t,e)}):c.beforeCreate=l?[].concat(l,d):[d]}return{esModule:s,exports:a,options:c}}},function(t,e,n){"use strict";var r=function(){var t=this,e=t.$createElement,n=t._self._c||e;return n("ul",{staticClass:"vuejs-countdown"},[t.days>0?n("li",[n("p",{staticClass:"digit"},[t._v(t._s(t._f("twoDigits")(t.days)))]),t._v(" "),n("p",{staticClass:"text"},[t._v(t._s(t.days>1?"days":"day"))])]):t._e(),t._v(" "),n("li",[n("p",{staticClass:"digit"},[t._v(t._s(t._f("twoDigits")(t.hours)))]),t._v(" "),n("p",{staticClass:"text"},[t._v(t._s(t.hours>1?"hours":"hour"))])]),t._v(" "),n("li",[n("p",{staticClass:"digit"},[t._v(t._s(t._f("twoDigits")(t.minutes)))]),t._v(" "),n("p",{staticClass:"text"},[t._v("min")])]),t._v(" "),n("li",[n("p",{staticClass:"digit"},[t._v(t._s(t._f("twoDigits")(t.seconds)))]),t._v(" "),n("p",{staticClass:"text"},[t._v("Sec")])])])},o=[],i={render:r,staticRenderFns:o};e.a=i}])});
 
 /***/ })
 /******/ ]);

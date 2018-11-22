@@ -19,6 +19,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('list-member', require('./components/ListMember.vue'));
 Vue.component('list-quiz', require('./components/Admin/Quiz/ListQuiz'));
 Vue.component('form-quiz', require('./components/Admin/Quiz/FormQuiz'));
+Vue.component('start-quiz', require('./components/Front/StartQuiz'));
 
 const app_vue = new Vue({
     el: '#app'

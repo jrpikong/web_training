@@ -29,9 +29,12 @@ Route::prefix('/admin')->group(function () {
 
 
     /*Quize*/
-    Route::get('list_quiz','QuizController@index')->name('list_quiz');
-    Route::get('add_quiz','QuizController@form')->name('add_quiz');
-    Route::post('post_quiz','QuizController@submitSoal')->name('post_quiz');
-    Route::get('get_quiz','QuizController@getQiz')->name('get_quiz');
+    Route::get('/list_quiz','QuizController@index')->name('list_quiz');
+    Route::get('/add_quiz','QuizController@form')->name('add_quiz');
+    Route::post('/post_quiz','QuizController@submitSoal')->name('post_quiz');
 
 });
+
+
+Route::get('/start_quiz','QuizController@startQuiz')->name('start_quiz');
+Route::get('/get_quiz','QuizController@getQiz')->name('get_quiz');
