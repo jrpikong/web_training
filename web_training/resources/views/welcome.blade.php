@@ -220,14 +220,19 @@
                 <div class="col-md-6 col-lg-5 offset-lg-1 order-1 order-lg-2 scale-2">
                     <div class="owl-carousel owl-theme nav-style-1 stage-margin mb-0" data-plugin-options="{'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 1}, '1200': {'items': 1}}, 'margin': 25, 'loop': true, 'nav': true, 'dots': false, 'stagePadding': 40}">
                         <div class="p-4">
-                            <iframe style="width: 100%; height: auto; object-fit: cover"  src="https://www.youtube.com/embed/U1qLerI9Kzo" frameborder="1" allowfullscreen></iframe>
-
+                            <div class="videoWrapper">
+                                <iframe style="width: 100%; height: auto; object-fit: cover"  src="https://www.youtube.com/embed/U1qLerI9Kzo?rel=0&hd=1&autoplay=1&modestbranding=1" allowfullscreen></iframe>
+                            </div>
                         </div>
                         <div class="p-4">
-                            <iframe style="width: 100%; height: auto; object-fit: cover" src="https://www.youtube.com/embed/be7QGWQnJVg" frameborder="1" allowfullscreen></iframe>
+                            <div class="videoWrapper">
+                                <iframe style="width: 100%; height: auto; object-fit: cover" src="https://www.youtube.com/embed/be7QGWQnJVg?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
+                            </div>
                         </div>
                         <div class="p-4">
-                            <iframe style="width: 100%; height: auto; object-fit: cover" src="https://www.youtube.com/embed/WOPehPhfHS4" frameborder="1" allowfullscreen></iframe>
+                            <div class="videoWrapper">
+                                <iframe style="width: 100%; height: auto; object-fit: cover" src="https://www.youtube.com/embed/WOPehPhfHS4?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
+                            </div>
                         </div>
                     </div>
                 </div>
