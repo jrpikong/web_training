@@ -14,8 +14,8 @@
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Lama Waktu Pengerjaan</label>
                             <div class="col-lg-10">
-                                {{ items.waktu }} Sisa waktu
-                                <Countdown end="2018-11-21 08:50:22"></Countdown>
+                                {{ items.waktu }} Menit Sisa waktu <vue-countdown v-on:time-expire="handleTimeExpire" :seconds="Number(items.waktu * 60)" :start="start"></vue-countdown>
+                                <button type="button" class="btn btn-primary" v-on:click="startTimer">Start Quiz</button>
                             </div>
                         </div>
                         <div v-for="(item,index) in items.quiz_detail" :key="index">
@@ -70,11 +70,13 @@
 </template>
 
 <script>
-    import Countdown from 'vuejs-countdown'
+    import VueCountdown from '@dmaksimovic/vue-countdown';
+    var moment = require('moment');
     export default {
         name: "StartQuiz",
         data : function () {
             return {
+                start: false,
                 items:[],
                 loading: true,
                 answer:{
@@ -88,13 +90,11 @@
         created() {
             this.getQuestion();
         },
-        components: { Countdown },
+        components: { 'vue-countdown': VueCountdown },
         methods: {
             async getQuestion() {
                 setTimeout(() => {
-                    var now = new Date();
-
-                    this.date = now.format("m d");
+                    this.date = moment().format('MMM d');
 
                     const data = {
                         'type': 'Personal Test'
@@ -104,6 +104,15 @@
                         this.loading = false
                     });
                 },500)
+            },
+            handleTimeExpire () {
+                alert('Time is up!');
+            },
+            startTimer () {
+                this.start = true;
+            },
+            sumbitForm(){
+
             }
         }
     }
