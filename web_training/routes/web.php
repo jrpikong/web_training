@@ -33,6 +33,13 @@ Route::prefix('/admin')->group(function () {
     Route::get('/add_quiz','QuizController@form')->name('add_quiz');
     Route::post('/post_quiz','QuizController@submitSoal')->name('post_quiz');
 
+
+    /*Product*/
+    Route::get('/list_product', 'ProductController@index')->name('list_product');
+    Route::get('/add_product', 'ProductController@add')->name('add_product');
+    Route::post('/post_product', 'ProductController@store')->name('post_product');
+    Route::get('/get_product_categories', 'ProductController@getCategories')->name('get_product_categories');
+
 });
 
 

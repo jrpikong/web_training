@@ -82,6 +82,13 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('list_product') }}" class="nav-link">
+                            <i class="icon-package"></i>
+                            <span>Products</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item nav-item-submenu">
                         <a href="#" class="nav-link"><i class="icon-stack"></i> <span> Setting</span></a>
 
