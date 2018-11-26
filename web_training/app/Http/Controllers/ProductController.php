@@ -74,4 +74,22 @@ class ProductController extends Controller
             'data' => $categories,
         ],200);
     }
+
+
+    /*FRONT END =================*/
+
+    public function getAll()
+    {
+        $products = $this->product_model->with('product_category')->paginate(12);
+        return view('products', compact('products'));
+    }
+
+    public function getDetailProduct($id)
+    {
+        $product = $this->product_model->with('product_category')->findOrFail($id);
+        $product_images = $product->getMedia('product_images');
+        $product_tecnology_images = $product->getMedia('product_tecnology_images');
+        return view('product_detail', compact('product','product_images','product_tecnology_images'));
+    }
+
 }
