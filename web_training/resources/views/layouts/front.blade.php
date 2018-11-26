@@ -89,7 +89,7 @@
                                                 </a>
                                             </li>
                                             <li class="dropdown">
-                                                <a class="dropdown-item dropdown-toggle" href="#">
+                                                <a class="dropdown-item dropdown-toggle" href="{{ route('products') }}">
                                                     Product
                                                 </a>
                                             </li>
