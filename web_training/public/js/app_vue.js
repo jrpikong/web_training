@@ -64938,8 +64938,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "FormProduct",
+    props: ['id'],
     data: function data() {
         return {
+            product_id: '',
             categories: [],
             product_name: '',
             product_category: '',
@@ -64956,6 +64958,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         this.getCategories();
+        if (this.id !== '') {
+            this.getProduct();
+        }
     },
 
     methods: {
@@ -64968,10 +64973,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getCategories: function getCategories() {
             var _this = this;
 
-            axios.get('get_product_categories').then(function (response) {
+            axios.get('/admin/get_product_categories').then(function (response) {
                 _this.alert = true;
                 if (response.data) {
                     _this.categories = response.data.data;
+                }
+            });
+        },
+        getProduct: function getProduct() {
+            var _this2 = this;
+
+            this.product_id = this.id;
+            axios.get('/admin/get_product/' + this.id).then(function (response) {
+                _this2.alert = true;
+                if (response.data) {
+                    _this2.product_name = response.data.data.products.product_name;
+                    _this2.product_category = response.data.data.products.category_id;
+                    _this2.price = response.data.data.products.price;
+                    _this2.sort_descriptions = response.data.data.products.sort_descriptions;
+                    _this2.descriptions = response.data.data.products.descriptions;
+                    _this2.spesifications = JSON.parse(response.data.data.products.spesifications);
+                    _this2.productImages = response.data.data.product_images;
+                    _this2.productTecnologyImages = response.data.data.product_tecnology_images;
                 }
             });
         },

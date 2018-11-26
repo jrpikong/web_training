@@ -127,8 +127,10 @@
 <script>
     export default {
         name: "FormProduct",
+        props: ['id'],
         data () {
             return {
+                product_id: '',
                 categories:[],
                 product_name: '',
                 product_category: '',
@@ -147,6 +149,9 @@
         },
         created() {
             this.getCategories()
+            if(this.id !==''){
+                this.getProduct()
+            }
         },
         methods: {
             addNewQuestions: function () {
@@ -156,10 +161,27 @@
                 Vue.delete(this.spesifications, index);
             },
             getCategories: function(){
-                axios.get('get_product_categories').then((response) => {
+                axios.get('/admin/get_product_categories').then((response) => {
                     this.alert = true;
                     if(response.data){
                         this.categories = response.data.data;
+
+                    }
+                });
+            },
+            getProduct: function(){
+                this.product_id = this.id;
+                axios.get('/admin/get_product/' + this.id).then((response) => {
+                    this.alert = true;
+                    if(response.data){
+                        this.product_name = response.data.data.products.product_name;
+                        this.product_category = response.data.data.products.category_id;
+                        this.price = response.data.data.products.price;
+                        this.sort_descriptions = response.data.data.products.sort_descriptions;
+                        this.descriptions = response.data.data.products.descriptions;
+                        this.spesifications =JSON.parse(response.data.data.products.spesifications);
+                        this.productImages =  response.data.data.product_images;
+                        this.productTecnologyImages =  response.data.data.product_tecnology_images;
 
                     }
                 });

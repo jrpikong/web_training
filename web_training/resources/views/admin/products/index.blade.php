@@ -32,7 +32,7 @@
                                 <td> Rp. {{ number_format($product->price,2) }} </td>
                                 <td> {{ $product->sort_descriptions}} </td>
                                 <td> {{ $product->product_category->category_name }} </td>
-                                <td> -- </td>
+                                <td> <a class="" href="{{route('edit_product',$product->id)}}">Edit</a> </td>
                             </tr>
                         @endforeach
                     @endif
