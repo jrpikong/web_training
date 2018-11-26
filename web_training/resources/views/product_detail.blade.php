@@ -63,7 +63,7 @@
                     </ul>
                     <div class="tab-content p-0">
                         <div class="tab-pane p-4 active" id="productDescription">
-                            <p class="m-0">{{ $product->descriptions }}</p>
+                            <p class="m-0">{!!  $product->descriptions  !!}</p>
                         </div>
                         <div class="tab-pane p-4" id="productInfo">
                             <table class="table table-bordered m-0">
