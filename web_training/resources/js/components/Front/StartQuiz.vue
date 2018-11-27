@@ -26,6 +26,7 @@
                                         <li>
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label">
+                                                    <!--<input type="hidden" v-model="answer.id[index]" :value="item.id"/>-->
                                                     <input type="radio" class="form-check-input" v-model="answer.choice[index]" :value="item.type_of_choice_a" :name="'answers['+index+'][jawaban]'">
                                                     A. {{ item.choice_a }}
                                                 </label>
@@ -81,9 +82,9 @@
                 loading: true,
                 answer:{
                     choice: [],
-                    id: [],
+                    id:''
                 },
-                answers: [],
+                // answers: [],
                 date:''
             }
         },

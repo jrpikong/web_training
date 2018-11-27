@@ -56,7 +56,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{ route('trainings') }}" class="nav-link">
                         <i class="icon-traffic-lights"></i>
                         <span>Training</span>
                     </a>

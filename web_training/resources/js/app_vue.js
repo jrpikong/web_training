@@ -20,6 +20,7 @@ Vue.component('list-quiz', require('./components/Admin/Quiz/ListQuiz'));
 Vue.component('form-quiz', require('./components/Admin/Quiz/FormQuiz'));
 Vue.component('start-quiz', require('./components/Front/StartQuiz'));
 Vue.component('form-product', require('./components/Admin/Products/FormProduct'));
+Vue.component('follow-training', require('./components/user/FollowTraining'));
 
 const app_vue = new Vue({
     el: '#app'
