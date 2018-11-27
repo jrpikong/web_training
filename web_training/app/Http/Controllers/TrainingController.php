@@ -16,6 +16,7 @@ class TrainingController extends Controller
 
     public function FollowTraining($id)
     {
-        return view('follow_training', compact('id'));
+        $training = Training::find($id);
+        return view('follow_training', compact('training'));
     }
 }
