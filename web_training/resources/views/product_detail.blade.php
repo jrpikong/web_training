@@ -59,7 +59,7 @@
                     <ul class="nav nav-tabs">
                         <li class="nav-item active"><a class="nav-link py-3 px-4" href="#productDescription" data-toggle="tab">Description</a></li>
                         <li class="nav-item"><a class="nav-link py-3 px-4" href="#productInfo" data-toggle="tab">Spesification</a></li>
-                        <li class="nav-item"><a class="nav-link py-3 px-4" href="#productTecnology" data-toggle="tab">Product Tecnology</a></li>
+                        <li class="nav-item"><a class="nav-link py-3 px-4" href="#productTecnology" data-toggle="tab">Video</a></li>
                     </ul>
                     <div class="tab-content p-0">
                         <div class="tab-pane p-4 active" id="productDescription">
