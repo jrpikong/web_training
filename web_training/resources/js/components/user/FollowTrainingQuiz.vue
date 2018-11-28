@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="start === false">
+        <div v-show="description">
             <fieldset class="mb-3">
                 <legend class="text-uppercase font-size-sm font-weight-bold"><h1> {{ training.title }} </h1></legend>
                 <h4> {{ training.sort_description }}</h4>
@@ -40,6 +40,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="card-footer bg-white d-sm-flex justify-content-sm-between align-items-sm-center">
                 <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
                     <li class="page-item"><a v-if="questionIndex > 0" v-on:click="prev" class="page-link">← &nbsp; Previous</a></li>
@@ -49,6 +50,15 @@
                 <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
                     <button type="button" v-show="(questionIndex + 1) === questions.length" class="btn bg-blue" v-on:click="handleResults">Kirim Jawaban</button>
                 </ul>
+            </div>
+        </div>
+
+        <div class="card my-3" v-show="message">
+            <div class="card-body">
+                <h3>Hasil Nilai Anda : {{ correct }}</h3>
+                <h4 v-if="correct === questions.length"> Selamat Anda Benar - Benar Telah Menguasai Materi Training Dengan Sangat Baik</h4>
+                <h4 v-else>Silahkan Pelajari Ulang Materi Trainingnya dan Kemudian Lakukan Tes Lagi!</h4>
+                <button class="btn btn-outline-success">Kembali Kehalaman SSA Training</button>
             </div>
         </div>
     </div>
@@ -64,6 +74,7 @@
         data() {
             return {
                 training: JSON.parse(this.trainingQuiz),
+                description: true,
                 start: false,
                 date:'',
                 waktu:90,
@@ -71,7 +82,8 @@
                 questions:[],
                 userResponses:[],
                 answers:[],
-                correct:0
+                correct:0,
+                message: false
             }
         },
         mounted() {
@@ -79,6 +91,7 @@
         },
         methods: {
             startQuiz () {
+                this.description = false;
                 this.start = true;
                 axios.get('/get_training_quiz/'+this.training.id).then((response)=>{
                     this.questions = response.data.data
@@ -90,6 +103,7 @@
                 this.handleResults();
             },
             startTimer () {
+                this.description = false;
                 this.start = true;
             },
             next: function() {
@@ -125,7 +139,8 @@
 
                 /*POST*/
                 axios.post('/post_quiz',{'answers':this.answers,'quiz_id':this.training.id,'total_correct':this.correct}).then((response)=>{
-                    this.correct = response
+                    this.start = false;
+                    this.message = true;
                 });
 
             }

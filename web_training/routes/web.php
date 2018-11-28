@@ -36,7 +36,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/add_quiz', 'QuizController@form')->name('add_quiz');
         Route::post('/post_quiz', 'QuizController@submitSoal')->name('post_quiz');
 
-
         /*Product*/
         Route::get('/list_product', 'ProductController@index')->name('list_product');
         Route::get('/add_product', 'ProductController@add')->name('add_product');
@@ -48,11 +47,12 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-
-Route::get('/start_quiz','QuizController@startQuiz')->name('start_quiz');
-Route::get('/get_quiz','QuizController@getQiz')->name('get_quiz');
-Route::get('/trainings', 'TrainingController@getTraining')->name('trainings');
-Route::get('/follow_training/{id}', 'TrainingController@FollowTraining')->name('follow_training');
-Route::get('/follow_test/{id}', 'TrainingQuizController@FollowTest')->name('follow_test');
-Route::get('/get_training_quiz/{id}', 'TrainingQuizController@getTrainingQuiz')->name('get_training_quiz');
-Route::post('/post_quiz', 'TrainingQuizController@postQuiz')->name('post_quiz');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/start_quiz','QuizController@startQuiz')->name('start_quiz');
+    Route::get('/get_quiz','QuizController@getQiz')->name('get_quiz');
+    Route::get('/trainings', 'TrainingController@getTraining')->name('trainings');
+    Route::get('/follow_training/{id}', 'TrainingController@FollowTraining')->name('follow_training');
+    Route::get('/follow_test/{id}', 'TrainingQuizController@FollowTest')->name('follow_test');
+    Route::get('/get_training_quiz/{id}', 'TrainingQuizController@getTrainingQuiz')->name('get_training_quiz');
+    Route::post('/post_quiz', 'TrainingQuizController@postQuiz')->name('post_quiz');
+});

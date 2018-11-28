@@ -50,14 +50,14 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('start_quiz') }}" class="nav-link">
-                        <i class="icon-traffic-lights"></i>
+                        <i class="icon-lab"></i>
                         <span>Kuis</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('trainings') }}" class="nav-link">
-                        <i class="icon-traffic-lights"></i>
+                        <i class="icon-stack"></i>
                         <span>Training</span>
                     </a>
                 </li>
@@ -87,14 +87,6 @@
                             <i class="icon-package"></i>
                             <span>Products</span>
                         </a>
-                    </li>
-
-                    <li class="nav-item nav-item-submenu">
-                        <a href="#" class="nav-link"><i class="icon-stack"></i> <span> Setting</span></a>
-
-                        <ul class="nav nav-group-sub" data-submenu-title="Starter kit">
-                            <li class="nav-item"><a href="#" class="nav-link">switch Biller</a></li>
-                        </ul>
                     </li>
                 @endif
                 <!-- /main -->
