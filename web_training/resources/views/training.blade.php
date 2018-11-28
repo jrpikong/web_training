@@ -28,8 +28,8 @@
                         <tr>
                             <td> {{ $key + 1 }} </td>
                             <td> {{ $training->training_name }} </td>
-                            <td> Rp. {{ $training->difficulty }} </td>
-                            <td> {{ $training->sort_descriptions}} </td>
+                            <td> {{ $training->difficulty }} </td>
+                            <td> {{ $training->descriptions}} </td>
                             <td> <a class="" href="{{route('follow_training',$training->id)}}">Ikuti Training</a> </td>
                         </tr>
                     @endforeach
