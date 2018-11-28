@@ -58,7 +58,7 @@
                 <h3>Hasil Nilai Anda : {{ correct }}</h3>
                 <h4 v-if="correct === questions.length"> Selamat Anda Benar - Benar Telah Menguasai Materi Training Dengan Sangat Baik</h4>
                 <h4 v-else>Silahkan Pelajari Ulang Materi Trainingnya dan Kemudian Lakukan Tes Lagi!</h4>
-                <button class="btn btn-outline-success">Kembali Kehalaman SSA Training</button>
+                <a href="/trainings" class="btn btn-outline-success">Kembali Kehalaman SSA Training</a>
             </div>
         </div>
     </div>
