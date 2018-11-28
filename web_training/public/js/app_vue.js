@@ -66316,7 +66316,7 @@ var render = function() {
                                   }
                                 }),
                                 _vm._v(
-                                  "\n                                        A. " +
+                                  "\n                                        " +
                                     _vm._s(choice.choice) +
                                     "\n                                    "
                                 )

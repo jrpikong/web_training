@@ -31,7 +31,7 @@
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label">
                                             <input type="radio" class="form-check-input" v-model="userResponses[index]" :value="choice.choice">
-                                            A. {{ choice.choice }}
+                                            {{ choice.choice }}
                                         </label>
                                     </div>
                                 </li>
