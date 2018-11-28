@@ -23,27 +23,36 @@ Route::get('/products/{id}', 'ProductController@getDetailProduct')->name('produc
 Route::get('/term_and_condition', 'HomeController@term_and_condition')->name('term_and_condition');
 Route::post('/term_and_condition_pos', 'HomeController@term_and_condition_post')->name('term_and_condition_pos');
 
-Route::prefix('/admin')->group(function () {
-    Route::get('/members', 'MemberController@index')->name('admin_members');
-    Route::get('/get_members', 'MemberController@getMember');
-    Route::get('/get_member/{id}', 'MemberController@getMemberByID');
-    Route::get('/sliders','SliderController@index')->name('admin_sliders');
+Route::middleware(['auth'])->group(function () {
+    Route::prefix('/admin')->group(function () {
+        Route::get('/members', 'MemberController@index')->name('admin_members');
+        Route::get('/get_members', 'MemberController@getMember');
+        Route::get('/get_member/{id}', 'MemberController@getMemberByID');
+        Route::get('/sliders', 'SliderController@index')->name('admin_sliders');
 
 
-    /*Quize*/
-    Route::get('/list_quiz','QuizController@index')->name('list_quiz');
-    Route::get('/add_quiz','QuizController@form')->name('add_quiz');
-    Route::post('/post_quiz','QuizController@submitSoal')->name('post_quiz');
+        /*Quize*/
+        Route::get('/list_quiz', 'QuizController@index')->name('list_quiz');
+        Route::get('/add_quiz', 'QuizController@form')->name('add_quiz');
+        Route::post('/post_quiz', 'QuizController@submitSoal')->name('post_quiz');
 
+        /*Product*/
+        Route::get('/list_product', 'ProductController@index')->name('list_product');
+        Route::get('/add_product', 'ProductController@add')->name('add_product');
+        Route::get('/edit_product/{id}', 'ProductController@edit')->name('edit_product');
+        Route::get('/get_product/{id}', 'ProductController@getProduct')->name('get_product');
+        Route::post('/post_product', 'ProductController@store')->name('post_product');
+        Route::get('/get_product_categories', 'ProductController@getCategories')->name('get_product_categories');
 
-    /*Product*/
-    Route::get('/list_product', 'ProductController@index')->name('list_product');
-    Route::get('/add_product', 'ProductController@add')->name('add_product');
-    Route::post('/post_product', 'ProductController@store')->name('post_product');
-    Route::get('/get_product_categories', 'ProductController@getCategories')->name('get_product_categories');
-
+    });
 });
 
-
-Route::get('/start_quiz','QuizController@startQuiz')->name('start_quiz');
-Route::get('/get_quiz','QuizController@getQiz')->name('get_quiz');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/start_quiz','QuizController@startQuiz')->name('start_quiz');
+    Route::get('/get_quiz','QuizController@getQiz')->name('get_quiz');
+    Route::get('/trainings', 'TrainingController@getTraining')->name('trainings');
+    Route::get('/follow_training/{id}', 'TrainingController@FollowTraining')->name('follow_training');
+    Route::get('/follow_test/{id}', 'TrainingQuizController@FollowTest')->name('follow_test');
+    Route::get('/get_training_quiz/{id}', 'TrainingQuizController@getTrainingQuiz')->name('get_training_quiz');
+    Route::post('/post_quiz', 'TrainingQuizController@postQuiz')->name('post_quiz');
+});

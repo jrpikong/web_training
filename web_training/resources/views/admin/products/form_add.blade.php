@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <form-product></form-product>
+    @php
+        $id = (isset($id)) ? $id : '';
+    @endphp
+    <form-product :id="'{!! $id !!}'"></form-product>
 @endsection
 
 

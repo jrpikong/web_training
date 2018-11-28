@@ -28,6 +28,11 @@ class ProductController extends Controller
         return view('admin.products.form_add');
     }
 
+    public function edit($id)
+    {
+        return view('admin.products.form_add',compact('id'));
+    }
+
     public function store(Request $request)
     {
         Log::info($request);
@@ -72,6 +77,22 @@ class ProductController extends Controller
             'status' => '00',
             'message' => 'All Categories',
             'data' => $categories,
+        ],200);
+    }
+
+    public function getProduct($id)
+    {
+        $product = $this->product_model->with('product_category')->findOrFail($id);
+        $product_images = $product->getMedia('product_images');
+        $product_tecnology_images = $product->getMedia('product_tecnology_images');
+        return response()->json([
+            'status' => '00',
+            'message' => 'All Categories',
+            'data' => [
+                'products' => $product,
+                'product_images' => $product_images,
+                'product_tecnology_images' => $product_tecnology_images
+            ],
         ],200);
     }
 

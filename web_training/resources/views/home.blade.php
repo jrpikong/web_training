@@ -37,10 +37,13 @@
                             </div>
                         </div>
                         <div class="col-md-4 text-center">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4>Training</h4>
-                            </div>
+                            <a href="{{ route('trainings') }}">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4>Training</h4>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
