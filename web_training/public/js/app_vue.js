@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 204);
+/******/ 	return __webpack_require__(__webpack_require__.s = 139);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -1902,7 +1902,7 @@
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(254)("./" + name);
+                __webpack_require__(188)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -4574,22 +4574,17 @@
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)(module)))
 
 /***/ }),
-/* 1 */,
-/* 2 */,
-/* 3 */,
-/* 4 */,
-/* 5 */,
-/* 6 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(52);
-var isBuffer = __webpack_require__(212);
+var bind = __webpack_require__(8);
+var isBuffer = __webpack_require__(147);
 
 /*global toString:true*/
 
@@ -4892,35 +4887,7 @@ module.exports = {
 
 
 /***/ }),
-/* 7 */,
-/* 8 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 9 */
+/* 2 */
 /***/ (function(module, exports) {
 
 /* globals __VUE_SSR_CONTEXT__ */
@@ -5029,17 +4996,34 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 10 */,
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */
+/* 3 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 /*
@@ -5121,7 +5105,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 21 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -5140,7 +5124,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(246)
+var listToStyles = __webpack_require__(181)
 
 /*
 type StyleObject = {
@@ -5349,13 +5333,157 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(1);
+var normalizeHeaderName = __webpack_require__(149);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(10);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(10);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 9 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -5545,196 +5673,19 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(6);
-var normalizeHeaderName = __webpack_require__(214);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(53);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(53);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28)))
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(237);
-
-
-/***/ }),
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
-    }
-    return fn.apply(thisArg, args);
-  };
-};
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(6);
-var settle = __webpack_require__(215);
-var buildURL = __webpack_require__(217);
-var parseHeaders = __webpack_require__(218);
-var isURLSameOrigin = __webpack_require__(219);
-var createError = __webpack_require__(54);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(220);
+var utils = __webpack_require__(1);
+var settle = __webpack_require__(150);
+var buildURL = __webpack_require__(152);
+var parseHeaders = __webpack_require__(153);
+var isURLSameOrigin = __webpack_require__(154);
+var createError = __webpack_require__(11);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(155);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -5831,7 +5782,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(221);
+      var cookies = __webpack_require__(156);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -5909,13 +5860,13 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 54 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var enhanceError = __webpack_require__(216);
+var enhanceError = __webpack_require__(151);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -5934,7 +5885,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 55 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5946,7 +5897,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 56 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5972,7 +5923,1243 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 57 */
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(172);
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["vue-countdown"] = factory();
+	else
+		root["vue-countdown"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_vue_countdown_vue__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_571b4b7c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_vue_countdown_vue__ = __webpack_require__(5);
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+
+/* template */
+
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_vue_countdown_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_571b4b7c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_vue_countdown_vue__["a" /* default */],
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "src/vue-countdown.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] vue-countdown.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-571b4b7c", Component.options)
+  } else {
+    hotAPI.reload("data-v-571b4b7c", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_easytimer__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_easytimer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_easytimer__);
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    props: {
+        seconds: Number,
+        countdown: Boolean,
+        message: String,
+        date: String,
+        units: Array,
+        start: {
+            type: Boolean,
+            default: true
+        }
+    },
+
+    data: function data() {
+        return {
+            timer: null,
+            time: '',
+            label: this.message ? this.message : 'Time\'s up!',
+            timerUnits: this.units ? this.units : ['hours', 'minutes', 'seconds'],
+            timerOptions: {}
+        };
+    },
+
+
+    computed: {
+        parsedDate: function parsedDate() {
+            if (!this.date) {
+                return false;
+            }
+
+            return Date.parse(this.date);
+        }
+    },
+
+    created: function created() {
+        this.timer = new __WEBPACK_IMPORTED_MODULE_0_easytimer___default.a();
+
+        var parsedDate = this.parsedDate;
+        var now = Date.now();
+
+        var seconds = this.seconds;
+        this.timerOptions = {
+            countdown: true
+        };
+
+        if (!parsedDate && this.date) {
+            throw new Error('Please provide valid date');
+        }
+
+        if (now < parsedDate) {
+            seconds = (parsedDate - now) / 1000;
+        }
+
+        this.timerOptions.startValues = {
+            seconds: seconds
+        };
+
+        if (this.start) {
+            this.timer.start(this.timerOptions);
+        }
+
+        this.time = this.timer.getTimeValues().toString(this.timerUnits);
+
+        this.timer.addEventListener('secondsUpdated', this.onTimeChange.bind(this));
+        this.timer.addEventListener('targetAchieved', this.onTimeExpire.bind(this));
+    },
+
+
+    methods: {
+        onTimeChange: function onTimeChange() {
+            this.time = this.timer.getTimeValues().toString(this.timerUnits);
+        },
+        onTimeExpire: function onTimeExpire() {
+            this.$emit('time-expire');
+
+            this.time = this.label;
+        }
+    },
+
+    watch: {
+        start: function start(newValue) {
+            if (newValue) {
+                this.timer.start(this.timerOptions);
+            } else {
+                this.timer.stop();
+            }
+        }
+    }
+});
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
+ * @license easytimer.js v1.0
+ * Created by Albert González
+ * Licensed under The MIT License.
+ *
+* @class Timer
+*/
+
+var module;
+
+var Timer = (
+
+    function (module) {
+        'use strict';
+
+        /*
+         * Polyfill por IE9, IE10 and IE11
+         */
+        var CustomEvent = typeof window !== 'undefined' ? window.CustomEvent : undefined;
+
+        if (typeof window !== 'undefined' && typeof CustomEvent !== "function" ) {
+            CustomEvent = function ( event, params ) {
+                params = params || { bubbles: false, cancelable: false, detail: undefined };
+                var evt = document.createEvent( 'CustomEvent' );
+                evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
+                return evt;
+            };
+
+            CustomEvent.prototype = window.Event.prototype;
+
+            window.CustomEvent = CustomEvent;
+        }
+
+        /*
+         * General functions, variables and constants
+         */
+        var SECOND_TENTHS_PER_SECOND = 10,
+            SECONDS_PER_MINUTE = 60,
+            SECOND_TENTHS_PER_MINUTE = 600,
+            MINUTES_PER_HOUR = 60,
+            SECONDS_PER_HOUR = 3600,
+            SECOND_TENTHS_PER_HOUR = 36000,
+            HOURS_PER_DAY = 24,
+
+            SECOND_TENTHS_POSITION = 0,
+            SECONDS_POSITION = 1,
+            MINUTES_POSITION = 2,
+            HOURS_POSITION = 3,
+            DAYS_POSITION = 4,
+
+            SECOND_TENTHS = 'secondTenths',
+            SECONDS = 'seconds',
+            MINUTES = 'minutes',
+            HOURS = 'hours',
+            DAYS = 'days',
+
+            unitsInMilliseconds = {
+                secondTenths: 100,
+                seconds: 1000,
+                minutes: 60000,
+                hours: 3600000,
+                days: 86400000
+            },
+
+            events = module && module.exports? __webpack_require__(4) : undefined,
+
+            prototype;
+
+        function hasDOM() {
+            return typeof document !== 'undefined';
+        }
+
+        function hasEventEmitter() {
+            return events;
+        }
+
+        function mod(number, module) {
+            return ((number % module) + module) % module;
+        }
+
+        function leftPadding(string, padLength, character) {
+            var i,
+                characters = '';
+
+            for (i = 0; i < padLength; i = i + 1) {
+                characters += String(character);
+            }
+
+            return (characters + string).slice(-characters.length);
+        }
+
+        /**
+         * [TimeCounter Stores the units counted by the timer]
+         */
+        function TimeCounter() {
+            this.secondTenths = 0;
+            this.seconds = 0;
+            this.minutes = 0;
+            this.hours = 0;
+            this.days = 0;
+
+            /**
+             * [toString convert the counted values on a string]
+             * @param  {[array]} units           [array with the units to display]
+             * @param  {[string]} separator       [separator of the units]
+             * @param  {[integer]} leftZeroPadding [number of zero padding]
+             * @return {[string]}                 [result string]
+             */
+            this.toString = function(units, separator, leftZeroPadding) {
+                units = units || ['hours', 'minutes', 'seconds'];
+                separator = separator || ':';
+                leftZeroPadding = leftZeroPadding || 2;
+
+                var stringTime,
+                    arrayTime = [],
+                    i,
+                    zeros = '';
+
+                for (i = 0; i < leftZeroPadding; i = i + 1) {
+                    zeros += '0';
+                }
+
+                for (i = 0; i < units.length; i = i + 1) {
+                    if (this[units[i]] !== undefined) {
+                        arrayTime.push(leftPadding(this[units[i]], leftZeroPadding, '0'));
+                    }
+                }
+                stringTime = arrayTime.join(separator);
+
+                return stringTime;
+            };
+        }
+
+        /**
+         * [Timer Timer/Chronometer/Countdown compatible with AMD and NodeJS.
+         * Can update time values with different time intervals: tenth of seconds,
+         * seconds, minutes and hours.]
+         */
+        function Timer() {
+
+            /*
+             * PRIVATE Variables and Functions
+             */
+            var counters = new TimeCounter(),
+                totalCounters =new TimeCounter(),
+
+                intervalId,
+                eventEmitter = hasDOM()? document.createElement('span') :
+                    hasEventEmitter()? new events.EventEmitter() : undefined,
+                running = false,
+                paused = false,
+                precision,
+                valueToAdd,
+                customCallback,
+                timerConfig = {},
+                target,
+                startValues,
+                countdown;
+
+            function isCountdownTimer() {
+                return timerConfig.countdown;
+            }
+
+            function updateCounters(counter, value) {
+                counters[counter] += value;
+                totalCounters[counter] += value;
+            }
+
+            function updateDays(value) {
+                updateCounters(DAYS, value);
+
+                dispatchEvent('daysUpdated');
+            }
+
+            function updateHours(value) {
+                updateCounters(HOURS, value);
+
+                counters.hours = mod(counters.hours, HOURS_PER_DAY);
+
+                if ((isCountdownTimer() && counters.hours === HOURS_PER_DAY - 1) ||
+                        (!isCountdownTimer() && counters.hours === 0)) {
+                    updateDays(value);
+                }
+
+                if (precision === HOURS) {
+                    totalCounters[MINUTES] += isCountdownTimer() ? -MINUTES_PER_HOUR : MINUTES_PER_HOUR;
+                    totalCounters[SECONDS] += isCountdownTimer() ? -SECONDS_PER_HOUR : SECONDS_PER_HOUR;
+                    totalCounters[SECOND_TENTHS] += isCountdownTimer() ? -SECOND_TENTHS_PER_HOUR : SECOND_TENTHS_PER_HOUR;
+                }
+
+                dispatchEvent('hoursUpdated');
+            }
+
+            function updateMinutes(value) {
+                updateCounters(MINUTES, value);
+
+                counters.minutes = mod(counters.minutes, MINUTES_PER_HOUR);
+
+                if ((isCountdownTimer() && counters.minutes === MINUTES_PER_HOUR - 1) ||
+                    (!isCountdownTimer() && counters.minutes === 0)) {
+                    updateHours(value);
+                }
+
+                if (precision === MINUTES) {
+                    totalCounters[SECONDS] += isCountdownTimer() ? -SECONDS_PER_MINUTE : SECONDS_PER_MINUTE;
+                    totalCounters[SECOND_TENTHS] += isCountdownTimer() ? -SECOND_TENTHS_PER_MINUTE : SECOND_TENTHS_PER_MINUTE;
+                }
+
+                dispatchEvent('minutesUpdated');
+            }
+
+            function updateSeconds(value) {
+                updateCounters(SECONDS, value);
+
+                counters.seconds = mod(counters.seconds, SECONDS_PER_MINUTE);
+
+                if ((isCountdownTimer() && counters.seconds === SECONDS_PER_MINUTE - 1) ||
+                    (!isCountdownTimer() && counters.seconds === 0)) {
+                    updateMinutes(value);
+                }
+
+                if (precision === SECONDS) {
+                    totalCounters[SECOND_TENTHS] += isCountdownTimer() ? -SECOND_TENTHS_PER_SECOND : SECOND_TENTHS_PER_SECOND;
+                }
+
+                dispatchEvent('secondsUpdated');
+            }
+
+            function updateSecondTenths(value) {
+                updateCounters(SECOND_TENTHS, value);
+
+                counters.secondTenths = mod(counters.secondTenths, SECOND_TENTHS_PER_SECOND);
+
+                if ((isCountdownTimer() && counters.secondTenths === SECOND_TENTHS_PER_SECOND - 1) ||
+                    (!isCountdownTimer() && counters.secondTenths === 0)) {
+                    updateSeconds(value);
+                }
+
+                dispatchEvent('secondTenthsUpdated');
+            }
+
+            function stopTimer() {
+                clearInterval(intervalId);
+                intervalId = undefined;
+                running = false;
+                paused = false;
+            }
+
+            function startTimer() {
+                var callback,
+                    interval = unitsInMilliseconds[precision];
+
+                switch (precision) {
+                case DAYS:
+                    callback = updateDays;
+                    break;
+                case HOURS:
+                    callback = updateHours;
+                    break;
+                case MINUTES:
+                    callback =  updateMinutes;
+                    break;
+                case SECOND_TENTHS:
+                    callback =  updateSecondTenths;
+                    break;
+                default:
+                    callback = updateSeconds;
+                }
+
+                intervalId = setInterval(
+                    function () {
+                        callback(valueToAdd);
+                        customCallback(counters);
+                        if (isTargetAchieved()) {
+                            dispatchEvent('targetAchieved');
+                            stop();
+                        }
+                    },
+                    interval
+                );
+
+                running = true;
+                paused = false;
+            }
+
+            function isRegularTimerTargetAchieved() {
+                return counters.hours > target[HOURS_POSITION]
+                    || (counters.hours === target[HOURS_POSITION] && (counters.minutes > target[MINUTES_POSITION]
+                        || (counters.minutes === target[MINUTES_POSITION]) && counters.seconds >= target[SECONDS_POSITION]));
+            }
+
+            function isCountdownTimerTargetAchieved() {
+                return counters.hours < target[HOURS_POSITION]
+                    || (counters.hours === target[HOURS_POSITION] && (counters.minutes < target[MINUTES_POSITION]
+                    || (counters.minutes === target[MINUTES_POSITION] && (counters.seconds < target[SECONDS_POSITION]
+                    || (counters.seconds === target[SECONDS_POSITION] && (counters.secondTenths < target[SECOND_TENTHS_POSITION]
+                    || counters.secondTenths === target[SECOND_TENTHS_POSITION] ))))));
+            }
+
+            function isTargetAchieved() {
+                return target instanceof Array &&
+                    (timerConfig.countdown && isCountdownTimerTargetAchieved() || !timerConfig.countdown && isRegularTimerTargetAchieved());
+            }
+
+            function resetCounters() {
+                for (var counter in counters) {
+                    if(counters.hasOwnProperty(counter) && typeof counters[counter] === 'number'){
+                        counters[counter] = 0;
+                    }
+                }
+
+                for (var counter in totalCounters) {
+                    if(totalCounters.hasOwnProperty(counter) && typeof totalCounters[counter] === 'number'){
+                        totalCounters[counter] = 0;
+                    }
+                }
+            }
+
+            function setParams(params) {
+                precision = params && typeof params.precision === 'string' ? params.precision : SECONDS;
+                customCallback = params && typeof params.callback === 'function'? params.callback : function () {};
+                valueToAdd = params && params.countdown === true? -1 : 1;
+                countdown = params && params.countdown == true;
+                if (params && (typeof params.target === 'object')) { setTarget(params.target)};
+                if (params && (typeof params.startValues === 'object')) { setStartValues(params.startValues)};
+                target = target || !countdown? target : [0, 0, 0, 0, 0];
+
+                timerConfig = {
+                    precision: precision,
+                    callback: customCallback,
+                    countdown: typeof params === 'object' && params.countdown == true,
+                    target: target,
+                    startValues: startValues
+                }
+            }
+
+            function configInputValues(inputValues) {
+                var secondTenths, seconds, minutes, hours, days, values;
+                if (typeof inputValues === 'object') {
+                    if (inputValues instanceof Array) {
+                        if (inputValues.length != 5) {
+                            throw new Error('Array size not valid');
+                        }
+                        values = inputValues;
+                    } else {
+                        values = [
+                            inputValues.secondTenths || 0, inputValues.seconds || 0,
+                            inputValues.minutes || 0, inputValues.hours || 0,
+                            inputValues.days || 0
+                        ];
+                    }
+                }
+
+                for (var i = 0; i < inputValues.length; i = i + 1) {
+                    if (inputValues[i] < 0) {
+                        inputValues[i] = 0;
+                    }
+                }
+
+                secondTenths = values[SECOND_TENTHS_POSITION];
+                seconds = values[SECONDS_POSITION] + Math.floor(secondTenths / SECOND_TENTHS_PER_SECOND);
+                minutes = values[MINUTES_POSITION] + Math.floor(seconds / SECONDS_PER_MINUTE);
+                hours = values[HOURS_POSITION] + Math.floor(minutes / MINUTES_PER_HOUR);
+                days = values[DAYS_POSITION] +  Math.floor(hours / HOURS_PER_DAY);
+
+                values[SECOND_TENTHS_POSITION] = secondTenths % SECOND_TENTHS_PER_SECOND;
+                values[SECONDS_POSITION] = seconds % SECONDS_PER_MINUTE;
+                values[MINUTES_POSITION] = minutes % MINUTES_PER_HOUR;
+                values[HOURS_POSITION] = hours % HOURS_PER_DAY;
+                values[DAYS_POSITION] = days;
+
+                return values;
+            }
+
+            function setTarget(inputTarget) {
+                target = configInputValues(inputTarget);
+
+            }
+
+            function setStartValues(inputStartValues) {
+                startValues = configInputValues(inputStartValues);
+                counters.secondTenths = startValues[SECOND_TENTHS_POSITION];
+                counters.seconds = startValues[SECONDS_POSITION];
+                counters.minutes = startValues[MINUTES_POSITION];
+                counters.hours = startValues[HOURS_POSITION]
+                counters.days = startValues[DAYS_POSITION]
+
+                totalCounters.days = counters.days;
+                totalCounters.hours = totalCounters.days * HOURS_PER_DAY + counters.hours;
+                totalCounters.minutes = totalCounters.hours * MINUTES_PER_HOUR + counters.minutes;
+                totalCounters.seconds = totalCounters.minutes * SECONDS_PER_MINUTE + counters.seconds;
+                totalCounters.secondTenths = totalCounters.seconds * SECOND_TENTHS_PER_SECOND + counters.secondTenths;
+            }
+
+            /*
+             * PUBLIC functions
+             */
+
+            /**
+             * [stop stops the timer and resets the counters. Dispatch stopped event]
+             */
+            function stop() {
+                stopTimer();
+                resetCounters();
+                dispatchEvent('stopped');
+            }
+
+            /**
+             * [start starts the timer configured by the params object. Dispatch started event]
+             * @param  {[object]} params [Configuration parameters]
+             */
+            function start(params) {
+                if (this.isRunning()) {
+                    throw new Error('Timer already running');
+                }
+
+                if (!this.isPaused()) {
+                    setParams(params);
+                }
+                if (!isTargetAchieved()) {
+                    startTimer();
+                    dispatchEvent('started');
+                }
+            }
+
+            /**
+             * [pause stops the timer without resetting the counters. The timer it can be restarted with start function.
+             * Dispatch paused event]
+             * @return {[type]} [description]
+             */
+            function pause() {
+                stopTimer();
+                paused = true;
+                dispatchEvent('paused');
+            }
+
+            /**
+             * [addEventListener Adds event listener to the timer]
+             * @param {[string]} event      [event to listen]
+             * @param {[function]} listener   [the event listener function]
+             */
+            function addEventListener(event, listener) {
+                if (hasDOM()) {
+                    eventEmitter.addEventListener(event, listener);
+                } else if (hasEventEmitter()) {
+                    eventEmitter.on(event, listener)
+                }
+            }
+
+            /**
+             * [removeEventListener Removes event listener to the timer]
+             * @param  {[string]} event    [event to remove listener]
+             * @param  {[function]} listener [listener to remove]
+             */
+            function removeEventListener(event, listener) {
+                if (hasDOM()) {
+                    eventEmitter.removeEventListener(event, listener);
+                } else if (hasEventEmitter()) {
+                    eventEmitter.removeListener(event, listener);
+                }
+            }
+
+            /**
+             * [dispatchEvent dispatchs an event]
+             * @param  {string} event [event to dispatch]
+             */
+            function dispatchEvent(event) {
+                if (hasDOM()) {
+                    eventEmitter.dispatchEvent(new CustomEvent(event));
+                } else if (hasEventEmitter()) {
+                    eventEmitter.emit(event)
+                }
+            }
+
+            /**
+             * [isRunning return true if the timer is running]
+             * @return {Boolean}
+             */
+            function isRunning() {
+                return running;
+            }
+
+            /**
+             * [isPaused returns true if the timer is paused]
+             * @return {Boolean}
+             */
+            function isPaused() {
+                return paused;
+            }
+
+            /**
+             * [getTimeValues returns the counter with the current timer values]
+             * @return {[TimeCounter]}
+             */
+            function getTimeValues() {
+                return counters;
+            };
+
+            /**
+             * [getTotalTimeValues returns the counter with the current timer total values]
+             * @return {[TimeCounter]}
+             */
+            function getTotalTimeValues() {
+                return totalCounters;
+            };
+
+            /**
+             * [getConfig returns the configuration paramameters]
+             * @return {[type]}
+             */
+            function getConfig () {
+                return timerConfig;
+            };
+
+            /**
+             * Public API
+             * Definition of Timer instance public functions
+             */
+            if (typeof this !== 'undefined') {
+                this.start= start;
+
+                this.pause = pause;
+
+                this.stop = stop;
+
+                this.isRunning = isRunning;
+
+                this.isPaused = isPaused;
+
+                this.getTimeValues = getTimeValues;
+
+                this.getTotalTimeValues = getTotalTimeValues;
+
+                this.getConfig = getConfig;
+
+                this.addEventListener = addEventListener
+
+                this.removeEventListener = removeEventListener;
+            }
+
+        };
+
+        if (module && module.exports) {
+            module.exports = Timer;
+        } else if (true) {
+            !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+                return Timer;
+            }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+        }
+
+        return  Timer;
+    }(module)
+);
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+function EventEmitter() {
+  this._events = this._events || {};
+  this._maxListeners = this._maxListeners || undefined;
+}
+module.exports = EventEmitter;
+
+// Backwards-compat with node 0.10.x
+EventEmitter.EventEmitter = EventEmitter;
+
+EventEmitter.prototype._events = undefined;
+EventEmitter.prototype._maxListeners = undefined;
+
+// By default EventEmitters will print a warning if more than 10 listeners are
+// added to it. This is a useful default which helps finding memory leaks.
+EventEmitter.defaultMaxListeners = 10;
+
+// Obviously not all Emitters should be limited to 10. This function allows
+// that to be increased. Set to zero for unlimited.
+EventEmitter.prototype.setMaxListeners = function(n) {
+  if (!isNumber(n) || n < 0 || isNaN(n))
+    throw TypeError('n must be a positive number');
+  this._maxListeners = n;
+  return this;
+};
+
+EventEmitter.prototype.emit = function(type) {
+  var er, handler, len, args, i, listeners;
+
+  if (!this._events)
+    this._events = {};
+
+  // If there is no 'error' event listener then throw.
+  if (type === 'error') {
+    if (!this._events.error ||
+        (isObject(this._events.error) && !this._events.error.length)) {
+      er = arguments[1];
+      if (er instanceof Error) {
+        throw er; // Unhandled 'error' event
+      } else {
+        // At least give some kind of context to the user
+        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+        err.context = er;
+        throw err;
+      }
+    }
+  }
+
+  handler = this._events[type];
+
+  if (isUndefined(handler))
+    return false;
+
+  if (isFunction(handler)) {
+    switch (arguments.length) {
+      // fast cases
+      case 1:
+        handler.call(this);
+        break;
+      case 2:
+        handler.call(this, arguments[1]);
+        break;
+      case 3:
+        handler.call(this, arguments[1], arguments[2]);
+        break;
+      // slower
+      default:
+        args = Array.prototype.slice.call(arguments, 1);
+        handler.apply(this, args);
+    }
+  } else if (isObject(handler)) {
+    args = Array.prototype.slice.call(arguments, 1);
+    listeners = handler.slice();
+    len = listeners.length;
+    for (i = 0; i < len; i++)
+      listeners[i].apply(this, args);
+  }
+
+  return true;
+};
+
+EventEmitter.prototype.addListener = function(type, listener) {
+  var m;
+
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  if (!this._events)
+    this._events = {};
+
+  // To avoid recursion in the case that type === "newListener"! Before
+  // adding it to the listeners, first emit "newListener".
+  if (this._events.newListener)
+    this.emit('newListener', type,
+              isFunction(listener.listener) ?
+              listener.listener : listener);
+
+  if (!this._events[type])
+    // Optimize the case of one listener. Don't need the extra array object.
+    this._events[type] = listener;
+  else if (isObject(this._events[type]))
+    // If we've already got an array, just append.
+    this._events[type].push(listener);
+  else
+    // Adding the second element, need to change to array.
+    this._events[type] = [this._events[type], listener];
+
+  // Check for listener leak
+  if (isObject(this._events[type]) && !this._events[type].warned) {
+    if (!isUndefined(this._maxListeners)) {
+      m = this._maxListeners;
+    } else {
+      m = EventEmitter.defaultMaxListeners;
+    }
+
+    if (m && m > 0 && this._events[type].length > m) {
+      this._events[type].warned = true;
+      console.error('(node) warning: possible EventEmitter memory ' +
+                    'leak detected. %d listeners added. ' +
+                    'Use emitter.setMaxListeners() to increase limit.',
+                    this._events[type].length);
+      if (typeof console.trace === 'function') {
+        // not supported in IE 10
+        console.trace();
+      }
+    }
+  }
+
+  return this;
+};
+
+EventEmitter.prototype.on = EventEmitter.prototype.addListener;
+
+EventEmitter.prototype.once = function(type, listener) {
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  var fired = false;
+
+  function g() {
+    this.removeListener(type, g);
+
+    if (!fired) {
+      fired = true;
+      listener.apply(this, arguments);
+    }
+  }
+
+  g.listener = listener;
+  this.on(type, g);
+
+  return this;
+};
+
+// emits a 'removeListener' event iff the listener was removed
+EventEmitter.prototype.removeListener = function(type, listener) {
+  var list, position, length, i;
+
+  if (!isFunction(listener))
+    throw TypeError('listener must be a function');
+
+  if (!this._events || !this._events[type])
+    return this;
+
+  list = this._events[type];
+  length = list.length;
+  position = -1;
+
+  if (list === listener ||
+      (isFunction(list.listener) && list.listener === listener)) {
+    delete this._events[type];
+    if (this._events.removeListener)
+      this.emit('removeListener', type, listener);
+
+  } else if (isObject(list)) {
+    for (i = length; i-- > 0;) {
+      if (list[i] === listener ||
+          (list[i].listener && list[i].listener === listener)) {
+        position = i;
+        break;
+      }
+    }
+
+    if (position < 0)
+      return this;
+
+    if (list.length === 1) {
+      list.length = 0;
+      delete this._events[type];
+    } else {
+      list.splice(position, 1);
+    }
+
+    if (this._events.removeListener)
+      this.emit('removeListener', type, listener);
+  }
+
+  return this;
+};
+
+EventEmitter.prototype.removeAllListeners = function(type) {
+  var key, listeners;
+
+  if (!this._events)
+    return this;
+
+  // not listening for removeListener, no need to emit
+  if (!this._events.removeListener) {
+    if (arguments.length === 0)
+      this._events = {};
+    else if (this._events[type])
+      delete this._events[type];
+    return this;
+  }
+
+  // emit removeListener for all listeners on all events
+  if (arguments.length === 0) {
+    for (key in this._events) {
+      if (key === 'removeListener') continue;
+      this.removeAllListeners(key);
+    }
+    this.removeAllListeners('removeListener');
+    this._events = {};
+    return this;
+  }
+
+  listeners = this._events[type];
+
+  if (isFunction(listeners)) {
+    this.removeListener(type, listeners);
+  } else if (listeners) {
+    // LIFO order
+    while (listeners.length)
+      this.removeListener(type, listeners[listeners.length - 1]);
+  }
+  delete this._events[type];
+
+  return this;
+};
+
+EventEmitter.prototype.listeners = function(type) {
+  var ret;
+  if (!this._events || !this._events[type])
+    ret = [];
+  else if (isFunction(this._events[type]))
+    ret = [this._events[type]];
+  else
+    ret = this._events[type].slice();
+  return ret;
+};
+
+EventEmitter.prototype.listenerCount = function(type) {
+  if (this._events) {
+    var evlistener = this._events[type];
+
+    if (isFunction(evlistener))
+      return 1;
+    else if (evlistener)
+      return evlistener.length;
+  }
+  return 0;
+};
+
+EventEmitter.listenerCount = function(emitter, type) {
+  return emitter.listenerCount(type);
+};
+
+function isFunction(arg) {
+  return typeof arg === 'function';
+}
+
+function isNumber(arg) {
+  return typeof arg === 'number';
+}
+
+function isObject(arg) {
+  return typeof arg === 'object' && arg !== null;
+}
+
+function isUndefined(arg) {
+  return arg === void 0;
+}
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "vue-countdown"
+  }, [_c('div', {
+    staticClass: "vue-countdown--time"
+  }, [_vm._v("\n        " + _vm._s(_vm.time) + "\n    ")])])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-571b4b7c", esExports)
+  }
+}
+
+/***/ })
+/******/ ]);
+});
+
+/***/ }),
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6049,7 +7236,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 58 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6188,7 +7375,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 59 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6251,7 +7438,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 60 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6314,7 +7501,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 61 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6440,7 +7627,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 62 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6503,7 +7690,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 63 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6611,7 +7798,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 64 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6674,7 +7861,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 65 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6783,7 +7970,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 66 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -6919,7 +8106,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 67 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7013,7 +8200,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 68 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7075,7 +8262,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 69 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7198,7 +8385,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 70 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7321,7 +8508,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 71 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7433,7 +8620,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 72 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7588,7 +8775,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 73 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7680,7 +8867,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 74 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7863,7 +9050,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 75 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -7930,7 +9117,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 76 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8014,7 +9201,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 77 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8078,7 +9265,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 78 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8158,7 +9345,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 79 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8238,7 +9425,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 80 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8318,7 +9505,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 81 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8421,7 +9608,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 82 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8525,7 +9712,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 83 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8596,7 +9783,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 84 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8663,7 +9850,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 85 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8734,7 +9921,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 86 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8805,7 +9992,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 87 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8871,7 +10058,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 88 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -8942,7 +10129,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 89 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9017,7 +10204,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 90 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9113,7 +10300,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 91 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9209,7 +10396,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 92 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9296,7 +10483,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 93 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9380,7 +10567,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 94 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9450,7 +10637,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 95 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9560,7 +10747,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 96 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9673,7 +10860,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 97 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9737,7 +10924,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 98 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9824,7 +11011,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 99 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9902,7 +11089,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 100 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -9984,7 +11171,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 101 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10063,7 +11250,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 102 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10143,7 +11330,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 103 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10224,7 +11411,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 104 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10351,7 +11538,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 105 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10479,7 +11666,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 106 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10580,7 +11767,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 107 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10708,7 +11895,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 108 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10866,7 +12053,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 109 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -10980,7 +12167,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 110 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11079,7 +12266,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 111 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11165,7 +12352,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 112 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11301,7 +12488,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 113 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11374,7 +12561,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 114 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11470,7 +12657,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 115 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11556,7 +12743,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 116 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11649,7 +12836,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 117 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11740,7 +12927,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 118 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11854,7 +13041,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 119 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -11984,7 +13171,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 120 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12069,7 +13256,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 121 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12160,7 +13347,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 122 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12300,7 +13487,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 123 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12374,7 +13561,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 124 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12496,7 +13683,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 125 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12597,7 +13784,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 126 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12713,7 +13900,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 127 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12781,7 +13968,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 128 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12875,7 +14062,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 129 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -12960,7 +14147,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 130 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13068,7 +14255,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 131 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13232,7 +14419,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 132 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13318,7 +14505,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 133 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13404,7 +14591,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 134 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13468,7 +14655,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 135 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13565,7 +14752,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 136 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13631,7 +14818,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 137 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13758,7 +14945,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 138 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13849,7 +15036,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 139 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -13940,7 +15127,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 140 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14004,7 +15191,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 141 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14132,7 +15319,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 142 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14262,7 +15449,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 143 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14331,7 +15518,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 144 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14396,7 +15583,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 145 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14475,7 +15662,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 146 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14661,7 +15848,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 147 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14763,7 +15950,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 148 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14827,7 +16014,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 149 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -14902,7 +16089,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 150 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15062,7 +16249,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 151 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15239,7 +16426,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 152 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15311,7 +16498,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 153 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15426,7 +16613,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 154 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15541,7 +16728,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 155 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15633,7 +16820,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 156 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15706,7 +16893,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 157 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15769,7 +16956,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 158 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15902,7 +17089,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 159 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -15995,7 +17182,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 160 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16066,7 +17253,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 161 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16186,7 +17373,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 162 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16257,7 +17444,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 163 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16323,7 +17510,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 164 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16449,7 +17636,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 165 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -16547,7 +17734,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 166 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16642,7 +17829,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 167 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16704,7 +17891,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 168 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -16766,7 +17953,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 169 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js language configuration
@@ -16889,7 +18076,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 170 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17044,7 +18231,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 171 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17146,7 +18333,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 172 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17208,7 +18395,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 173 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17270,7 +18457,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 174 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17353,7 +18540,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 175 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17425,7 +18612,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 176 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17489,7 +18676,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 177 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17603,7 +18790,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 178 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17710,7 +18897,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 179 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -17817,39 +19004,15 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 180 */,
-/* 181 */,
-/* 182 */,
-/* 183 */,
-/* 184 */,
-/* 185 */,
-/* 186 */,
-/* 187 */,
-/* 188 */,
-/* 189 */,
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */,
-/* 194 */,
-/* 195 */,
-/* 196 */,
-/* 197 */,
-/* 198 */,
-/* 199 */,
-/* 200 */,
-/* 201 */,
-/* 202 */,
-/* 203 */,
-/* 204 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(205);
-module.exports = __webpack_require__(357);
+__webpack_require__(140);
+module.exports = __webpack_require__(203);
 
 
 /***/ }),
-/* 205 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -17859,34 +19022,35 @@ module.exports = __webpack_require__(357);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(206);
+__webpack_require__(141);
 
-window.Vue = __webpack_require__(229);
+window.Vue = __webpack_require__(164);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', __webpack_require__(232));
-Vue.component('list-member', __webpack_require__(235));
-Vue.component('list-quiz', __webpack_require__(240));
-Vue.component('form-quiz', __webpack_require__(243));
-Vue.component('start-quiz', __webpack_require__(249));
-Vue.component('form-product', __webpack_require__(256));
-Vue.component('follow-training-quiz', __webpack_require__(531));
+Vue.component('example-component', __webpack_require__(167));
+Vue.component('list-member', __webpack_require__(170));
+Vue.component('list-quiz', __webpack_require__(175));
+Vue.component('form-quiz', __webpack_require__(178));
+Vue.component('start-quiz', __webpack_require__(184));
+Vue.component('form-product', __webpack_require__(190));
+Vue.component('follow-training-quiz', __webpack_require__(193));
+Vue.component('training-quiz-form', __webpack_require__(198));
 
 var app_vue = new Vue({
   el: '#app'
 });
 
 /***/ }),
-/* 206 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-window._ = __webpack_require__(207);
-window.Popper = __webpack_require__(208).default;
+window._ = __webpack_require__(142);
+window.Popper = __webpack_require__(143).default;
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -17895,7 +19059,7 @@ window.Popper = __webpack_require__(208).default;
  */
 
 try {
-  window.$ = window.jQuery = __webpack_require__(209);
+  window.$ = window.jQuery = __webpack_require__(144);
 
   // require('bootstrap');
 } catch (e) {}
@@ -17906,7 +19070,7 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = __webpack_require__(210);
+window.axios = __webpack_require__(145);
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
@@ -17942,7 +19106,7 @@ if (token) {
 // });
 
 /***/ }),
-/* 207 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -35054,10 +36218,10 @@ if (token) {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(33)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(7)(module)))
 
 /***/ }),
-/* 208 */
+/* 143 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37597,10 +38761,10 @@ Popper.Defaults = Defaults;
 /* harmony default export */ __webpack_exports__["default"] = (Popper);
 //# sourceMappingURL=popper.js.map
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 209 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -47971,22 +49135,22 @@ return jQuery;
 
 
 /***/ }),
-/* 210 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(211);
+module.exports = __webpack_require__(146);
 
 /***/ }),
-/* 211 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
-var bind = __webpack_require__(52);
-var Axios = __webpack_require__(213);
-var defaults = __webpack_require__(34);
+var utils = __webpack_require__(1);
+var bind = __webpack_require__(8);
+var Axios = __webpack_require__(148);
+var defaults = __webpack_require__(6);
 
 /**
  * Create an instance of Axios
@@ -48019,15 +49183,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(56);
-axios.CancelToken = __webpack_require__(227);
-axios.isCancel = __webpack_require__(55);
+axios.Cancel = __webpack_require__(13);
+axios.CancelToken = __webpack_require__(162);
+axios.isCancel = __webpack_require__(12);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(228);
+axios.spread = __webpack_require__(163);
 
 module.exports = axios;
 
@@ -48036,7 +49200,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 212 */
+/* 147 */
 /***/ (function(module, exports) {
 
 /*!
@@ -48063,16 +49227,16 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 213 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var defaults = __webpack_require__(34);
-var utils = __webpack_require__(6);
-var InterceptorManager = __webpack_require__(222);
-var dispatchRequest = __webpack_require__(223);
+var defaults = __webpack_require__(6);
+var utils = __webpack_require__(1);
+var InterceptorManager = __webpack_require__(157);
+var dispatchRequest = __webpack_require__(158);
 
 /**
  * Create a new instance of Axios
@@ -48149,13 +49313,13 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 214 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
+var utils = __webpack_require__(1);
 
 module.exports = function normalizeHeaderName(headers, normalizedName) {
   utils.forEach(headers, function processHeader(value, name) {
@@ -48168,13 +49332,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 215 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(54);
+var createError = __webpack_require__(11);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -48201,7 +49365,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 216 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48229,13 +49393,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 217 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
+var utils = __webpack_require__(1);
 
 function encode(val) {
   return encodeURIComponent(val).
@@ -48302,13 +49466,13 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 218 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
+var utils = __webpack_require__(1);
 
 // Headers whose duplicates are ignored by node
 // c.f. https://nodejs.org/api/http.html#http_message_headers
@@ -48362,13 +49526,13 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 219 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
+var utils = __webpack_require__(1);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -48437,7 +49601,7 @@ module.exports = (
 
 
 /***/ }),
-/* 220 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48480,13 +49644,13 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 221 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
+var utils = __webpack_require__(1);
 
 module.exports = (
   utils.isStandardBrowserEnv() ?
@@ -48540,13 +49704,13 @@ module.exports = (
 
 
 /***/ }),
-/* 222 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
+var utils = __webpack_require__(1);
 
 function InterceptorManager() {
   this.handlers = [];
@@ -48599,18 +49763,18 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 223 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
-var transformData = __webpack_require__(224);
-var isCancel = __webpack_require__(55);
-var defaults = __webpack_require__(34);
-var isAbsoluteURL = __webpack_require__(225);
-var combineURLs = __webpack_require__(226);
+var utils = __webpack_require__(1);
+var transformData = __webpack_require__(159);
+var isCancel = __webpack_require__(12);
+var defaults = __webpack_require__(6);
+var isAbsoluteURL = __webpack_require__(160);
+var combineURLs = __webpack_require__(161);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -48692,13 +49856,13 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 224 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var utils = __webpack_require__(6);
+var utils = __webpack_require__(1);
 
 /**
  * Transform the data for a request or a response
@@ -48719,7 +49883,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 225 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48740,7 +49904,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 226 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48761,13 +49925,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 227 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(56);
+var Cancel = __webpack_require__(13);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -48825,7 +49989,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 228 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48859,7 +50023,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 229 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -59822,10 +60986,10 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(230).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(165).setImmediate))
 
 /***/ }),
-/* 230 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -59881,7 +61045,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(231);
+__webpack_require__(166);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -59892,10 +61056,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 231 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -60085,18 +61249,18 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8), __webpack_require__(28)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(9)))
 
 /***/ }),
-/* 232 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(233)
+var __vue_script__ = __webpack_require__(168)
 /* template */
-var __vue_template__ = __webpack_require__(234)
+var __vue_template__ = __webpack_require__(169)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -60135,7 +61299,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 233 */
+/* 168 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60164,7 +61328,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 234 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -60207,15 +61371,15 @@ if (false) {
 }
 
 /***/ }),
-/* 235 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(236)
+var __vue_script__ = __webpack_require__(171)
 /* template */
-var __vue_template__ = __webpack_require__(239)
+var __vue_template__ = __webpack_require__(174)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -60254,12 +61418,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 236 */
+/* 171 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
 
 
@@ -60368,7 +61532,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 });
 
 /***/ }),
-/* 237 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -60393,7 +61557,7 @@ var oldRuntime = hadRuntime && g.regeneratorRuntime;
 // Force reevalutation of runtime.js.
 g.regeneratorRuntime = undefined;
 
-module.exports = __webpack_require__(238);
+module.exports = __webpack_require__(173);
 
 if (hadRuntime) {
   // Restore the original runtime.
@@ -60409,7 +61573,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 238 */
+/* 173 */
 /***/ (function(module, exports) {
 
 /**
@@ -61142,7 +62306,7 @@ if (hadRuntime) {
 
 
 /***/ }),
-/* 239 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -61291,15 +62455,15 @@ if (false) {
 }
 
 /***/ }),
-/* 240 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(241)
+var __vue_script__ = __webpack_require__(176)
 /* template */
-var __vue_template__ = __webpack_require__(242)
+var __vue_template__ = __webpack_require__(177)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -61338,7 +62502,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 241 */
+/* 176 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -61382,7 +62546,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 242 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -61461,19 +62625,19 @@ if (false) {
 }
 
 /***/ }),
-/* 243 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(244)
+  __webpack_require__(179)
 }
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(247)
+var __vue_script__ = __webpack_require__(182)
 /* template */
-var __vue_template__ = __webpack_require__(248)
+var __vue_template__ = __webpack_require__(183)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -61512,17 +62676,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 244 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(245);
+var content = __webpack_require__(180);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(21)("ada1a686", content, false, {});
+var update = __webpack_require__(5)("ada1a686", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -61538,21 +62702,21 @@ if(false) {
 }
 
 /***/ }),
-/* 245 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(20)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 246 */
+/* 181 */
 /***/ (function(module, exports) {
 
 /**
@@ -61585,14 +62749,11 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 247 */
+/* 182 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
 //
 //
 //
@@ -61825,7 +62986,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 248 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -62721,19 +63882,19 @@ if (false) {
 }
 
 /***/ }),
-/* 249 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(250)
+  __webpack_require__(185)
 }
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(252)
+var __vue_script__ = __webpack_require__(187)
 /* template */
-var __vue_template__ = __webpack_require__(255)
+var __vue_template__ = __webpack_require__(189)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -62772,17 +63933,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 250 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(251);
+var content = __webpack_require__(186);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(21)("b776dbe0", content, false, {});
+var update = __webpack_require__(5)("b776dbe0", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -62798,10 +63959,10 @@ if(false) {
 }
 
 /***/ }),
-/* 251 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(20)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -62812,14 +63973,14 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 252 */
+/* 187 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dmaksimovic_vue_countdown__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dmaksimovic_vue_countdown__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dmaksimovic_vue_countdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__dmaksimovic_vue_countdown__);
 
 
@@ -62966,1485 +64127,256 @@ var moment = __webpack_require__(0);
 });
 
 /***/ }),
-/* 253 */
-/***/ (function(module, exports, __webpack_require__) {
-
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(true)
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["vue-countdown"] = factory();
-	else
-		root["vue-countdown"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_vue_countdown_vue__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_571b4b7c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_vue_countdown_vue__ = __webpack_require__(5);
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-
-/* template */
-
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_node_modules_vue_loader_lib_selector_type_script_index_0_vue_countdown_vue__["a" /* default */],
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_571b4b7c_hasScoped_false_node_modules_vue_loader_lib_selector_type_template_index_0_vue_countdown_vue__["a" /* default */],
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "src/vue-countdown.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] vue-countdown.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-571b4b7c", Component.options)
-  } else {
-    hotAPI.reload("data-v-571b4b7c", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// this module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_easytimer__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_easytimer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_easytimer__);
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    props: {
-        seconds: Number,
-        countdown: Boolean,
-        message: String,
-        date: String,
-        units: Array,
-        start: {
-            type: Boolean,
-            default: true
-        }
-    },
-
-    data: function data() {
-        return {
-            timer: null,
-            time: '',
-            label: this.message ? this.message : 'Time\'s up!',
-            timerUnits: this.units ? this.units : ['hours', 'minutes', 'seconds'],
-            timerOptions: {}
-        };
-    },
-
-
-    computed: {
-        parsedDate: function parsedDate() {
-            if (!this.date) {
-                return false;
-            }
-
-            return Date.parse(this.date);
-        }
-    },
-
-    created: function created() {
-        this.timer = new __WEBPACK_IMPORTED_MODULE_0_easytimer___default.a();
-
-        var parsedDate = this.parsedDate;
-        var now = Date.now();
-
-        var seconds = this.seconds;
-        this.timerOptions = {
-            countdown: true
-        };
-
-        if (!parsedDate && this.date) {
-            throw new Error('Please provide valid date');
-        }
-
-        if (now < parsedDate) {
-            seconds = (parsedDate - now) / 1000;
-        }
-
-        this.timerOptions.startValues = {
-            seconds: seconds
-        };
-
-        if (this.start) {
-            this.timer.start(this.timerOptions);
-        }
-
-        this.time = this.timer.getTimeValues().toString(this.timerUnits);
-
-        this.timer.addEventListener('secondsUpdated', this.onTimeChange.bind(this));
-        this.timer.addEventListener('targetAchieved', this.onTimeExpire.bind(this));
-    },
-
-
-    methods: {
-        onTimeChange: function onTimeChange() {
-            this.time = this.timer.getTimeValues().toString(this.timerUnits);
-        },
-        onTimeExpire: function onTimeExpire() {
-            this.$emit('time-expire');
-
-            this.time = this.label;
-        }
-    },
-
-    watch: {
-        start: function start(newValue) {
-            if (newValue) {
-                this.timer.start(this.timerOptions);
-            } else {
-                this.timer.stop();
-            }
-        }
-    }
-});
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
- * @license easytimer.js v1.0
- * Created by Albert González
- * Licensed under The MIT License.
- *
-* @class Timer
-*/
-
-var module;
-
-var Timer = (
-
-    function (module) {
-        'use strict';
-
-        /*
-         * Polyfill por IE9, IE10 and IE11
-         */
-        var CustomEvent = typeof window !== 'undefined' ? window.CustomEvent : undefined;
-
-        if (typeof window !== 'undefined' && typeof CustomEvent !== "function" ) {
-            CustomEvent = function ( event, params ) {
-                params = params || { bubbles: false, cancelable: false, detail: undefined };
-                var evt = document.createEvent( 'CustomEvent' );
-                evt.initCustomEvent( event, params.bubbles, params.cancelable, params.detail );
-                return evt;
-            };
-
-            CustomEvent.prototype = window.Event.prototype;
-
-            window.CustomEvent = CustomEvent;
-        }
-
-        /*
-         * General functions, variables and constants
-         */
-        var SECOND_TENTHS_PER_SECOND = 10,
-            SECONDS_PER_MINUTE = 60,
-            SECOND_TENTHS_PER_MINUTE = 600,
-            MINUTES_PER_HOUR = 60,
-            SECONDS_PER_HOUR = 3600,
-            SECOND_TENTHS_PER_HOUR = 36000,
-            HOURS_PER_DAY = 24,
-
-            SECOND_TENTHS_POSITION = 0,
-            SECONDS_POSITION = 1,
-            MINUTES_POSITION = 2,
-            HOURS_POSITION = 3,
-            DAYS_POSITION = 4,
-
-            SECOND_TENTHS = 'secondTenths',
-            SECONDS = 'seconds',
-            MINUTES = 'minutes',
-            HOURS = 'hours',
-            DAYS = 'days',
-
-            unitsInMilliseconds = {
-                secondTenths: 100,
-                seconds: 1000,
-                minutes: 60000,
-                hours: 3600000,
-                days: 86400000
-            },
-
-            events = module && module.exports? __webpack_require__(4) : undefined,
-
-            prototype;
-
-        function hasDOM() {
-            return typeof document !== 'undefined';
-        }
-
-        function hasEventEmitter() {
-            return events;
-        }
-
-        function mod(number, module) {
-            return ((number % module) + module) % module;
-        }
-
-        function leftPadding(string, padLength, character) {
-            var i,
-                characters = '';
-
-            for (i = 0; i < padLength; i = i + 1) {
-                characters += String(character);
-            }
-
-            return (characters + string).slice(-characters.length);
-        }
-
-        /**
-         * [TimeCounter Stores the units counted by the timer]
-         */
-        function TimeCounter() {
-            this.secondTenths = 0;
-            this.seconds = 0;
-            this.minutes = 0;
-            this.hours = 0;
-            this.days = 0;
-
-            /**
-             * [toString convert the counted values on a string]
-             * @param  {[array]} units           [array with the units to display]
-             * @param  {[string]} separator       [separator of the units]
-             * @param  {[integer]} leftZeroPadding [number of zero padding]
-             * @return {[string]}                 [result string]
-             */
-            this.toString = function(units, separator, leftZeroPadding) {
-                units = units || ['hours', 'minutes', 'seconds'];
-                separator = separator || ':';
-                leftZeroPadding = leftZeroPadding || 2;
-
-                var stringTime,
-                    arrayTime = [],
-                    i,
-                    zeros = '';
-
-                for (i = 0; i < leftZeroPadding; i = i + 1) {
-                    zeros += '0';
-                }
-
-                for (i = 0; i < units.length; i = i + 1) {
-                    if (this[units[i]] !== undefined) {
-                        arrayTime.push(leftPadding(this[units[i]], leftZeroPadding, '0'));
-                    }
-                }
-                stringTime = arrayTime.join(separator);
-
-                return stringTime;
-            };
-        }
-
-        /**
-         * [Timer Timer/Chronometer/Countdown compatible with AMD and NodeJS.
-         * Can update time values with different time intervals: tenth of seconds,
-         * seconds, minutes and hours.]
-         */
-        function Timer() {
-
-            /*
-             * PRIVATE Variables and Functions
-             */
-            var counters = new TimeCounter(),
-                totalCounters =new TimeCounter(),
-
-                intervalId,
-                eventEmitter = hasDOM()? document.createElement('span') :
-                    hasEventEmitter()? new events.EventEmitter() : undefined,
-                running = false,
-                paused = false,
-                precision,
-                valueToAdd,
-                customCallback,
-                timerConfig = {},
-                target,
-                startValues,
-                countdown;
-
-            function isCountdownTimer() {
-                return timerConfig.countdown;
-            }
-
-            function updateCounters(counter, value) {
-                counters[counter] += value;
-                totalCounters[counter] += value;
-            }
-
-            function updateDays(value) {
-                updateCounters(DAYS, value);
-
-                dispatchEvent('daysUpdated');
-            }
-
-            function updateHours(value) {
-                updateCounters(HOURS, value);
-
-                counters.hours = mod(counters.hours, HOURS_PER_DAY);
-
-                if ((isCountdownTimer() && counters.hours === HOURS_PER_DAY - 1) ||
-                        (!isCountdownTimer() && counters.hours === 0)) {
-                    updateDays(value);
-                }
-
-                if (precision === HOURS) {
-                    totalCounters[MINUTES] += isCountdownTimer() ? -MINUTES_PER_HOUR : MINUTES_PER_HOUR;
-                    totalCounters[SECONDS] += isCountdownTimer() ? -SECONDS_PER_HOUR : SECONDS_PER_HOUR;
-                    totalCounters[SECOND_TENTHS] += isCountdownTimer() ? -SECOND_TENTHS_PER_HOUR : SECOND_TENTHS_PER_HOUR;
-                }
-
-                dispatchEvent('hoursUpdated');
-            }
-
-            function updateMinutes(value) {
-                updateCounters(MINUTES, value);
-
-                counters.minutes = mod(counters.minutes, MINUTES_PER_HOUR);
-
-                if ((isCountdownTimer() && counters.minutes === MINUTES_PER_HOUR - 1) ||
-                    (!isCountdownTimer() && counters.minutes === 0)) {
-                    updateHours(value);
-                }
-
-                if (precision === MINUTES) {
-                    totalCounters[SECONDS] += isCountdownTimer() ? -SECONDS_PER_MINUTE : SECONDS_PER_MINUTE;
-                    totalCounters[SECOND_TENTHS] += isCountdownTimer() ? -SECOND_TENTHS_PER_MINUTE : SECOND_TENTHS_PER_MINUTE;
-                }
-
-                dispatchEvent('minutesUpdated');
-            }
-
-            function updateSeconds(value) {
-                updateCounters(SECONDS, value);
-
-                counters.seconds = mod(counters.seconds, SECONDS_PER_MINUTE);
-
-                if ((isCountdownTimer() && counters.seconds === SECONDS_PER_MINUTE - 1) ||
-                    (!isCountdownTimer() && counters.seconds === 0)) {
-                    updateMinutes(value);
-                }
-
-                if (precision === SECONDS) {
-                    totalCounters[SECOND_TENTHS] += isCountdownTimer() ? -SECOND_TENTHS_PER_SECOND : SECOND_TENTHS_PER_SECOND;
-                }
-
-                dispatchEvent('secondsUpdated');
-            }
-
-            function updateSecondTenths(value) {
-                updateCounters(SECOND_TENTHS, value);
-
-                counters.secondTenths = mod(counters.secondTenths, SECOND_TENTHS_PER_SECOND);
-
-                if ((isCountdownTimer() && counters.secondTenths === SECOND_TENTHS_PER_SECOND - 1) ||
-                    (!isCountdownTimer() && counters.secondTenths === 0)) {
-                    updateSeconds(value);
-                }
-
-                dispatchEvent('secondTenthsUpdated');
-            }
-
-            function stopTimer() {
-                clearInterval(intervalId);
-                intervalId = undefined;
-                running = false;
-                paused = false;
-            }
-
-            function startTimer() {
-                var callback,
-                    interval = unitsInMilliseconds[precision];
-
-                switch (precision) {
-                case DAYS:
-                    callback = updateDays;
-                    break;
-                case HOURS:
-                    callback = updateHours;
-                    break;
-                case MINUTES:
-                    callback =  updateMinutes;
-                    break;
-                case SECOND_TENTHS:
-                    callback =  updateSecondTenths;
-                    break;
-                default:
-                    callback = updateSeconds;
-                }
-
-                intervalId = setInterval(
-                    function () {
-                        callback(valueToAdd);
-                        customCallback(counters);
-                        if (isTargetAchieved()) {
-                            dispatchEvent('targetAchieved');
-                            stop();
-                        }
-                    },
-                    interval
-                );
-
-                running = true;
-                paused = false;
-            }
-
-            function isRegularTimerTargetAchieved() {
-                return counters.hours > target[HOURS_POSITION]
-                    || (counters.hours === target[HOURS_POSITION] && (counters.minutes > target[MINUTES_POSITION]
-                        || (counters.minutes === target[MINUTES_POSITION]) && counters.seconds >= target[SECONDS_POSITION]));
-            }
-
-            function isCountdownTimerTargetAchieved() {
-                return counters.hours < target[HOURS_POSITION]
-                    || (counters.hours === target[HOURS_POSITION] && (counters.minutes < target[MINUTES_POSITION]
-                    || (counters.minutes === target[MINUTES_POSITION] && (counters.seconds < target[SECONDS_POSITION]
-                    || (counters.seconds === target[SECONDS_POSITION] && (counters.secondTenths < target[SECOND_TENTHS_POSITION]
-                    || counters.secondTenths === target[SECOND_TENTHS_POSITION] ))))));
-            }
-
-            function isTargetAchieved() {
-                return target instanceof Array &&
-                    (timerConfig.countdown && isCountdownTimerTargetAchieved() || !timerConfig.countdown && isRegularTimerTargetAchieved());
-            }
-
-            function resetCounters() {
-                for (var counter in counters) {
-                    if(counters.hasOwnProperty(counter) && typeof counters[counter] === 'number'){
-                        counters[counter] = 0;
-                    }
-                }
-
-                for (var counter in totalCounters) {
-                    if(totalCounters.hasOwnProperty(counter) && typeof totalCounters[counter] === 'number'){
-                        totalCounters[counter] = 0;
-                    }
-                }
-            }
-
-            function setParams(params) {
-                precision = params && typeof params.precision === 'string' ? params.precision : SECONDS;
-                customCallback = params && typeof params.callback === 'function'? params.callback : function () {};
-                valueToAdd = params && params.countdown === true? -1 : 1;
-                countdown = params && params.countdown == true;
-                if (params && (typeof params.target === 'object')) { setTarget(params.target)};
-                if (params && (typeof params.startValues === 'object')) { setStartValues(params.startValues)};
-                target = target || !countdown? target : [0, 0, 0, 0, 0];
-
-                timerConfig = {
-                    precision: precision,
-                    callback: customCallback,
-                    countdown: typeof params === 'object' && params.countdown == true,
-                    target: target,
-                    startValues: startValues
-                }
-            }
-
-            function configInputValues(inputValues) {
-                var secondTenths, seconds, minutes, hours, days, values;
-                if (typeof inputValues === 'object') {
-                    if (inputValues instanceof Array) {
-                        if (inputValues.length != 5) {
-                            throw new Error('Array size not valid');
-                        }
-                        values = inputValues;
-                    } else {
-                        values = [
-                            inputValues.secondTenths || 0, inputValues.seconds || 0,
-                            inputValues.minutes || 0, inputValues.hours || 0,
-                            inputValues.days || 0
-                        ];
-                    }
-                }
-
-                for (var i = 0; i < inputValues.length; i = i + 1) {
-                    if (inputValues[i] < 0) {
-                        inputValues[i] = 0;
-                    }
-                }
-
-                secondTenths = values[SECOND_TENTHS_POSITION];
-                seconds = values[SECONDS_POSITION] + Math.floor(secondTenths / SECOND_TENTHS_PER_SECOND);
-                minutes = values[MINUTES_POSITION] + Math.floor(seconds / SECONDS_PER_MINUTE);
-                hours = values[HOURS_POSITION] + Math.floor(minutes / MINUTES_PER_HOUR);
-                days = values[DAYS_POSITION] +  Math.floor(hours / HOURS_PER_DAY);
-
-                values[SECOND_TENTHS_POSITION] = secondTenths % SECOND_TENTHS_PER_SECOND;
-                values[SECONDS_POSITION] = seconds % SECONDS_PER_MINUTE;
-                values[MINUTES_POSITION] = minutes % MINUTES_PER_HOUR;
-                values[HOURS_POSITION] = hours % HOURS_PER_DAY;
-                values[DAYS_POSITION] = days;
-
-                return values;
-            }
-
-            function setTarget(inputTarget) {
-                target = configInputValues(inputTarget);
-
-            }
-
-            function setStartValues(inputStartValues) {
-                startValues = configInputValues(inputStartValues);
-                counters.secondTenths = startValues[SECOND_TENTHS_POSITION];
-                counters.seconds = startValues[SECONDS_POSITION];
-                counters.minutes = startValues[MINUTES_POSITION];
-                counters.hours = startValues[HOURS_POSITION]
-                counters.days = startValues[DAYS_POSITION]
-
-                totalCounters.days = counters.days;
-                totalCounters.hours = totalCounters.days * HOURS_PER_DAY + counters.hours;
-                totalCounters.minutes = totalCounters.hours * MINUTES_PER_HOUR + counters.minutes;
-                totalCounters.seconds = totalCounters.minutes * SECONDS_PER_MINUTE + counters.seconds;
-                totalCounters.secondTenths = totalCounters.seconds * SECOND_TENTHS_PER_SECOND + counters.secondTenths;
-            }
-
-            /*
-             * PUBLIC functions
-             */
-
-            /**
-             * [stop stops the timer and resets the counters. Dispatch stopped event]
-             */
-            function stop() {
-                stopTimer();
-                resetCounters();
-                dispatchEvent('stopped');
-            }
-
-            /**
-             * [start starts the timer configured by the params object. Dispatch started event]
-             * @param  {[object]} params [Configuration parameters]
-             */
-            function start(params) {
-                if (this.isRunning()) {
-                    throw new Error('Timer already running');
-                }
-
-                if (!this.isPaused()) {
-                    setParams(params);
-                }
-                if (!isTargetAchieved()) {
-                    startTimer();
-                    dispatchEvent('started');
-                }
-            }
-
-            /**
-             * [pause stops the timer without resetting the counters. The timer it can be restarted with start function.
-             * Dispatch paused event]
-             * @return {[type]} [description]
-             */
-            function pause() {
-                stopTimer();
-                paused = true;
-                dispatchEvent('paused');
-            }
-
-            /**
-             * [addEventListener Adds event listener to the timer]
-             * @param {[string]} event      [event to listen]
-             * @param {[function]} listener   [the event listener function]
-             */
-            function addEventListener(event, listener) {
-                if (hasDOM()) {
-                    eventEmitter.addEventListener(event, listener);
-                } else if (hasEventEmitter()) {
-                    eventEmitter.on(event, listener)
-                }
-            }
-
-            /**
-             * [removeEventListener Removes event listener to the timer]
-             * @param  {[string]} event    [event to remove listener]
-             * @param  {[function]} listener [listener to remove]
-             */
-            function removeEventListener(event, listener) {
-                if (hasDOM()) {
-                    eventEmitter.removeEventListener(event, listener);
-                } else if (hasEventEmitter()) {
-                    eventEmitter.removeListener(event, listener);
-                }
-            }
-
-            /**
-             * [dispatchEvent dispatchs an event]
-             * @param  {string} event [event to dispatch]
-             */
-            function dispatchEvent(event) {
-                if (hasDOM()) {
-                    eventEmitter.dispatchEvent(new CustomEvent(event));
-                } else if (hasEventEmitter()) {
-                    eventEmitter.emit(event)
-                }
-            }
-
-            /**
-             * [isRunning return true if the timer is running]
-             * @return {Boolean}
-             */
-            function isRunning() {
-                return running;
-            }
-
-            /**
-             * [isPaused returns true if the timer is paused]
-             * @return {Boolean}
-             */
-            function isPaused() {
-                return paused;
-            }
-
-            /**
-             * [getTimeValues returns the counter with the current timer values]
-             * @return {[TimeCounter]}
-             */
-            function getTimeValues() {
-                return counters;
-            };
-
-            /**
-             * [getTotalTimeValues returns the counter with the current timer total values]
-             * @return {[TimeCounter]}
-             */
-            function getTotalTimeValues() {
-                return totalCounters;
-            };
-
-            /**
-             * [getConfig returns the configuration paramameters]
-             * @return {[type]}
-             */
-            function getConfig () {
-                return timerConfig;
-            };
-
-            /**
-             * Public API
-             * Definition of Timer instance public functions
-             */
-            if (typeof this !== 'undefined') {
-                this.start= start;
-
-                this.pause = pause;
-
-                this.stop = stop;
-
-                this.isRunning = isRunning;
-
-                this.isPaused = isPaused;
-
-                this.getTimeValues = getTimeValues;
-
-                this.getTotalTimeValues = getTotalTimeValues;
-
-                this.getConfig = getConfig;
-
-                this.addEventListener = addEventListener
-
-                this.removeEventListener = removeEventListener;
-            }
-
-        };
-
-        if (module && module.exports) {
-            module.exports = Timer;
-        } else if (true) {
-            !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
-                return Timer;
-            }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-        }
-
-        return  Timer;
-    }(module)
-);
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-function EventEmitter() {
-  this._events = this._events || {};
-  this._maxListeners = this._maxListeners || undefined;
-}
-module.exports = EventEmitter;
-
-// Backwards-compat with node 0.10.x
-EventEmitter.EventEmitter = EventEmitter;
-
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-
-// By default EventEmitters will print a warning if more than 10 listeners are
-// added to it. This is a useful default which helps finding memory leaks.
-EventEmitter.defaultMaxListeners = 10;
-
-// Obviously not all Emitters should be limited to 10. This function allows
-// that to be increased. Set to zero for unlimited.
-EventEmitter.prototype.setMaxListeners = function(n) {
-  if (!isNumber(n) || n < 0 || isNaN(n))
-    throw TypeError('n must be a positive number');
-  this._maxListeners = n;
-  return this;
-};
-
-EventEmitter.prototype.emit = function(type) {
-  var er, handler, len, args, i, listeners;
-
-  if (!this._events)
-    this._events = {};
-
-  // If there is no 'error' event listener then throw.
-  if (type === 'error') {
-    if (!this._events.error ||
-        (isObject(this._events.error) && !this._events.error.length)) {
-      er = arguments[1];
-      if (er instanceof Error) {
-        throw er; // Unhandled 'error' event
-      } else {
-        // At least give some kind of context to the user
-        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
-        err.context = er;
-        throw err;
-      }
-    }
-  }
-
-  handler = this._events[type];
-
-  if (isUndefined(handler))
-    return false;
-
-  if (isFunction(handler)) {
-    switch (arguments.length) {
-      // fast cases
-      case 1:
-        handler.call(this);
-        break;
-      case 2:
-        handler.call(this, arguments[1]);
-        break;
-      case 3:
-        handler.call(this, arguments[1], arguments[2]);
-        break;
-      // slower
-      default:
-        args = Array.prototype.slice.call(arguments, 1);
-        handler.apply(this, args);
-    }
-  } else if (isObject(handler)) {
-    args = Array.prototype.slice.call(arguments, 1);
-    listeners = handler.slice();
-    len = listeners.length;
-    for (i = 0; i < len; i++)
-      listeners[i].apply(this, args);
-  }
-
-  return true;
-};
-
-EventEmitter.prototype.addListener = function(type, listener) {
-  var m;
-
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
-
-  if (!this._events)
-    this._events = {};
-
-  // To avoid recursion in the case that type === "newListener"! Before
-  // adding it to the listeners, first emit "newListener".
-  if (this._events.newListener)
-    this.emit('newListener', type,
-              isFunction(listener.listener) ?
-              listener.listener : listener);
-
-  if (!this._events[type])
-    // Optimize the case of one listener. Don't need the extra array object.
-    this._events[type] = listener;
-  else if (isObject(this._events[type]))
-    // If we've already got an array, just append.
-    this._events[type].push(listener);
-  else
-    // Adding the second element, need to change to array.
-    this._events[type] = [this._events[type], listener];
-
-  // Check for listener leak
-  if (isObject(this._events[type]) && !this._events[type].warned) {
-    if (!isUndefined(this._maxListeners)) {
-      m = this._maxListeners;
-    } else {
-      m = EventEmitter.defaultMaxListeners;
-    }
-
-    if (m && m > 0 && this._events[type].length > m) {
-      this._events[type].warned = true;
-      console.error('(node) warning: possible EventEmitter memory ' +
-                    'leak detected. %d listeners added. ' +
-                    'Use emitter.setMaxListeners() to increase limit.',
-                    this._events[type].length);
-      if (typeof console.trace === 'function') {
-        // not supported in IE 10
-        console.trace();
-      }
-    }
-  }
-
-  return this;
-};
-
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-EventEmitter.prototype.once = function(type, listener) {
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
-
-  var fired = false;
-
-  function g() {
-    this.removeListener(type, g);
-
-    if (!fired) {
-      fired = true;
-      listener.apply(this, arguments);
-    }
-  }
-
-  g.listener = listener;
-  this.on(type, g);
-
-  return this;
-};
-
-// emits a 'removeListener' event iff the listener was removed
-EventEmitter.prototype.removeListener = function(type, listener) {
-  var list, position, length, i;
-
-  if (!isFunction(listener))
-    throw TypeError('listener must be a function');
-
-  if (!this._events || !this._events[type])
-    return this;
-
-  list = this._events[type];
-  length = list.length;
-  position = -1;
-
-  if (list === listener ||
-      (isFunction(list.listener) && list.listener === listener)) {
-    delete this._events[type];
-    if (this._events.removeListener)
-      this.emit('removeListener', type, listener);
-
-  } else if (isObject(list)) {
-    for (i = length; i-- > 0;) {
-      if (list[i] === listener ||
-          (list[i].listener && list[i].listener === listener)) {
-        position = i;
-        break;
-      }
-    }
-
-    if (position < 0)
-      return this;
-
-    if (list.length === 1) {
-      list.length = 0;
-      delete this._events[type];
-    } else {
-      list.splice(position, 1);
-    }
-
-    if (this._events.removeListener)
-      this.emit('removeListener', type, listener);
-  }
-
-  return this;
-};
-
-EventEmitter.prototype.removeAllListeners = function(type) {
-  var key, listeners;
-
-  if (!this._events)
-    return this;
-
-  // not listening for removeListener, no need to emit
-  if (!this._events.removeListener) {
-    if (arguments.length === 0)
-      this._events = {};
-    else if (this._events[type])
-      delete this._events[type];
-    return this;
-  }
-
-  // emit removeListener for all listeners on all events
-  if (arguments.length === 0) {
-    for (key in this._events) {
-      if (key === 'removeListener') continue;
-      this.removeAllListeners(key);
-    }
-    this.removeAllListeners('removeListener');
-    this._events = {};
-    return this;
-  }
-
-  listeners = this._events[type];
-
-  if (isFunction(listeners)) {
-    this.removeListener(type, listeners);
-  } else if (listeners) {
-    // LIFO order
-    while (listeners.length)
-      this.removeListener(type, listeners[listeners.length - 1]);
-  }
-  delete this._events[type];
-
-  return this;
-};
-
-EventEmitter.prototype.listeners = function(type) {
-  var ret;
-  if (!this._events || !this._events[type])
-    ret = [];
-  else if (isFunction(this._events[type]))
-    ret = [this._events[type]];
-  else
-    ret = this._events[type].slice();
-  return ret;
-};
-
-EventEmitter.prototype.listenerCount = function(type) {
-  if (this._events) {
-    var evlistener = this._events[type];
-
-    if (isFunction(evlistener))
-      return 1;
-    else if (evlistener)
-      return evlistener.length;
-  }
-  return 0;
-};
-
-EventEmitter.listenerCount = function(emitter, type) {
-  return emitter.listenerCount(type);
-};
-
-function isFunction(arg) {
-  return typeof arg === 'function';
-}
-
-function isNumber(arg) {
-  return typeof arg === 'number';
-}
-
-function isObject(arg) {
-  return typeof arg === 'object' && arg !== null;
-}
-
-function isUndefined(arg) {
-  return arg === void 0;
-}
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "vue-countdown"
-  }, [_c('div', {
-    staticClass: "vue-countdown--time"
-  }, [_vm._v("\n        " + _vm._s(_vm.time) + "\n    ")])])
-}
-var staticRenderFns = []
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-571b4b7c", esExports)
-  }
-}
-
-/***/ })
-/******/ ]);
-});
-
-/***/ }),
-/* 254 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 57,
-	"./af.js": 57,
-	"./ar": 58,
-	"./ar-dz": 59,
-	"./ar-dz.js": 59,
-	"./ar-kw": 60,
-	"./ar-kw.js": 60,
-	"./ar-ly": 61,
-	"./ar-ly.js": 61,
-	"./ar-ma": 62,
-	"./ar-ma.js": 62,
-	"./ar-sa": 63,
-	"./ar-sa.js": 63,
-	"./ar-tn": 64,
-	"./ar-tn.js": 64,
-	"./ar.js": 58,
-	"./az": 65,
-	"./az.js": 65,
-	"./be": 66,
-	"./be.js": 66,
-	"./bg": 67,
-	"./bg.js": 67,
-	"./bm": 68,
-	"./bm.js": 68,
-	"./bn": 69,
-	"./bn.js": 69,
-	"./bo": 70,
-	"./bo.js": 70,
-	"./br": 71,
-	"./br.js": 71,
-	"./bs": 72,
-	"./bs.js": 72,
-	"./ca": 73,
-	"./ca.js": 73,
-	"./cs": 74,
-	"./cs.js": 74,
-	"./cv": 75,
-	"./cv.js": 75,
-	"./cy": 76,
-	"./cy.js": 76,
-	"./da": 77,
-	"./da.js": 77,
-	"./de": 78,
-	"./de-at": 79,
-	"./de-at.js": 79,
-	"./de-ch": 80,
-	"./de-ch.js": 80,
-	"./de.js": 78,
-	"./dv": 81,
-	"./dv.js": 81,
-	"./el": 82,
-	"./el.js": 82,
-	"./en-au": 83,
-	"./en-au.js": 83,
-	"./en-ca": 84,
-	"./en-ca.js": 84,
-	"./en-gb": 85,
-	"./en-gb.js": 85,
-	"./en-ie": 86,
-	"./en-ie.js": 86,
-	"./en-il": 87,
-	"./en-il.js": 87,
-	"./en-nz": 88,
-	"./en-nz.js": 88,
-	"./eo": 89,
-	"./eo.js": 89,
-	"./es": 90,
-	"./es-do": 91,
-	"./es-do.js": 91,
-	"./es-us": 92,
-	"./es-us.js": 92,
-	"./es.js": 90,
-	"./et": 93,
-	"./et.js": 93,
-	"./eu": 94,
-	"./eu.js": 94,
-	"./fa": 95,
-	"./fa.js": 95,
-	"./fi": 96,
-	"./fi.js": 96,
-	"./fo": 97,
-	"./fo.js": 97,
-	"./fr": 98,
-	"./fr-ca": 99,
-	"./fr-ca.js": 99,
-	"./fr-ch": 100,
-	"./fr-ch.js": 100,
-	"./fr.js": 98,
-	"./fy": 101,
-	"./fy.js": 101,
-	"./gd": 102,
-	"./gd.js": 102,
-	"./gl": 103,
-	"./gl.js": 103,
-	"./gom-latn": 104,
-	"./gom-latn.js": 104,
-	"./gu": 105,
-	"./gu.js": 105,
-	"./he": 106,
-	"./he.js": 106,
-	"./hi": 107,
-	"./hi.js": 107,
-	"./hr": 108,
-	"./hr.js": 108,
-	"./hu": 109,
-	"./hu.js": 109,
-	"./hy-am": 110,
-	"./hy-am.js": 110,
-	"./id": 111,
-	"./id.js": 111,
-	"./is": 112,
-	"./is.js": 112,
-	"./it": 113,
-	"./it.js": 113,
-	"./ja": 114,
-	"./ja.js": 114,
-	"./jv": 115,
-	"./jv.js": 115,
-	"./ka": 116,
-	"./ka.js": 116,
-	"./kk": 117,
-	"./kk.js": 117,
-	"./km": 118,
-	"./km.js": 118,
-	"./kn": 119,
-	"./kn.js": 119,
-	"./ko": 120,
-	"./ko.js": 120,
-	"./ky": 121,
-	"./ky.js": 121,
-	"./lb": 122,
-	"./lb.js": 122,
-	"./lo": 123,
-	"./lo.js": 123,
-	"./lt": 124,
-	"./lt.js": 124,
-	"./lv": 125,
-	"./lv.js": 125,
-	"./me": 126,
-	"./me.js": 126,
-	"./mi": 127,
-	"./mi.js": 127,
-	"./mk": 128,
-	"./mk.js": 128,
-	"./ml": 129,
-	"./ml.js": 129,
-	"./mn": 130,
-	"./mn.js": 130,
-	"./mr": 131,
-	"./mr.js": 131,
-	"./ms": 132,
-	"./ms-my": 133,
-	"./ms-my.js": 133,
-	"./ms.js": 132,
-	"./mt": 134,
-	"./mt.js": 134,
-	"./my": 135,
-	"./my.js": 135,
-	"./nb": 136,
-	"./nb.js": 136,
-	"./ne": 137,
-	"./ne.js": 137,
-	"./nl": 138,
-	"./nl-be": 139,
-	"./nl-be.js": 139,
-	"./nl.js": 138,
-	"./nn": 140,
-	"./nn.js": 140,
-	"./pa-in": 141,
-	"./pa-in.js": 141,
-	"./pl": 142,
-	"./pl.js": 142,
-	"./pt": 143,
-	"./pt-br": 144,
-	"./pt-br.js": 144,
-	"./pt.js": 143,
-	"./ro": 145,
-	"./ro.js": 145,
-	"./ru": 146,
-	"./ru.js": 146,
-	"./sd": 147,
-	"./sd.js": 147,
-	"./se": 148,
-	"./se.js": 148,
-	"./si": 149,
-	"./si.js": 149,
-	"./sk": 150,
-	"./sk.js": 150,
-	"./sl": 151,
-	"./sl.js": 151,
-	"./sq": 152,
-	"./sq.js": 152,
-	"./sr": 153,
-	"./sr-cyrl": 154,
-	"./sr-cyrl.js": 154,
-	"./sr.js": 153,
-	"./ss": 155,
-	"./ss.js": 155,
-	"./sv": 156,
-	"./sv.js": 156,
-	"./sw": 157,
-	"./sw.js": 157,
-	"./ta": 158,
-	"./ta.js": 158,
-	"./te": 159,
-	"./te.js": 159,
-	"./tet": 160,
-	"./tet.js": 160,
-	"./tg": 161,
-	"./tg.js": 161,
-	"./th": 162,
-	"./th.js": 162,
-	"./tl-ph": 163,
-	"./tl-ph.js": 163,
-	"./tlh": 164,
-	"./tlh.js": 164,
-	"./tr": 165,
-	"./tr.js": 165,
-	"./tzl": 166,
-	"./tzl.js": 166,
-	"./tzm": 167,
-	"./tzm-latn": 168,
-	"./tzm-latn.js": 168,
-	"./tzm.js": 167,
-	"./ug-cn": 169,
-	"./ug-cn.js": 169,
-	"./uk": 170,
-	"./uk.js": 170,
-	"./ur": 171,
-	"./ur.js": 171,
-	"./uz": 172,
-	"./uz-latn": 173,
-	"./uz-latn.js": 173,
-	"./uz.js": 172,
-	"./vi": 174,
-	"./vi.js": 174,
-	"./x-pseudo": 175,
-	"./x-pseudo.js": 175,
-	"./yo": 176,
-	"./yo.js": 176,
-	"./zh-cn": 177,
-	"./zh-cn.js": 177,
-	"./zh-hk": 178,
-	"./zh-hk.js": 178,
-	"./zh-tw": 179,
-	"./zh-tw.js": 179
+	"./af": 16,
+	"./af.js": 16,
+	"./ar": 17,
+	"./ar-dz": 18,
+	"./ar-dz.js": 18,
+	"./ar-kw": 19,
+	"./ar-kw.js": 19,
+	"./ar-ly": 20,
+	"./ar-ly.js": 20,
+	"./ar-ma": 21,
+	"./ar-ma.js": 21,
+	"./ar-sa": 22,
+	"./ar-sa.js": 22,
+	"./ar-tn": 23,
+	"./ar-tn.js": 23,
+	"./ar.js": 17,
+	"./az": 24,
+	"./az.js": 24,
+	"./be": 25,
+	"./be.js": 25,
+	"./bg": 26,
+	"./bg.js": 26,
+	"./bm": 27,
+	"./bm.js": 27,
+	"./bn": 28,
+	"./bn.js": 28,
+	"./bo": 29,
+	"./bo.js": 29,
+	"./br": 30,
+	"./br.js": 30,
+	"./bs": 31,
+	"./bs.js": 31,
+	"./ca": 32,
+	"./ca.js": 32,
+	"./cs": 33,
+	"./cs.js": 33,
+	"./cv": 34,
+	"./cv.js": 34,
+	"./cy": 35,
+	"./cy.js": 35,
+	"./da": 36,
+	"./da.js": 36,
+	"./de": 37,
+	"./de-at": 38,
+	"./de-at.js": 38,
+	"./de-ch": 39,
+	"./de-ch.js": 39,
+	"./de.js": 37,
+	"./dv": 40,
+	"./dv.js": 40,
+	"./el": 41,
+	"./el.js": 41,
+	"./en-au": 42,
+	"./en-au.js": 42,
+	"./en-ca": 43,
+	"./en-ca.js": 43,
+	"./en-gb": 44,
+	"./en-gb.js": 44,
+	"./en-ie": 45,
+	"./en-ie.js": 45,
+	"./en-il": 46,
+	"./en-il.js": 46,
+	"./en-nz": 47,
+	"./en-nz.js": 47,
+	"./eo": 48,
+	"./eo.js": 48,
+	"./es": 49,
+	"./es-do": 50,
+	"./es-do.js": 50,
+	"./es-us": 51,
+	"./es-us.js": 51,
+	"./es.js": 49,
+	"./et": 52,
+	"./et.js": 52,
+	"./eu": 53,
+	"./eu.js": 53,
+	"./fa": 54,
+	"./fa.js": 54,
+	"./fi": 55,
+	"./fi.js": 55,
+	"./fo": 56,
+	"./fo.js": 56,
+	"./fr": 57,
+	"./fr-ca": 58,
+	"./fr-ca.js": 58,
+	"./fr-ch": 59,
+	"./fr-ch.js": 59,
+	"./fr.js": 57,
+	"./fy": 60,
+	"./fy.js": 60,
+	"./gd": 61,
+	"./gd.js": 61,
+	"./gl": 62,
+	"./gl.js": 62,
+	"./gom-latn": 63,
+	"./gom-latn.js": 63,
+	"./gu": 64,
+	"./gu.js": 64,
+	"./he": 65,
+	"./he.js": 65,
+	"./hi": 66,
+	"./hi.js": 66,
+	"./hr": 67,
+	"./hr.js": 67,
+	"./hu": 68,
+	"./hu.js": 68,
+	"./hy-am": 69,
+	"./hy-am.js": 69,
+	"./id": 70,
+	"./id.js": 70,
+	"./is": 71,
+	"./is.js": 71,
+	"./it": 72,
+	"./it.js": 72,
+	"./ja": 73,
+	"./ja.js": 73,
+	"./jv": 74,
+	"./jv.js": 74,
+	"./ka": 75,
+	"./ka.js": 75,
+	"./kk": 76,
+	"./kk.js": 76,
+	"./km": 77,
+	"./km.js": 77,
+	"./kn": 78,
+	"./kn.js": 78,
+	"./ko": 79,
+	"./ko.js": 79,
+	"./ky": 80,
+	"./ky.js": 80,
+	"./lb": 81,
+	"./lb.js": 81,
+	"./lo": 82,
+	"./lo.js": 82,
+	"./lt": 83,
+	"./lt.js": 83,
+	"./lv": 84,
+	"./lv.js": 84,
+	"./me": 85,
+	"./me.js": 85,
+	"./mi": 86,
+	"./mi.js": 86,
+	"./mk": 87,
+	"./mk.js": 87,
+	"./ml": 88,
+	"./ml.js": 88,
+	"./mn": 89,
+	"./mn.js": 89,
+	"./mr": 90,
+	"./mr.js": 90,
+	"./ms": 91,
+	"./ms-my": 92,
+	"./ms-my.js": 92,
+	"./ms.js": 91,
+	"./mt": 93,
+	"./mt.js": 93,
+	"./my": 94,
+	"./my.js": 94,
+	"./nb": 95,
+	"./nb.js": 95,
+	"./ne": 96,
+	"./ne.js": 96,
+	"./nl": 97,
+	"./nl-be": 98,
+	"./nl-be.js": 98,
+	"./nl.js": 97,
+	"./nn": 99,
+	"./nn.js": 99,
+	"./pa-in": 100,
+	"./pa-in.js": 100,
+	"./pl": 101,
+	"./pl.js": 101,
+	"./pt": 102,
+	"./pt-br": 103,
+	"./pt-br.js": 103,
+	"./pt.js": 102,
+	"./ro": 104,
+	"./ro.js": 104,
+	"./ru": 105,
+	"./ru.js": 105,
+	"./sd": 106,
+	"./sd.js": 106,
+	"./se": 107,
+	"./se.js": 107,
+	"./si": 108,
+	"./si.js": 108,
+	"./sk": 109,
+	"./sk.js": 109,
+	"./sl": 110,
+	"./sl.js": 110,
+	"./sq": 111,
+	"./sq.js": 111,
+	"./sr": 112,
+	"./sr-cyrl": 113,
+	"./sr-cyrl.js": 113,
+	"./sr.js": 112,
+	"./ss": 114,
+	"./ss.js": 114,
+	"./sv": 115,
+	"./sv.js": 115,
+	"./sw": 116,
+	"./sw.js": 116,
+	"./ta": 117,
+	"./ta.js": 117,
+	"./te": 118,
+	"./te.js": 118,
+	"./tet": 119,
+	"./tet.js": 119,
+	"./tg": 120,
+	"./tg.js": 120,
+	"./th": 121,
+	"./th.js": 121,
+	"./tl-ph": 122,
+	"./tl-ph.js": 122,
+	"./tlh": 123,
+	"./tlh.js": 123,
+	"./tr": 124,
+	"./tr.js": 124,
+	"./tzl": 125,
+	"./tzl.js": 125,
+	"./tzm": 126,
+	"./tzm-latn": 127,
+	"./tzm-latn.js": 127,
+	"./tzm.js": 126,
+	"./ug-cn": 128,
+	"./ug-cn.js": 128,
+	"./uk": 129,
+	"./uk.js": 129,
+	"./ur": 130,
+	"./ur.js": 130,
+	"./uz": 131,
+	"./uz-latn": 132,
+	"./uz-latn.js": 132,
+	"./uz.js": 131,
+	"./vi": 133,
+	"./vi.js": 133,
+	"./x-pseudo": 134,
+	"./x-pseudo.js": 134,
+	"./yo": 135,
+	"./yo.js": 135,
+	"./zh-cn": 136,
+	"./zh-cn.js": 136,
+	"./zh-hk": 137,
+	"./zh-hk.js": 137,
+	"./zh-tw": 138,
+	"./zh-tw.js": 138
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -64460,10 +64392,10 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 254;
+webpackContext.id = 188;
 
 /***/ }),
-/* 255 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -64825,15 +64757,15 @@ if (false) {
 }
 
 /***/ }),
-/* 256 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(257)
+var __vue_script__ = __webpack_require__(191)
 /* template */
-var __vue_template__ = __webpack_require__(258)
+var __vue_template__ = __webpack_require__(192)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -64872,7 +64804,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 257 */
+/* 191 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65140,7 +65072,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 258 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -65620,296 +65552,19 @@ if (false) {
 }
 
 /***/ }),
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
-/* 263 */,
-/* 264 */,
-/* 265 */,
-/* 266 */,
-/* 267 */,
-/* 268 */,
-/* 269 */,
-/* 270 */,
-/* 271 */,
-/* 272 */,
-/* 273 */,
-/* 274 */,
-/* 275 */,
-/* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */,
-/* 288 */,
-/* 289 */,
-/* 290 */,
-/* 291 */,
-/* 292 */,
-/* 293 */,
-/* 294 */,
-/* 295 */,
-/* 296 */,
-/* 297 */,
-/* 298 */,
-/* 299 */,
-/* 300 */,
-/* 301 */,
-/* 302 */,
-/* 303 */,
-/* 304 */,
-/* 305 */,
-/* 306 */,
-/* 307 */,
-/* 308 */,
-/* 309 */,
-/* 310 */,
-/* 311 */,
-/* 312 */,
-/* 313 */,
-/* 314 */,
-/* 315 */,
-/* 316 */,
-/* 317 */,
-/* 318 */,
-/* 319 */,
-/* 320 */,
-/* 321 */,
-/* 322 */,
-/* 323 */,
-/* 324 */,
-/* 325 */,
-/* 326 */,
-/* 327 */,
-/* 328 */,
-/* 329 */,
-/* 330 */,
-/* 331 */,
-/* 332 */,
-/* 333 */,
-/* 334 */,
-/* 335 */,
-/* 336 */,
-/* 337 */,
-/* 338 */,
-/* 339 */,
-/* 340 */,
-/* 341 */,
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
-/* 347 */,
-/* 348 */,
-/* 349 */,
-/* 350 */,
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */,
-/* 357 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 358 */,
-/* 359 */,
-/* 360 */,
-/* 361 */,
-/* 362 */,
-/* 363 */,
-/* 364 */,
-/* 365 */,
-/* 366 */,
-/* 367 */,
-/* 368 */,
-/* 369 */,
-/* 370 */,
-/* 371 */,
-/* 372 */,
-/* 373 */,
-/* 374 */,
-/* 375 */,
-/* 376 */,
-/* 377 */,
-/* 378 */,
-/* 379 */,
-/* 380 */,
-/* 381 */,
-/* 382 */,
-/* 383 */,
-/* 384 */,
-/* 385 */,
-/* 386 */,
-/* 387 */,
-/* 388 */,
-/* 389 */,
-/* 390 */,
-/* 391 */,
-/* 392 */,
-/* 393 */,
-/* 394 */,
-/* 395 */,
-/* 396 */,
-/* 397 */,
-/* 398 */,
-/* 399 */,
-/* 400 */,
-/* 401 */,
-/* 402 */,
-/* 403 */,
-/* 404 */,
-/* 405 */,
-/* 406 */,
-/* 407 */,
-/* 408 */,
-/* 409 */,
-/* 410 */,
-/* 411 */,
-/* 412 */,
-/* 413 */,
-/* 414 */,
-/* 415 */,
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */,
-/* 426 */,
-/* 427 */,
-/* 428 */,
-/* 429 */,
-/* 430 */,
-/* 431 */,
-/* 432 */,
-/* 433 */,
-/* 434 */,
-/* 435 */,
-/* 436 */,
-/* 437 */,
-/* 438 */,
-/* 439 */,
-/* 440 */,
-/* 441 */,
-/* 442 */,
-/* 443 */,
-/* 444 */,
-/* 445 */,
-/* 446 */,
-/* 447 */,
-/* 448 */,
-/* 449 */,
-/* 450 */,
-/* 451 */,
-/* 452 */,
-/* 453 */,
-/* 454 */,
-/* 455 */,
-/* 456 */,
-/* 457 */,
-/* 458 */,
-/* 459 */,
-/* 460 */,
-/* 461 */,
-/* 462 */,
-/* 463 */,
-/* 464 */,
-/* 465 */,
-/* 466 */,
-/* 467 */,
-/* 468 */,
-/* 469 */,
-/* 470 */,
-/* 471 */,
-/* 472 */,
-/* 473 */,
-/* 474 */,
-/* 475 */,
-/* 476 */,
-/* 477 */,
-/* 478 */,
-/* 479 */,
-/* 480 */,
-/* 481 */,
-/* 482 */,
-/* 483 */,
-/* 484 */,
-/* 485 */,
-/* 486 */,
-/* 487 */,
-/* 488 */,
-/* 489 */,
-/* 490 */,
-/* 491 */,
-/* 492 */,
-/* 493 */,
-/* 494 */,
-/* 495 */,
-/* 496 */,
-/* 497 */,
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */,
-/* 504 */,
-/* 505 */,
-/* 506 */,
-/* 507 */,
-/* 508 */,
-/* 509 */,
-/* 510 */,
-/* 511 */,
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */,
-/* 517 */,
-/* 518 */,
-/* 519 */,
-/* 520 */,
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
-/* 525 */,
-/* 526 */,
-/* 527 */,
-/* 528 */,
-/* 529 */,
-/* 530 */,
-/* 531 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(532)
+  __webpack_require__(194)
 }
-var normalizeComponent = __webpack_require__(9)
+var normalizeComponent = __webpack_require__(2)
 /* script */
-var __vue_script__ = __webpack_require__(534)
+var __vue_script__ = __webpack_require__(196)
 /* template */
-var __vue_template__ = __webpack_require__(535)
+var __vue_template__ = __webpack_require__(197)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -65948,17 +65603,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 532 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(533);
+var content = __webpack_require__(195);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(21)("3b4315b7", content, false, {});
+var update = __webpack_require__(5)("3b4315b7", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -65974,10 +65629,10 @@ if(false) {
 }
 
 /***/ }),
-/* 533 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(20)(false);
+exports = module.exports = __webpack_require__(4)(false);
 // imports
 
 
@@ -65988,12 +65643,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 534 */
+/* 196 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dmaksimovic_vue_countdown__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dmaksimovic_vue_countdown__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dmaksimovic_vue_countdown___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__dmaksimovic_vue_countdown__);
 //
 //
@@ -66147,7 +65802,7 @@ var moment = __webpack_require__(0);
 });
 
 /***/ }),
-/* 535 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -66449,6 +66104,967 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-8c4891ee", module.exports)
   }
 }
+
+/***/ }),
+/* 198 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(199)
+}
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(201)
+/* template */
+var __vue_template__ = __webpack_require__(202)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-3a79cfed"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/Admin/Training/TrainingQuizForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3a79cfed", Component.options)
+  } else {
+    hotAPI.reload("data-v-3a79cfed", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 199 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(200);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(5)("1b1d95a2", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3a79cfed\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TrainingQuizForm.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3a79cfed\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TrainingQuizForm.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 200 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(4)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 201 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "TrainingQuizForm",
+    props: ['id-quiz'],
+    data: function data() {
+        return {
+            alert: false,
+            alert_info: '',
+            waktu_pengerjaan: 90,
+            title: 'dsa',
+            sort_description: 'sad',
+            choice: [],
+            questions: [{
+                pertanyaan: '',
+                choice_a: '',
+                choice_b: '',
+                choice_c: '',
+                choice_d: '',
+                kunci_a: true,
+                kunci_b: false,
+                kunci_c: false,
+                kunci_d: false
+            }],
+            pertinyiin: []
+        };
+    },
+
+    methods: {
+        removeQuestions: function removeQuestions(index) {
+            Vue.delete(this.questions, index);
+        },
+        addNewApartment: function addNewApartment() {
+            console.log(Vue.util.extend({}, this.questions[0]));
+
+            this.questions.push(Vue.util.extend({}, this.questions[0]));
+        },
+        sumbitForm: function sumbitForm() {
+            var _this = this;
+
+            this.questions.forEach(function (a, index) {
+                _this.pertinyiin[index] = {
+                    'pertanyaan': a.pertanyaan,
+                    'pilihan': [{
+                        'value': a.choice_a,
+                        'kunci': a.kunci_a
+                    }, {
+                        'value': a.choice_b,
+                        'kunci': a.kunci_b
+                    }, {
+                        'value': a.choice_c,
+                        'kunci': a.kunci_c
+                    }, {
+                        'value': a.choice_d,
+                        'kunci': a.kunci_d
+                    }]
+                };
+            });
+
+            var dataForm = {
+                idQuiz: this.idQuiz,
+                waktu_pengerjaan: this.waktu_pengerjaan,
+                title: this.title,
+                sort_description: this.sort_description,
+                questions: this.pertinyiin
+            };
+            axios.post('/submit_quiz_training', dataForm).then(function (response) {
+                _this.alert = true;
+                if (response.data) {
+                    _this.alert_info = 'primary';
+                    _this.message = response.data.message;
+                    if (response.data.status === '00') {
+                        setTimeout(function () {
+                            window.location = '/trainings';
+                        }, 400);
+                    }
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.alert
+      ? _c(
+          "div",
+          {
+            class:
+              "alert alert-" + _vm.alert_info + " border-0 alert-dismissible"
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("span", { staticClass: "font-weight-semibold" }, [
+              _vm._v("Info!")
+            ]),
+            _vm._v(" " + _vm._s(_vm.message) + "\n    ")
+          ]
+        )
+      : _c("div", { staticClass: "card my-3" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.sumbitForm($event)
+                  }
+                }
+              },
+              [
+                _c("fieldset", { staticClass: "mb-3" }, [
+                  _c(
+                    "legend",
+                    {
+                      staticClass:
+                        "text-uppercase font-size-sm font-weight-bold"
+                    },
+                    [_vm._v("Deskripsi Kuis")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                      _vm._v("Lama Waktu Pengerjaan")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-10" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.waktu_pengerjaan,
+                            expression: "waktu_pengerjaan"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "number", required: "" },
+                        domProps: { value: _vm.waktu_pengerjaan },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.waktu_pengerjaan = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                      _vm._v("Title Quiz")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-10" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.title,
+                            expression: "title"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", required: "" },
+                        domProps: { value: _vm.title },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.title = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                      _vm._v("Sort Description Quiz")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-10" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sort_description,
+                            expression: "sort_description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", required: "" },
+                        domProps: { value: _vm.sort_description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.sort_description = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "fieldset",
+                  { staticClass: "mb-3" },
+                  [
+                    _c(
+                      "legend",
+                      {
+                        staticClass:
+                          "text-uppercase font-size-sm font-weight-bold"
+                      },
+                      [_vm._v("Soal Ujian")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.questions, function(question, index) {
+                      return _c("div", { key: index }, [
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-md-1" }, [
+                                _c("h1", [_vm._v(_vm._s(index + 1))])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-11" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-danger",
+                                    attrs: { type: "button" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.removeQuestions(index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                            Hapus Soal\n                                        "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("hr")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "label",
+                            { staticClass: "col-form-label col-lg-2" },
+                            [_vm._v("Pertanyaan")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-10" }, [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: question.pertanyaan,
+                                  expression: "question.pertanyaan"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "text", required: "" },
+                              domProps: { value: question.pertanyaan },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    question,
+                                    "pertanyaan",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", [
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-form-label col-lg-2" },
+                              [_vm._v("Pilihan A")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.questions[index].choice_a,
+                                    expression: "questions[index].choice_a"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text", required: "" },
+                                domProps: {
+                                  value: _vm.questions[index].choice_a
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.questions[index],
+                                      "choice_a",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-1" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.questions[index].kunci_a,
+                                      expression: "questions[index].kunci_a"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { required: "" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.questions[index],
+                                        "kunci_a",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v("Kunci Jawaban")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "true" } }, [
+                                    _vm._v("True")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "false" } }, [
+                                    _vm._v("False")
+                                  ])
+                                ]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-form-label col-lg-2" },
+                              [_vm._v("Pilihan B")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.questions[index].choice_b,
+                                    expression: "questions[index].choice_b"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text", required: "" },
+                                domProps: {
+                                  value: _vm.questions[index].choice_b
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.questions[index],
+                                      "choice_b",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-1" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.questions[index].kunci_b,
+                                      expression: "questions[index].kunci_b"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { required: "" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.questions[index],
+                                        "kunci_b",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "true" } }, [
+                                    _vm._v("True")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "false" } }, [
+                                    _vm._v("False")
+                                  ])
+                                ]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-form-label col-lg-2" },
+                              [_vm._v("Pilihan C")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.questions[index].choice_c,
+                                    expression: "questions[index].choice_c"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text", required: "" },
+                                domProps: {
+                                  value: _vm.questions[index].choice_c
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.questions[index],
+                                      "choice_c",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-1" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.questions[index].kunci_c,
+                                      expression: "questions[index].kunci_c"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { required: "" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.questions[index],
+                                        "kunci_c",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "true" } }, [
+                                    _vm._v("True")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "false" } }, [
+                                    _vm._v("False")
+                                  ])
+                                ]
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group row" }, [
+                            _c(
+                              "label",
+                              { staticClass: "col-form-label col-lg-2" },
+                              [_vm._v("Pilihan D")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-9" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.questions[index].choice_d,
+                                    expression: "questions[index].choice_d"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "text", required: "" },
+                                domProps: {
+                                  value: _vm.questions[index].choice_d
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.questions[index],
+                                      "choice_d",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-1" }, [
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.questions[index].kunci_d,
+                                      expression: "questions[index].kunci_d"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { required: "" },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.$set(
+                                        _vm.questions[index],
+                                        "kunci_d",
+                                        $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("option", { attrs: { value: "true" } }, [
+                                    _vm._v("True")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "false" } }, [
+                                    _vm._v("False")
+                                  ])
+                                ]
+                              )
+                            ])
+                          ])
+                        ])
+                      ])
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "text-right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: { type: "button" },
+                      on: { click: _vm.addNewApartment }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Tambah Pertanyaan +\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ])
+              ]
+            )
+          ])
+        ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: { type: "button", "data-dismiss": "alert" }
+      },
+      [_c("span", [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header header-elements-inline" }, [
+      _c("h5", { staticClass: "card-title" }, [_vm._v("Basic form inputs")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+      [_vm._v("Submit "), _c("i", { staticClass: "icon-paperplane ml-2" })]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3a79cfed", module.exports)
+  }
+}
+
+/***/ }),
+/* 203 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

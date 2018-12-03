@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TrainingQuizQuestion extends Model
 {
     //
+    protected $fillable = ['quiz_id','question'];
 
     public function choice()
     {

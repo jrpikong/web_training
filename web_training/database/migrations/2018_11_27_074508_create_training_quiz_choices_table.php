@@ -17,6 +17,7 @@ class CreateTrainingQuizChoicesTable extends Migration
             $table->increments('id');
             $table->integer('question_id',false,true);
             $table->string('choice');
+            $table->string('correct_answer');
             $table->timestamps();
             $table->foreign('question_id')->references('id')->on('training_quiz_questions')->onUpdate('cascade')->onDelete('cascade');
 

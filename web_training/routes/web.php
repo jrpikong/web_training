@@ -51,6 +51,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/start_quiz','QuizController@startQuiz')->name('start_quiz');
     Route::get('/get_quiz','QuizController@getQiz')->name('get_quiz');
     Route::get('/trainings', 'TrainingController@getTraining')->name('trainings');
+    Route::get('/add_training', 'TrainingController@addTraining')->name('add_training');
+    Route::post('/submit_training', 'TrainingController@submitTraining')->name('submit_training');
+    Route::get('/add_quiz_training/{id_training}', 'TrainingQuizController@AddQuizTraining')->name('add_quiz_training');
+    Route::post('/submit_quiz_training', 'TrainingQuizController@SubmitQuizTraining')->name('submit_quiz_training');
+
     Route::get('/follow_training/{id}', 'TrainingController@FollowTraining')->name('follow_training');
     Route::get('/follow_test/{id}', 'TrainingQuizController@FollowTest')->name('follow_test');
     Route::get('/get_training_quiz/{id}', 'TrainingQuizController@getTrainingQuiz')->name('get_training_quiz');
