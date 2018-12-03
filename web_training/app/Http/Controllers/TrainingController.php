@@ -34,7 +34,7 @@ class TrainingController extends Controller
 
         $fileName = "module".time().'.'.request()->file_module->getClientOriginalExtension();
 
-        $pathName = $request->file_module->storeAs('module',$fileName);
+        $pathName = $request->file_module->storeAs('public/training',$fileName);
 
         $trainingModel = new Training();
         $trainingModel->training_name = $request->input('training_name');

@@ -77,7 +77,7 @@
                 description: true,
                 start: false,
                 date:'',
-                waktu:90,
+                waktu:'',
                 questionIndex:0,
                 questions:[],
                 userResponses:[],

@@ -27,7 +27,7 @@
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label">
                                                     <!--<input type="hidden" v-model="answer.id[index]" :value="item.id"/>-->
-                                                    <input type="radio" class="form-check-input" v-model="answer.choice[index]" :value="item.type_of_choice_a" :name="'answers['+index+'][jawaban]'">
+                                                    <input type="radio" class="form-check-input" v-model="answers[index]" :value="item.choice_a">
                                                     A. {{ item.choice_a }}
                                                 </label>
                                             </div>
@@ -35,7 +35,7 @@
                                         <li>
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" v-model="answer.choice[index]" :value="item.type_of_choice_b" :name="'answers['+index+'][jawaban]'">
+                                                    <input type="radio" class="form-check-input" v-model="answers[index]" :value="item.choice_b">
                                                     B. {{ item.choice_b }}
                                                 </label>
                                             </div>
@@ -43,7 +43,7 @@
                                         <li>
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" v-model="answer.choice[index]" :value="item.type_of_choice_c" :name="'answers['+index+'][jawaban]'">
+                                                    <input type="radio" class="form-check-input" v-model="answers[index]" :value="item.choice_c">
                                                     C. {{ item.choice_c }}
                                                 </label>
                                             </div>
@@ -51,7 +51,7 @@
                                         <li>
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label">
-                                                    <input type="radio" class="form-check-input" v-model="answer.choice[index]" :value="item.type_of_choice_d" :name="'answers['+index+'][jawaban]'">
+                                                    <input type="radio" class="form-check-input" v-model="answers[index]" :value="item.choice_d">
                                                     D. {{ item.choice_d }}
                                                 </label>
                                             </div>
@@ -80,10 +80,7 @@
                 start: false,
                 items:[],
                 loading: true,
-                answer:{
-                    choice: [],
-                    id:''
-                },
+                answers:[],
                 // answers: [],
                 date:''
             }
