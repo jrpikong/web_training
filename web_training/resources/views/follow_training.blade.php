@@ -10,8 +10,6 @@
                 <iframe  id="iframe" src="http://docs.google.com/gview?url={{ asset($training->file_module) }}&embedded=true" style="width:100%; height:600px;" frameborder="0">
                 </iframe>
                 <div style="width: 80px; height: 80px; position: absolute; opacity: 0; right: 0px; top: 0px;">&nbsp;</div>
-
-                {{ asset($training->file_module) }}
             </div>
             <div class="text-center pt-3">
                 <h1>Jika Merasa Sudah Cukup Memahami dan Menguasai, Silahkan Klik "TEST" Dibawah Ini Untuk Mengetahui Tingkat Penguasaaan Materi</h1>
