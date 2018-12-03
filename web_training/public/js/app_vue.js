@@ -63967,7 +63967,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64058,6 +64058,29 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var moment = __webpack_require__(0);
@@ -64067,9 +64090,10 @@ var moment = __webpack_require__(0);
         return {
             start: false,
             items: [],
+            id_quiz: '',
             loading: true,
             answers: [],
-            // answers: [],
+            result: [],
             date: ''
         };
     },
@@ -64077,7 +64101,9 @@ var moment = __webpack_require__(0);
         this.getQuestion();
     },
 
-    components: { 'vue-countdown': __WEBPACK_IMPORTED_MODULE_1__dmaksimovic_vue_countdown___default.a },
+    components: {
+        'vue-countdown': __WEBPACK_IMPORTED_MODULE_1__dmaksimovic_vue_countdown___default.a
+    },
     methods: {
         getQuestion: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
@@ -64095,6 +64121,7 @@ var moment = __webpack_require__(0);
                                     };
                                     axios.get('get_quiz', { params: data }).then(function (response) {
                                         _this.items = response.data.data;
+                                        _this.id_quiz = _this.items.id;
                                         _this.loading = false;
                                     });
                                 }, 500);
@@ -64119,7 +64146,21 @@ var moment = __webpack_require__(0);
         startTimer: function startTimer() {
             this.start = true;
         },
-        sumbitForm: function sumbitForm() {}
+        sumbitForm: function sumbitForm() {
+            var _this2 = this;
+
+            var data = {
+                'id_quiz': this.id_quiz,
+                'answers': this.answers
+            };
+
+            axios.post('post_personal_quiz', data).then(function (response) {
+                if (response.data.status === '00') {
+                    _this2.result = response.data.data;
+                    _this2.start = false;
+                }
+            });
+        }
     }
 });
 
@@ -64438,266 +64479,428 @@ var render = function() {
                         _vm._v("Lama Waktu Pengerjaan")
                       ]),
                       _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-10" }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.items.waktu) +
+                            "\n                        "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("label", { staticClass: "col-form-label col-lg-2" }, [
+                        _vm._v("Sisa Waktu Pengerjaan")
+                      ]),
+                      _vm._v(" "),
                       _c(
                         "div",
                         { staticClass: "col-lg-10" },
                         [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.items.waktu) +
-                              " Menit Sisa waktu "
-                          ),
                           _c("vue-countdown", {
                             attrs: {
                               seconds: Number(_vm.items.waktu * 60),
                               start: _vm.start
                             },
                             on: { "time-expire": _vm.handleTimeExpire }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              attrs: { type: "button" },
-                              on: { click: _vm.startTimer }
-                            },
-                            [_vm._v("Start Quiz")]
-                          )
+                          })
                         ],
                         1
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._l(_vm.items.quiz_detail, function(item, index) {
-                      return _c("div", { key: index }, [
-                        _c("div", { staticClass: "form-group row" }, [
+                    _vm.result.length > 0
+                      ? _c("div", { staticClass: "form-group row" }, [
                           _c(
                             "label",
-                            {
-                              staticClass:
-                                "d-block font-weight-semibold col-md-12"
-                            },
-                            [
-                              _vm._v(
-                                _vm._s(index + 1) +
-                                  ". " +
-                                  _vm._s(item.questions)
-                              )
-                            ]
+                            { staticClass: "col-form-label col-lg-2" },
+                            [_vm._v("Hasil")]
                           ),
                           _vm._v(" "),
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _c("ul", { staticClass: "soal" }, [
-                              _c("li", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "form-check form-check-inline"
-                                  },
-                                  [
-                                    _c(
-                                      "label",
-                                      { staticClass: "form-check-label" },
-                                      [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.answers[index],
-                                              expression: "answers[index]"
-                                            }
-                                          ],
-                                          staticClass: "form-check-input",
-                                          attrs: { type: "radio" },
-                                          domProps: {
-                                            value: item.choice_a,
-                                            checked: _vm._q(
-                                              _vm.answers[index],
-                                              item.choice_a
-                                            )
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              _vm.$set(
-                                                _vm.answers,
-                                                index,
-                                                item.choice_a
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(
-                                          "\n                                                A. " +
-                                            _vm._s(item.choice_a) +
-                                            "\n                                            "
-                                        )
-                                      ]
+                          _c("div", { staticClass: "col-lg-10" }, [
+                            _c("div", { staticClass: "card" }, [
+                              _c(
+                                "ul",
+                                { staticClass: "list-group list-group-flush" },
+                                [
+                                  _c("li", { staticClass: "list-group-item" }, [
+                                    _vm._v(
+                                      "Melankolis = " +
+                                        _vm._s(_vm.result[0].Melankolis) +
+                                        " %"
                                     )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "form-check form-check-inline"
-                                  },
-                                  [
-                                    _c(
-                                      "label",
-                                      { staticClass: "form-check-label" },
-                                      [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.answers[index],
-                                              expression: "answers[index]"
-                                            }
-                                          ],
-                                          staticClass: "form-check-input",
-                                          attrs: { type: "radio" },
-                                          domProps: {
-                                            value: item.choice_b,
-                                            checked: _vm._q(
-                                              _vm.answers[index],
-                                              item.choice_b
-                                            )
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              _vm.$set(
-                                                _vm.answers,
-                                                index,
-                                                item.choice_b
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(
-                                          "\n                                                B. " +
-                                            _vm._s(item.choice_b) +
-                                            "\n                                            "
-                                        )
-                                      ]
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", { staticClass: "list-group-item" }, [
+                                    _vm._v(
+                                      "Plegmati = " +
+                                        _vm._s(_vm.result[0].Plegmati) +
+                                        "%"
                                     )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "form-check form-check-inline"
-                                  },
-                                  [
-                                    _c(
-                                      "label",
-                                      { staticClass: "form-check-label" },
-                                      [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.answers[index],
-                                              expression: "answers[index]"
-                                            }
-                                          ],
-                                          staticClass: "form-check-input",
-                                          attrs: { type: "radio" },
-                                          domProps: {
-                                            value: item.choice_c,
-                                            checked: _vm._q(
-                                              _vm.answers[index],
-                                              item.choice_c
-                                            )
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              _vm.$set(
-                                                _vm.answers,
-                                                index,
-                                                item.choice_c
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(
-                                          "\n                                                C. " +
-                                            _vm._s(item.choice_c) +
-                                            "\n                                            "
-                                        )
-                                      ]
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", { staticClass: "list-group-item" }, [
+                                    _vm._v(
+                                      "Kolerik = " +
+                                        _vm._s(_vm.result[0].Kolerik) +
+                                        "%"
                                     )
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("li", [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "form-check form-check-inline"
-                                  },
-                                  [
-                                    _c(
-                                      "label",
-                                      { staticClass: "form-check-label" },
-                                      [
-                                        _c("input", {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: _vm.answers[index],
-                                              expression: "answers[index]"
-                                            }
-                                          ],
-                                          staticClass: "form-check-input",
-                                          attrs: { type: "radio" },
-                                          domProps: {
-                                            value: item.choice_d,
-                                            checked: _vm._q(
-                                              _vm.answers[index],
-                                              item.choice_d
-                                            )
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              _vm.$set(
-                                                _vm.answers,
-                                                index,
-                                                item.choice_d
-                                              )
-                                            }
-                                          }
-                                        }),
-                                        _vm._v(
-                                          "\n                                                D. " +
-                                            _vm._s(item.choice_d) +
-                                            "\n                                            "
-                                        )
-                                      ]
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", { staticClass: "list-group-item" }, [
+                                    _vm._v(
+                                      "Sanguinis = " +
+                                        _vm._s(_vm.result[0].Sanguinis) +
+                                        "%"
                                     )
-                                  ]
-                                )
-                              ])
+                                  ])
+                                ]
+                              )
                             ])
                           ])
                         ])
-                      ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.id_quiz,
+                          expression: "id_quiz"
+                        }
+                      ],
+                      attrs: { type: "hidden" },
+                      domProps: { value: _vm.id_quiz },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.id_quiz = $event.target.value
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._l(_vm.items.quiz_detail, function(item, index) {
+                      return _vm.start
+                        ? _c("div", { key: index }, [
+                            _c("div", { staticClass: "form-group row" }, [
+                              _c(
+                                "label",
+                                {
+                                  staticClass:
+                                    "d-block font-weight-semibold col-md-12"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(index + 1) +
+                                      ". " +
+                                      _vm._s(item.questions)
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-md-12" }, [
+                                _c("ul", { staticClass: "soal" }, [
+                                  _c("li", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-check form-check-inline"
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          { staticClass: "form-check-label" },
+                                          [
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.answers[index],
+                                                  expression: "answers[index]"
+                                                }
+                                              ],
+                                              staticClass: "form-check-input",
+                                              attrs: { type: "radio" },
+                                              domProps: {
+                                                value: [
+                                                  {
+                                                    choice: item.choice_a,
+                                                    id_questions: item.id,
+                                                    type_of_choice:
+                                                      item.type_of_choice_a
+                                                  }
+                                                ],
+                                                checked: _vm._q(
+                                                  _vm.answers[index],
+                                                  [
+                                                    {
+                                                      choice: item.choice_a,
+                                                      id_questions: item.id,
+                                                      type_of_choice:
+                                                        item.type_of_choice_a
+                                                    }
+                                                  ]
+                                                )
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  _vm.$set(_vm.answers, index, [
+                                                    {
+                                                      choice: item.choice_a,
+                                                      id_questions: item.id,
+                                                      type_of_choice:
+                                                        item.type_of_choice_a
+                                                    }
+                                                  ])
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(
+                                              "\n                                                A. " +
+                                                _vm._s(item.choice_a) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-check form-check-inline"
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          { staticClass: "form-check-label" },
+                                          [
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.answers[index],
+                                                  expression: "answers[index]"
+                                                }
+                                              ],
+                                              staticClass: "form-check-input",
+                                              attrs: { type: "radio" },
+                                              domProps: {
+                                                value: [
+                                                  {
+                                                    choice: item.choice_b,
+                                                    id_questions: item.id,
+                                                    type_of_choice:
+                                                      item.type_of_choice_b
+                                                  }
+                                                ],
+                                                checked: _vm._q(
+                                                  _vm.answers[index],
+                                                  [
+                                                    {
+                                                      choice: item.choice_b,
+                                                      id_questions: item.id,
+                                                      type_of_choice:
+                                                        item.type_of_choice_b
+                                                    }
+                                                  ]
+                                                )
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  _vm.$set(_vm.answers, index, [
+                                                    {
+                                                      choice: item.choice_b,
+                                                      id_questions: item.id,
+                                                      type_of_choice:
+                                                        item.type_of_choice_b
+                                                    }
+                                                  ])
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(
+                                              "\n                                                B. " +
+                                                _vm._s(item.choice_b) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-check form-check-inline"
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          { staticClass: "form-check-label" },
+                                          [
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.answers[index],
+                                                  expression: "answers[index]"
+                                                }
+                                              ],
+                                              staticClass: "form-check-input",
+                                              attrs: { type: "radio" },
+                                              domProps: {
+                                                value: [
+                                                  {
+                                                    choice: item.choice_c,
+                                                    id_questions: item.id,
+                                                    type_of_choice:
+                                                      item.type_of_choice_c
+                                                  }
+                                                ],
+                                                checked: _vm._q(
+                                                  _vm.answers[index],
+                                                  [
+                                                    {
+                                                      choice: item.choice_c,
+                                                      id_questions: item.id,
+                                                      type_of_choice:
+                                                        item.type_of_choice_c
+                                                    }
+                                                  ]
+                                                )
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  _vm.$set(_vm.answers, index, [
+                                                    {
+                                                      choice: item.choice_c,
+                                                      id_questions: item.id,
+                                                      type_of_choice:
+                                                        item.type_of_choice_c
+                                                    }
+                                                  ])
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(
+                                              "\n                                                C. " +
+                                                _vm._s(item.choice_c) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("li", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "form-check form-check-inline"
+                                      },
+                                      [
+                                        _c(
+                                          "label",
+                                          { staticClass: "form-check-label" },
+                                          [
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.answers[index],
+                                                  expression: "answers[index]"
+                                                }
+                                              ],
+                                              staticClass: "form-check-input",
+                                              attrs: { type: "radio" },
+                                              domProps: {
+                                                value: [
+                                                  {
+                                                    choice: item.choice_d,
+                                                    id_questions: item.id,
+                                                    type_of_choice:
+                                                      item.type_of_choice_d
+                                                  }
+                                                ],
+                                                checked: _vm._q(
+                                                  _vm.answers[index],
+                                                  [
+                                                    {
+                                                      choice: item.choice_d,
+                                                      id_questions: item.id,
+                                                      type_of_choice:
+                                                        item.type_of_choice_d
+                                                    }
+                                                  ]
+                                                )
+                                              },
+                                              on: {
+                                                change: function($event) {
+                                                  _vm.$set(_vm.answers, index, [
+                                                    {
+                                                      choice: item.choice_d,
+                                                      id_questions: item.id,
+                                                      type_of_choice:
+                                                        item.type_of_choice_d
+                                                    }
+                                                  ])
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(
+                                              "\n                                                D. " +
+                                                _vm._s(item.choice_d) +
+                                                "\n                                            "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ])
+                              ])
+                            ])
+                          ])
+                        : _vm._e()
                     })
                   ],
                   2
                 ),
                 _vm._v(" "),
-                _vm._m(1)
+                _vm.start === false
+                  ? _c("div", { staticClass: "text-right" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "button" },
+                          on: { click: _vm.startTimer }
+                        },
+                        [_vm._v("Start Quiz")]
+                      )
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.start
+                  ? _c("div", { staticClass: "text-right" }, [_vm._m(1)])
+                  : _vm._e()
               ]
             )
           ])
@@ -64719,13 +64922,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-right" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Submit "), _c("i", { staticClass: "icon-paperplane ml-2" })]
-      )
-    ])
+    return _c(
+      "button",
+      { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+      [_vm._v("Submit "), _c("i", { staticClass: "icon-paperplane ml-2" })]
+    )
   }
 ]
 render._withStripped = true

@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Quiz;
 use App\QuizDetail;
+use App\ResultPersonalQuiz;
+use App\ResultPersonalQuizDetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class QuizController extends Controller
@@ -80,6 +84,47 @@ class QuizController extends Controller
 
     public function startQuiz(){
         return view('quiz_personal_test');
+    }
+
+    public function postPersonalQuiz(Request $request)
+    {
+        $resultPersonal = new ResultPersonalQuiz();
+        $resultPersonal->user_id = Auth::user()->id;
+        $resultPersonal->quiz_id = $request->input('id_quiz');
+        $resultPersonal->save();
+
+        $answerData = [];
+        foreach ($request->answers as $key => $answer) {
+            $answerData[] = [
+                'quiz_result_id' => $resultPersonal->id,
+                'question_id' => $answer[0]['id_questions'],
+                'answers' => $answer[0]['choice'],
+                'type_of_choice' => $answer[0]['type_of_choice'] ,
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
+            ];
+        }
+        $resultPersonalDetail = new ResultPersonalQuizDetail();
+
+
+        $insert = $resultPersonalDetail->insert($answerData);
+
+        $getResult = ResultPersonalQuizDetail::select(
+                DB::raw( 'SUM(`type_of_choice` LIKE \'%Melankolis%\') as Melankolis'),
+                DB::raw( 'SUM(`type_of_choice` LIKE \'%Plegmati%\') as Plegmati'),
+                DB::raw( 'SUM(`type_of_choice` LIKE \'%Kolerik%\') as Kolerik'),
+                DB::raw( 'SUM(`type_of_choice` LIKE \'%Sanguinis%\') as Sanguinis')
+            )
+            ->where('quiz_result_id', '=', $resultPersonal->id)
+            ->groupBy('quiz_result_id')
+            ->get();
+
+        return response()->json([
+            'status' => '00',
+            'message' => 'Insert Success',
+            'data' => $getResult,
+        ]);
+
     }
 
 }
