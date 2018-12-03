@@ -58,58 +58,42 @@
 
                             <div class="form-group row">
                                 <label class="col-form-label col-lg-2">Pertanyaan</label>
-                                <div class="col-lg-10">
+                                <div class="col-lg-9">
                                     <input type="text" class="form-control" v-model="question.pertanyaan"  required>
+                                </div>
+                                <div class="col-lg-1">
+                                    <select class="form-control" v-model="question.kunci_paten" required>
+                                        <option value="">Kunci Jawaban</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                    </select>
                                 </div>
                             </div>
                             <div >
                                 <div class="form-group row">
                                     <label class="col-form-label col-lg-2">Pilihan A</label>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="questions[index].choice_a" required>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <select class="form-control" v-model="questions[index].kunci_a" required>
-                                            <option value="">Kunci Jawaban</option>
-                                            <option value="true">True</option>
-                                            <option value="false">False</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-lg-2">Pilihan B</label>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="questions[index].choice_b" required>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <select class="form-control" v-model="questions[index].kunci_b" required>
-                                            <option value="true">True</option>
-                                            <option value="false">False</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-lg-2">Pilihan C</label>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="questions[index].choice_c" required>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <select class="form-control" v-model="questions[index].kunci_c" required>
-                                            <option value="true">True</option>
-                                            <option value="false">False</option>
-                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-form-label col-lg-2">Pilihan D</label>
-                                    <div class="col-lg-9">
+                                    <div class="col-lg-10">
                                         <input type="text" class="form-control" v-model="questions[index].choice_d" required>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <select class="form-control" v-model="questions[index].kunci_d" required>
-                                            <option value="true">True</option>
-                                            <option value="false">False</option>
-                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -135,21 +119,18 @@
             return {
                 alert: false,
                 alert_info: '',
-                waktu_pengerjaan: 90,
-                title: 'dsa',
-                sort_description: 'sad',
+                waktu_pengerjaan: '',
+                title: '',
+                sort_description: '',
                 choice:[],
                 questions:[
                     {
+                        kunci_paten:'',
                         pertanyaan:'',
                         choice_a:'',
                         choice_b:'',
                         choice_c:'',
-                        choice_d:'',
-                        kunci_a:true,
-                        kunci_b:false,
-                        kunci_c:false,
-                        kunci_d:false,
+                        choice_d:''
                     }
                 ],
                 pertinyiin : []
@@ -166,24 +147,31 @@
             },
             sumbitForm: function () {
                 this.questions.forEach((a, index) => {
+                    let kunci_paten = '';
+                    if (a.kunci_paten === 'A') {
+                        kunci_paten = a.choice_a;
+                    }else if (a.kunci_paten === 'B') {
+                        kunci_paten = a.choice_b;
+                    }else if (a.kunci_paten === 'C') {
+                        kunci_paten = a.choice_c;
+                    }else if (a.kunci_paten === 'D') {
+                        kunci_paten = a.choice_d
+                    }
                     this.pertinyiin[index] = {
                         'pertanyaan': a.pertanyaan,
+                        'kunci_paten': kunci_paten,
                         'pilihan': [
                             {
                                 'value': a.choice_a,
-                                'kunci': a.kunci_a
                             },
                             {
                                 'value': a.choice_b,
-                                'kunci': a.kunci_b
                             },
                             {
                                 'value': a.choice_c,
-                                'kunci': a.kunci_c
                             },
                             {
                                 'value': a.choice_d,
-                                'kunci': a.kunci_d
                             }
                         ]
                     };

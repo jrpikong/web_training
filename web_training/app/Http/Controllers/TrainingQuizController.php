@@ -33,19 +33,18 @@ class TrainingQuizController extends Controller
         $training_quizzes->title = $title;
         $training_quizzes->sort_description = $sort_description;
         $training_quizzes->save();
-
         $quiz_choice = [];
         foreach ($questions as $key => $question) {
             $TrainingQuizQuestion = new TrainingQuizQuestion();
             $TrainingQuizQuestion->quiz_id = $training_quizzes->id;
             $TrainingQuizQuestion->question = $question['pertanyaan'];
+            $TrainingQuizQuestion->correct_answer = $question['kunci_paten'];
             $TrainingQuizQuestion->save();
 
             foreach ($question['pilihan'] as $value) {
                 $quiz_choice[] = [
                     'question_id' => $TrainingQuizQuestion->id,
-                    'choice' => $value['value'],
-                    'correct_answer' => $value['kunci']
+                    'choice' => $value['value']
                 ];
             }
         }
