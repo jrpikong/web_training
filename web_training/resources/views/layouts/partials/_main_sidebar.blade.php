@@ -61,6 +61,13 @@
                         <span>Training</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('history_training') }}" class="nav-link">
+                        <i class="icon-accessibility"></i>
+                        <span>History Training</span>
+                    </a>
+                </li>
                 @if(Auth::user()->id == 10)
                     <li class="nav-item">
                         <a href="{{ route('list_quiz') }}" class="nav-link">

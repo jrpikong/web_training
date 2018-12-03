@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Training;
 use App\TrainingQuiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TrainingController extends Controller
 {

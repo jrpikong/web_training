@@ -26,10 +26,10 @@
                 @if($trainings)
                     @foreach($trainings as $key => $training)
                         <tr>
-                            <td> {{ $key + 1 }} </td>
+                            <td width="100"> {{ $key + 1 }} </td>
                             <td> {{ $training->training_name }} </td>
                             <td> {{ $training->difficulty }} </td>
-                            <td> {{ $training->descriptions}} </td>
+                            <td width="400"> {{ $training->descriptions }} </td>
                             <td>
                                 <div class="btn-group ml-2">
                                     <button type="button" class="btn btn-info btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></button>

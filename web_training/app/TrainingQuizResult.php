@@ -12,4 +12,9 @@ class TrainingQuizResult extends Model
         'grade',
         'repeat',
     ];
+
+    public function quiz()
+    {
+        return $this->belongsTo(Training::class, 'quiz_id', 'id');
+    }
 }
