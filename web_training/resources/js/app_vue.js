@@ -22,6 +22,7 @@ Vue.component('start-quiz', require('./components/Front/StartQuiz'));
 Vue.component('form-product', require('./components/Admin/Products/FormProduct'));
 Vue.component('follow-training-quiz', require('./components/user/FollowTrainingQuiz'));
 Vue.component('training-quiz-form', require('./components/Admin/Training/TrainingQuizForm'));
+Vue.component('training-quiz-edit', require('./components/Admin/Training/TrainingQuizEdit'));
 
 const app_vue = new Vue({
     el: '#app'
