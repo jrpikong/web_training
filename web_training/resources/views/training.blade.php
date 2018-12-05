@@ -11,6 +11,17 @@
             </div>
         </div>
 
+        @if ($message = Session::get('success'))
+
+            <div class="alert alert-success alert-block">
+
+                <button type="button" class="close" data-dismiss="alert">×</button>
+
+                <strong>{{ $message }}</strong>
+
+            </div>
+
+        @endif
         <div class="table-responsive" style=" min-height: 500px">
             <table class="table table-xs table-bordered">
                 <thead>
@@ -37,8 +48,14 @@
 
                                     <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, -2px, 0px);">
                                         <a href="{{route('add_quiz_training',$training->id)}}" class="dropdown-item">Add Quiz</a>
-                                        <a href="#" class="dropdown-item">Edit</a>
-                                        <a href="#" class="dropdown-item">Delete</a>
+                                        <a href="{{ route('edit_quiz',$training->id) }}" class="dropdown-item">Edit Quiz</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a href="{{ route('edit_training',$training->id) }}" class="dropdown-item">Edit Training</a>
+                                        <form action="{{ route('delete_training', $training->id)}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="dropdown-item" type="submit">Delete Training</button>
+                                        </form>
                                     </div>
                                 </div>
                                 @endif

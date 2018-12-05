@@ -20,6 +20,11 @@ class TrainingQuizController extends Controller
         return view('admin.training.quiz_training_form',compact('id_training'));
     }
 
+    public function edit($id)
+    {
+        $training_quiz = TrainingQuiz::where('training_id',$id)->first();
+        return view('admin.training.edit_quiz',compact('training_quiz'));
+    }
     public function SubmitQuizTraining(Request $request){
         $waktu = $request->waktu_pengerjaan;
         $title = $request->title;
