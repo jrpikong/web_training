@@ -66662,7 +66662,7 @@ var moment = __webpack_require__(0);
             description: true,
             start: false,
             date: '',
-            waktu: '',
+            waktu: 0,
             questionIndex: 0,
             questions: [],
             userResponses: [],
@@ -66823,7 +66823,7 @@ var render = function() {
                   _c("i", { staticClass: "icon-alarm" }),
                   _c("vue-countdown", {
                     attrs: {
-                      seconds: Number(_vm.waktu * 60),
+                      seconds: Number(_vm.training.time * 60),
                       start: _vm.start
                     },
                     on: { "time-expire": _vm.handleTimeExpire }

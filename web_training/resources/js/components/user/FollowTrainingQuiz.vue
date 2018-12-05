@@ -17,7 +17,7 @@
             <div class="card-header bg-white header-elements-inline">
                 <h4 class="card-title"> Soal ke {{ questionIndex + 1 }} dari {{ questions.length }}</h4>
                 <div class="header-elements">
-                    <h4><i class="icon-alarm"></i><vue-countdown v-on:time-expire="handleTimeExpire" :seconds="Number(waktu * 60)" :start="start"></vue-countdown></h4>
+                    <h4><i class="icon-alarm"></i><vue-countdown v-on:time-expire="handleTimeExpire" :seconds="Number(training.time * 60)" :start="start"></vue-countdown></h4>
                 </div>
             </div>
 
@@ -77,7 +77,7 @@
                 description: true,
                 start: false,
                 date:'',
-                waktu:'',
+                waktu:0,
                 questionIndex:0,
                 questions:[],
                 userResponses:[],
@@ -95,8 +95,8 @@
                 this.start = true;
                 axios.get('/get_training_quiz/'+this.training.id).then((response)=>{
                     this.questions = response.data.data
-                });
 
+                });
             },
             handleTimeExpire () {
                 alert('Time is up!');
