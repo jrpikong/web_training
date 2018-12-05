@@ -46,7 +46,7 @@ class TrainingController extends Controller
         $trainingModel->descriptions = $request->input('descriptions');
         if ($request->file_module) {
             $request->validate([
-                'file_module' => 'file|max:1024',
+                'file_module' => 'file|max:5120',
             ]);
             $fileName = "module".time().'.'.request()->file_module->getClientOriginalExtension();
             $pathName = $request->file_module->storeAs('public/training',$fileName);
@@ -78,7 +78,7 @@ class TrainingController extends Controller
     public function submitTraining(Request $request)
     {
         $request->validate([
-            'file_module' => 'required|file|max:1024',
+            'file_module' => 'required|file|max:5120',
         ]);
 
         $fileName = "module".time().'.'.request()->file_module->getClientOriginalExtension();
