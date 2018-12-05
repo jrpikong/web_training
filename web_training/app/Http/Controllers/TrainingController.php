@@ -6,6 +6,7 @@ use App\Training;
 use App\TrainingQuiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TrainingController extends Controller
 {
@@ -48,9 +49,8 @@ class TrainingController extends Controller
                 'file_module' => 'file|max:1024',
             ]);
             $fileName = "module".time().'.'.request()->file_module->getClientOriginalExtension();
-
             $pathName = $request->file_module->storeAs('public/training',$fileName);
-            $trainingModel->file_module = $pathName;
+            $trainingModel->file_module = 'training/'.$fileName;
         }
 
         $trainingModel->status = $request->input('status');
@@ -82,14 +82,13 @@ class TrainingController extends Controller
         ]);
 
         $fileName = "module".time().'.'.request()->file_module->getClientOriginalExtension();
-
         $pathName = $request->file_module->storeAs('public/training',$fileName);
 
         $trainingModel = new Training();
         $trainingModel->training_name = $request->input('training_name');
         $trainingModel->difficulty = $request->input('diffiluct');
         $trainingModel->descriptions = $request->input('descriptions');
-        $trainingModel->file_module = $pathName;
+        $trainingModel->file_module = 'training/'.$fileName;
         $trainingModel->status = $request->input('status');
         $trainingModel->save();
 
