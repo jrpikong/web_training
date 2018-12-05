@@ -10,26 +10,81 @@
         <div class="row justify-content-center pt-1 pb-4 mb-3">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">{{ __('Term And Condition') }}</div>
+                    <div class="card-header">{{ __('PERJANJIAN FREELANCE SAMSUNG STUDENT AMBASADOR') }}</div>
 
                     <div class="card-body">
-                        <h3>What is Lorem Ipsum?</h3>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        @php $dateNow = \Carbon\Carbon::now()->format('d-F-Y'); @endphp
+                        <p>Pada hari ini, tanggal  <b>{{$dateNow }}</b> yang bertandatangan di bawah ini : </p>
 
-                        <h3>Why do we use it?</h3>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                        <p>Nama			: <b>Nelly Magdalena</b> </p>
+                        <p>Jabatan			: <b>Sr. Manager HRD PT. ACCENTUATES</b> </p>
+                        <p>Alamat			: <b>Gedung Satrio Tower Lt. 10, Jl. Prof. Dr. Satrio Kav.1-4 Blok C4 Jakarta 12950</b></p>
+                        <p>Selanjutnya di sebut sebagai <b>PIHAK PERTAMA</b> (perwakilan dari PT. Accentuates )</p>
 
+                        <p>Nama : <b>{{ Auth::user()->name }}</b></p>
+                        <p>Tempat / Tanggal Lahir : <b>{{ Auth::user()->place_of_birth }} {{ Auth::user()->birth_date }}</b></p>
+                        <p>Alamat sesuai KTP: <b>{{ Auth::user()->address }}</b></p>
+                        <p>No. HP: <b>{{ Auth::user()->phone_number }}</b></p>
+                        <p>Nama Universitas: <b>{{ Auth::user()->university }}</b></p>
+                        <p>Jurusan: <b>{{ Auth::user()->majors }}</b></p>
+                        <p>Tahun Masuk: <b>{{ Auth::user()->entry_year }}</b></p>
 
-                        <h3>Where does it come from?</h3>
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                        <p>Selanjutnya disebut sebagai <b><b>PIHAK KEDUA</b></b> (Freelancer)</p>
+                        <p>
+                            Dengan ini PIHAK PERTAMA dan <b>PIHAK KEDUA</b> sepakat untuk memenuhi ketentuan-ketentuan dalam perjanjian sebagaimana yang tercantum di dalam pasal-pasal berikut ini:
+                        </p>
 
-                            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                        <h4 class="text-center">Pasal 1</h4>
+                        <h4 class="text-center">Kesepakatan</h4>
+                        <p>
+                            PIHAK PERTAMA bersedia menerima <b>PIHAK KEDUA</b> sebagai peserta Program Samsung Student Ambasador dan <b>PIHAK KEDUA</b> menyatakan kesediaannya untuk mengikuti Program Samsung Student Ambasador yang dilaksanakan oleh PIHAK PERTAMA.
+                        </p>
 
+                        <h4 class="text-center">Pasal 2</h4>
+                        <h4 class="text-center">Masa Kerja</h4>>
+                        <p>
+                            Pelaksanaan Kerja yang lakukan oleh <b>PIHAK PERTAMA</b> kepada <b>PIHAK KEDUA</b> selama 3 (tiga) Bulan, yang di mulai pada tanggal {{$dateNow}} sampai dengan 26 Desember 2018.
+                        </p>
 
-                        <h3>Where does it come from?</h3>
-                        <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                        <h4 class="text-center">Pasal 3</h4>
+                        <h4 class="text-center">Hak & Kewajiban Pihak Pertama</h4>>
+                        {{--<p>--}}
+                            <ol>
+                                <li><b>PIHAK PERTAMA</b> merupakan Vendor dari PT. Samsung Elektronik Indonesia, dan <b>PIHAK PERTAMA</b> mempunyai kewajiban untuk mencari Peserta Program yang bersedia untuk Samsung Student Ambasador dengan syarat dan ketentuan yang berlaku.</li>
+                                <li><b>PIHAK PERTAMA</b> akan membayar setiap hak-hak yang telah di berikan oleh PT. Samsung Elektronik Indonesia kepada <b>PIHAK KEDUA</b> sesuai jadwal yang ditentukan.</li>
+                                <li><b>PIHAK PERTAMA</b> akan memberikan Penilaian kepada Hasil Kerja dari Peserta Program yang akan di evaluasi secara berkala.</li>
+                                <li>Setiap Personal Samsung Student Ambasador wajib membawa nama baik Brand SAMSUNG dan Agency PT Accentuates.</li>
+                                <li>Setiap bulan Team Samsung Student Ambasador akan direview atas hasil penjualannya.</li>
+                                <li>Bagi yang tidak aktif (tidak ada penjualan selama 3 bulan) akan di Non Aktifkan ID nya untuk di stop tunjangan pulsa / paket datanya serta tidak berlaku untuk insentif penjualan selanjutnya.</li>
+                            </ol>
 
-                            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                        <h4 class="text-center">Pasal 4</h4>
+                        <h4 class="text-center">
+                            Hak & Kewajiban dari Pihak Kedua
+                        </h4>
+                        <ol>
+                            <li><b>PIHAK KEDUA</b> bersedia untuk menjadi Partner PT. Samsung Elektronik Indonesia untuk melakukan proses penjualan online melalui “Blibli” dimana <b>PIHAK KEDUA</b> berhak mendapatkan pengajaran materi penjualan dari Pihak Samsung dan berhak atas insentif dari penjualan tersebut.</li>
+                            <li>Selama masa program <b>PIHAK KEDUA</b> wajib mengikuti ketentuan yang berlaku sesuai dengan aturan yang telah diberikan oleh <b>PIHAK PERTAMA</b>. </li>
+                            <li>
+                                <p>3. <b>PIHAK KEDUA</b> berhak untuk mendapatkan benefit sebagai berikut: </p>
+                                <p>• Tunjangan Pulsa	: Rp. 100.000,-/bulan</p>
+                                <p>• Insentif : sesuai pencapaian penjualan</p>
+
+                            </li>
+                        </ol>
+                        <p>
+                            Hasil kerja dari <b>PIHAK KEDUA</b> akan di evaluasi oleh <b>PIHAK PERTAMA</b> secara berkala.
+                        </p>
+                        <p class="text-center">Pasal 5</p>
+                        <p>
+                            Setelah masa program (pasal 2 diatas) berakhir, maka berakhir pula perjanjian ini dan tidak ada kewajiban atau tuntutan dari <b>PIHAK PERTAMA</b> dan <b>PIHAK KEDUA</b> terhadap perjanjian program ini.
+                        </p>
+                        <h4 class="text-center">Pasal 6</h4>
+                        <h4 class="text-center">Penutup</h4>
+
+                        <p>Perjanjian ini dibuat oleh <b>PIHAK PERTAMA</b> dan <b>PIHAK KEDUA</b> tanpa ada paksaan dari Pihak manapun dan di tandatangani dengan adanya Kesepakatan Bersama serta dibuat rangkap 2 (dua).</p>
+
+                        <p class="text-right"><b>Jakarta, {{$dateNow}} </b></p>
 
                         <div class="text-right">
                             <form method="POST" action="{{ route('term_and_condition_pos') }}" enctype="multipart/form-data">

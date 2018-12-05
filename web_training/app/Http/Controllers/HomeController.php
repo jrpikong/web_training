@@ -44,6 +44,15 @@ class HomeController extends Controller
 
     public function term_and_condition_post(Request $request)
     {
+        $this->validate($request, [
+            'photo' => 'mimes:jpeg,png,bmp,tiff |max:4096',
+        ],
+            $messages = [
+                'required' => 'The :attribute field is required.',
+                'mimes' => 'Only jpeg, png, bmp,tiff are allowed.'
+            ]
+        );
+
         if($request->has('img_digital_signature') === true){
             $user = Auth::user();
             $user->status = 1;

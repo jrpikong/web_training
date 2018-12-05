@@ -33,16 +33,16 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Tipe Kuis</label>
-                        <div class="col-lg-10">
-                            <select name="type" class="form-control form-control-uniform" v-model="tipe_kuis" required>
-                                <option value="">Tipe Kuis</option>
-                                <option value="Personal Test">Personal Test</option>
-                                <option value="Training Tes">Training Tes</option>
-                            </select>
-                        </div>
-                    </div>
+                    <!--<div class="form-group row">-->
+                        <!--<label class="col-form-label col-lg-2">Tipe Kuis</label>-->
+                        <!--<div class="col-lg-10">-->
+                            <!--<select name="type" class="form-control form-control-uniform" v-model="tipe_kuis" required>-->
+                                <!--<option value="">Tipe Kuis</option>-->
+                                <!--<option value="Personal Test">Personal Test</option>-->
+                                <!--<option value="Training Tes">Training Tes</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
 
                 </fieldset>
 
@@ -76,28 +76,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="row">
-                                    <label class="col-form-label col-lg-4">Kunci Jawaban</label>
-                                    <div class="col-lg-8">
-                                        <select class="form-control form-control-uniform"  v-model="question.jawaban" name="questions[][jawaban]" required>
-                                            <option value="">Isi Kunci Jawaban</option>
-                                            <option value="A">A</option>
-                                            <option value="B">B</option>
-                                            <option value="C">C</option>
-                                            <option value="D">D</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <!--<div class="col-md-4">-->
+                                <!--<div class="row">-->
+                                    <!--<label class="col-form-label col-lg-4">Kunci Jawaban</label>-->
+                                    <!--<div class="col-lg-8">-->
+                                        <!--<select class="form-control form-control-uniform"  v-model="question.jawaban" name="questions[][jawaban]" required>-->
+                                            <!--<option value="">Isi Kunci Jawaban</option>-->
+                                            <!--<option value="A">A</option>-->
+                                            <!--<option value="B">B</option>-->
+                                            <!--<option value="C">C</option>-->
+                                            <!--<option value="D">D</option>-->
+                                        <!--</select>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
                         </div>
-                        <div class="form-group row">
-                            <label class="col-form-label col-lg-2">Pertanyaan</label>
-                            <div class="col-lg-10">
-                                <input type="text" class="form-control" v-model="question.pertanyaan" name="questions[][pertanyaan]" required>
-                            </div>
-                        </div>
+                        <!--<div class="form-group row">-->
+                            <!--<label class="col-form-label col-lg-2">Pertanyaan</label>-->
+                            <!--<div class="col-lg-10">-->
+                                <!--<input type="text" class="form-control" v-model="question.pertanyaan" name="questions[][pertanyaan]" required>-->
+                            <!--</div>-->
+                        <!--</div>-->
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Pilihan A</label>
                             <div class="col-lg-9">
@@ -179,12 +179,12 @@
                 message: '',
                 waktu_pengerjaan: '',
                 status_kuis: '',
-                tipe_kuis: '',
+                tipe_kuis: 'Personal Test',
                 questions:[],
                 question: {
                     status_soal: '',
-                    jawaban: '',
-                    pertanyaan: '',
+                    jawaban: 'A',
+                    pertanyaan: '-',
                     pilihan_a: '',
                     type_of_choice_a: 'Sanguinis',
                     pilihan_b: '',

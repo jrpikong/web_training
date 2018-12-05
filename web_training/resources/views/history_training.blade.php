@@ -18,18 +18,17 @@
                     <th>#</th>
                     <th>Date</th>
                     <th>Training Name</th>
-                    <th>Difficulty</th>
                     <th>Skor</th>
                 </tr>
                 </thead>
                 <tbody>
                 @if($histories)
                     @foreach($histories as $key => $history)
+                        {{--@dd($history)--}}
                         <tr>
                             <td> {{ $key + 1 }} </td>
                             <td> {{ $history->created_at}} </td>
-                            <td> {{ $history->quiz->training_name }} </td>
-                            <td> {{ $history->quiz->difficulty }} </td>
+                            <td> {{ $history->quiz->title }} </td>
                             <td> {{ $history->grade}} </td>
                         </tr>
                     @endforeach

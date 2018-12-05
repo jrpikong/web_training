@@ -15,6 +15,6 @@ class TrainingQuizResult extends Model
 
     public function quiz()
     {
-        return $this->belongsTo(Training::class, 'quiz_id', 'id');
+        return $this->belongsTo(TrainingQuiz::class, 'quiz_id', 'id');
     }
 }

@@ -15,8 +15,8 @@ class QuizController extends Controller
 {
     public function index()
     {
-
-        return view('admin.quiz.index');
+        $quizzes = Quiz::all();
+        return view('admin.quiz.index',compact('quizzes'));
     }
 
     public function form()
@@ -83,7 +83,8 @@ class QuizController extends Controller
 
 
     public function startQuiz(){
-        return view('quiz_personal_test');
+        $data = ResultPersonalQuiz::where('user_id','=',Auth::user()->id)->first();
+        return view('quiz_personal_test',compact('data'));
     }
 
     public function postPersonalQuiz(Request $request)
@@ -92,7 +93,7 @@ class QuizController extends Controller
         $resultPersonal->user_id = Auth::user()->id;
         $resultPersonal->quiz_id = $request->input('id_quiz');
         $resultPersonal->save();
-
+//        dd('ds');
         $answerData = [];
         foreach ($request->answers as $key => $answer) {
             $answerData[] = [

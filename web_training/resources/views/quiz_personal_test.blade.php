@@ -1,7 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <start-quiz></start-quiz>
+    @if($data)
+        <div class="card my-3">
+            <div class="card-header header-elements-inline">
+                <h5 class="card-title">SSA Personal Training </h5>
+            </div>
+            <div class="card-body">
+                <h1 class="text-center"> Maaf Anda Sudah Pernah Mengikuti Test Ini</h1>
+            </div>
+        </div>
+    @else
+        <start-quiz></start-quiz>
+    @endif
 @endsection
 
 

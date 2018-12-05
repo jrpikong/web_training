@@ -54,7 +54,17 @@
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-4">
-                                <input id="date" type="text" placeholder="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" required autofocus>
+                                {{--<input id="date" type="text" placeholder="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" required autofocus>--}}
+                                <select id="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" required>
+                                    @php
+                                    $now = time();
+                                    $days = '';
+                                    @endphp
+                                    @foreach(range(1, 31) as $day)
+                                        @php $selected = ($day == date('j', $now)) ? ' selected="selected"' : ''; @endphp
+                                        <option value="{{ $day}} {{$selected}}">{{$day}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-4">
                                 <select id="month" class="form-control{{ $errors->has('month') ? ' is-invalid' : '' }}" name="month" value="{{ old('month') }}" required autofocus>
@@ -73,7 +83,17 @@
                                 </select>
                             </div>
                             <div class="col-md-4">
-                                <input id="year" type="text" placeholder="year" class="form-control{{ $errors->has('year') ? ' is-invalid' : '' }}" name="year" value="{{ old('year') }}" required autofocus>
+                                <select id="year" class="form-control{{ $errors->has('year') ? ' is-invalid' : '' }}" name="year" required autofocus>
+                                    @php
+                                        $years = '';
+                                        $startyear = '1980'; // This year
+                                        $endyear = date('Y', mktime(0,0,0,0,0,date('Y')-15)); // Three years ahead
+                                    @endphp
+                                    @foreach(range($startyear, $endyear) as $year) {
+                                        @php $selected = ($year == date('Y', $now)) ? 'selected="selected"' : ''; @endphp
+                                        <option value="{{$year}} {{$selected}}">{{ $year }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -197,16 +217,14 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Last Education') }}</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('EDUCATIONAL STATUS') }}</label>
 
                     <div class="col-md-6">
                         <div>
                             <select id="lulusan" class="form-control{{ $errors->has('lulusan') ? ' is-invalid' : '' }}" name="lulusan" value="{{ old('lulusan') }}" required autofocus>
-                                <option value="">choose your educational degree</option>
-                                <option value="D3">D3</option>
-                                <option value="S1">S1</option>
-                                <option value="S2">S2</option>
-
+                                <option value="">choose your educational status</option>
+                                <option value="student">student</option>
+                                <option value="fresh graduated">fresh graduated</option>
                             </select>
                             @if ($errors->has('lulusan'))
                                 <span class="invalid-feedback" role="alert">
@@ -265,6 +283,7 @@
                         <div style="margin-top: 15px">
                             <select id="grade_point_average" class="form-control{{ $errors->has('grade_point_average') ? ' is-invalid' : '' }}" name="grade_point_average" value="{{ old('grade_point_average') }}" required autofocus>
                                 <option value="">choose your grade point average</option>
+                                <option value="New Student">New Student</option>
                                 <option value="< 2">< 2</option>
                                 <option value="2 - 2,5">2 - 2,5</option>
                                 <option value="> 2,5 - 3">> 2,5 - 3</option>
@@ -311,14 +330,14 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('ID Identity') }}</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('ID Identity (KTP)') }}</label>
 
                     <div class="col-md-6">
-                        <input id="id_identity" type="text" placeholder="fill your id identity" class="form-control{{ $errors->has('id_identity') ? ' is-invalid' : '' }}" name="id_identity" value="{{ old('id_identity') }}" required autofocus>
+                        <input id="id_identity" type="text" placeholder="fill your id identity (nomor KTP)" class="form-control{{ $errors->has('id_identity') ? ' is-invalid' : '' }}" name="id_identity" value="{{ old('id_identity') }}" required autofocus>
                         @if ($errors->has('id_identity'))
                             <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('id_identity') }}</strong>
-                                        </span>
+                                <strong>{{ $errors->first('id_identity') }}</strong>
+                            </span>
                         @endif
                     </div>
                 </div>
@@ -350,7 +369,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image Identity Card') }}</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image Identity Card  (KTP)') }}</label>
 
                     <div class="col-md-6">
                         <input id="img_identity" type="file" class="form-control{{ $errors->has('img_identity') ? ' is-invalid' : '' }}" name="img_identity" value="{{ old('img_identity') }}" required autofocus>
@@ -363,10 +382,10 @@
                 </div>
 
                 <div class="form-group row">
-                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image NPWP') }}</label>
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Image NPWP (if you have)') }}</label>
 
                     <div class="col-md-6">
-                        <input id="img_npwp" type="file" class="form-control{{ $errors->has('img_npwp') ? ' is-invalid' : '' }}" name="img_npwp" value="{{ old('img_npwp') }}" required autofocus>
+                        <input id="img_npwp" type="file" class="form-control{{ $errors->has('img_npwp') ? ' is-invalid' : '' }}" name="img_npwp" value="{{ old('img_npwp') }}" autofocus>
                         @if ($errors->has('img_npwp'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('img_npwp') }}</strong>

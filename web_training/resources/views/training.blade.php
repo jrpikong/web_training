@@ -5,9 +5,11 @@
         <div class="card-header header-elements-inline">
             <h5 class="card-title">SSA Training</h5>
             <div class="header-elements">
-                <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
-                    <li class="page-item"><a href="{{route('add_training')}}" class="page-link"><i class="icon-file-plus2"></i> Add New</a></li>
-                </ul>
+                @if(Auth::user()->id == 10)
+                    <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
+                        <li class="page-item"><a href="{{route('add_training')}}" class="page-link"><i class="icon-file-plus2"></i> Add New</a></li>
+                    </ul>
+                @endif
             </div>
         </div>
 

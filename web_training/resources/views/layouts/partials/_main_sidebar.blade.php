@@ -51,7 +51,7 @@
                 <li class="nav-item">
                     <a href="{{ route('start_quiz') }}" class="nav-link">
                         <i class="icon-lab"></i>
-                        <span>Kuis</span>
+                        <span>Test Kepribadian</span>
                     </a>
                 </li>
 

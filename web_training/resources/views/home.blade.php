@@ -23,11 +23,13 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-4 text-center">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4>Personality Test</h4>
+                            <a href="{{ route('start_quiz') }}">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4>Personality Test</h4>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-md-4 text-center">
                             <div class="card">
