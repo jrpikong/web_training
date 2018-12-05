@@ -33,6 +33,11 @@ class ProductController extends Controller
         return view('admin.products.form_add',compact('id'));
     }
 
+    public function update(Request $request,$id)
+    {
+        $n = $request->file('productImages');
+        dd($n);
+    }
     public function store(Request $request)
     {
         Log::info($request);

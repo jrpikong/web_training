@@ -20,6 +20,7 @@ Vue.component('list-quiz', require('./components/Admin/Quiz/ListQuiz'));
 Vue.component('form-quiz', require('./components/Admin/Quiz/FormQuiz'));
 Vue.component('start-quiz', require('./components/Front/StartQuiz'));
 Vue.component('form-product', require('./components/Admin/Products/FormProduct'));
+Vue.component('edit-form-product', require('./components/Admin/Products/EditFormProduct'));
 Vue.component('follow-training-quiz', require('./components/user/FollowTrainingQuiz'));
 Vue.component('training-quiz-form', require('./components/Admin/Training/TrainingQuizForm'));
 

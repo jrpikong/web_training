@@ -4,7 +4,12 @@
     @php
         $id = (isset($id)) ? $id : '';
     @endphp
-    <form-product :id="'{!! $id !!}'"></form-product>
+
+    @if(isset($id))
+        <edit-form-product :id="'{!! $id !!}'"></edit-form-product>
+    @else
+        <form-product :id="'{!! $id !!}'"></form-product>
+    @endif
 @endsection
 
 

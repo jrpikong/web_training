@@ -31,6 +31,7 @@
                             <td> {{ $training->difficulty }} </td>
                             <td width="400"> {{ $training->descriptions }} </td>
                             <td>
+                                @if(Auth::user()->id == 10)
                                 <div class="btn-group ml-2">
                                     <button type="button" class="btn btn-info btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></button>
 
@@ -40,6 +41,7 @@
                                         <a href="#" class="dropdown-item">Delete</a>
                                     </div>
                                 </div>
+                                @endif
 
                                 <a class="" href="{{route('follow_training',$training->id)}}">Ikuti Training</a>
 
