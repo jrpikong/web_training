@@ -32,14 +32,13 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Diffiluct</label>
+                    <label class="col-form-label col-lg-2">Category</label>
                     <div class="col-lg-10">
                         <select name="diffiluct" class="form-control" required>
-                            <option value="Beginner">Beginner</option>
-                            <option value="Intermediate">Intermediate</option>
-                            <option value="Advanced">Advanced</option>
-                            <option value="Expert">Expert</option>
-                            <option value="Master">Master</option>
+                            <option value="">Select Category</option>
+                            <option value="SSA Knowledge">SSA Knowledge</option>
+                            <option value="Product Knowledge">Product Knowledge</option>
+                            <option value="Selling Skill">Selling Skill</option>
                         </select>
                     </div>
                 </div>

@@ -42,14 +42,13 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Diffiluct</label>
+                        <label class="col-form-label col-lg-2">Category</label>
                         <div class="col-lg-10">
                             <select name="diffiluct" class="form-control" required>
-                                <option value="Beginner" @if($training->difficulty=="Beginner") selected @endif>Beginner</option>
-                                <option value="Intermediate" @if($training->difficulty=="Intermediate") selected @endif>Intermediate</option>
-                                <option value="Advanced" @if($training->difficulty=="Advanced") selected @endif>Advanced</option>
-                                <option value="Expert" @if($training->difficulty=="Expert") selected @endif>Expert</option>
-                                <option value="Master" @if($training->difficulty=="Master") selected @endif>Master</option>
+                                <option value="">Select Category</option>
+                                <option value="SSA Knowledge" @if($training->difficulty=="SSA Knowledge") selected @endif>SSA Knowledge</option>
+                                <option value="Product Knowledge" @if($training->difficulty=="Product Knowledge") selected @endif>Product Knowledge</option>
+                                <option value="Selling Skill" @if($training->difficulty=="Selling Skill") selected @endif>Selling Skill</option>
                             </select>
                         </div>
                     </div>
