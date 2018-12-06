@@ -92,12 +92,12 @@
                             <!--</div>-->
 
                         </div>
-                        <!--<div class="form-group row">-->
-                            <!--<label class="col-form-label col-lg-2">Pertanyaan</label>-->
-                            <!--<div class="col-lg-10">-->
-                                <!--<input type="text" class="form-control" v-model="question.pertanyaan" name="questions[][pertanyaan]" required>-->
-                            <!--</div>-->
-                        <!--</div>-->
+                        <div class="form-group row">
+                            <label class="col-form-label col-lg-2">Pertanyaan</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" v-model="question.pertanyaan" name="questions[][pertanyaan]" required>
+                            </div>
+                        </div>
                         <div class="form-group row">
                             <label class="col-form-label col-lg-2">Pilihan A</label>
                             <div class="col-lg-9">
@@ -184,7 +184,7 @@
                 question: {
                     status_soal: '',
                     jawaban: 'A',
-                    pertanyaan: '-',
+                    pertanyaan: '',
                     pilihan_a: '',
                     type_of_choice_a: 'Sanguinis',
                     pilihan_b: '',
