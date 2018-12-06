@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    @php
-        $id = (isset($id)) ? $id : '';
-    @endphp
-
     @if(isset($id))
+        @php
+            $id = (isset($id)) ? $id : '';
+        @endphp
         <edit-form-product :id="'{!! $id !!}'"></edit-form-product>
     @else
-        <form-product :id="'{!! $id !!}'"></form-product>
+        <form-product :id="0"></form-product>
     @endif
 @endsection
 

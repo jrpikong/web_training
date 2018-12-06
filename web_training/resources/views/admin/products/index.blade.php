@@ -32,7 +32,16 @@
                                 <td> Rp. {{ number_format($product->price,2) }} </td>
                                 <td> {{ $product->sort_descriptions}} </td>
                                 <td> {{ $product->product_category->category_name }} </td>
-                                <td> <a class="" href="{{route('edit_product',$product->id)}}">Edit</a> </td>
+                                <td>
+                                    <a class="btn btn-outline-danger" href="{{route('edit_product',$product->id)}}" class="">
+                                        <i class="icon-pencil4 mr-2"></i>
+                                        Edit</a>
+                                    <form action="{{ route('delete_product', $product->id)}}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-outline-danger" type="submit"><i class="icon-database-remove mr-2"></i>Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     @endif

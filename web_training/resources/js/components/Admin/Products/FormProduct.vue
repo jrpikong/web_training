@@ -41,7 +41,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Descriptions</label>
                         <div class="col-lg-10">
-                            <textarea class="form-control" v-model="descriptions" required></textarea>
+                            <ckeditor type="classic" v-model="descriptions" :upload-adapter="UploadAdapter"></ckeditor>
                         </div>
                     </div>
 
@@ -125,20 +125,30 @@
 </template>
 
 <script>
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+    import VueCkeditor from 'vue-ckeditor5'
+    const options = {
+        editors: {
+            classic: ClassicEditor,
+        },
+        name: 'ckeditor'
+    }
+
+    Vue.use(VueCkeditor.plugin, options);
+
     export default {
         name: "FormProduct",
-        props: ['id'],
         data () {
             return {
                 product_id: '',
-                categories:[],
+                categories: [],
                 product_name: '',
                 product_category: '',
                 price: '',
                 sort_descriptions: '',
                 descriptions: '',
-                productImages:[],
-                productTecnologyImages:[],
+                productImages: [],
+                productTecnologyImages: [],
                 spesifications: [
                     {
                         key: '',
@@ -146,14 +156,33 @@
                     }
                 ],
             }
+
         },
         created() {
             this.getCategories()
-            if(this.id !==''){
-                this.getProduct()
-            }
         },
         methods: {
+            UploadAdapter: function (loader) {
+                this.loader = loader
+                this.upload = () => {
+                    const body = new FormData();
+                    console.log(body)
+                    body.append('file', this.loader.file);
+                    return axios.post('/uploadFile', {
+                        body: body,
+                    }).then(response =>{
+                        console.log(response);
+                        return {default: response.data};
+                            // return downloadUrl
+                    })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+                this.abort = () => {
+                    console.log('Abort upload.')
+                }
+            },
             addNewQuestions: function () {
                 this.spesifications.push(Vue.util.extend({},this.spec))
             },
@@ -165,23 +194,6 @@
                     this.alert = true;
                     if(response.data){
                         this.categories = response.data.data;
-
-                    }
-                });
-            },
-            getProduct: function(){
-                this.product_id = this.id;
-                axios.get('/admin/get_product/' + this.id).then((response) => {
-                    this.alert = true;
-                    if(response.data){
-                        this.product_name = response.data.data.products.product_name;
-                        this.product_category = response.data.data.products.category_id;
-                        this.price = response.data.data.products.price;
-                        this.sort_descriptions = response.data.data.products.sort_descriptions;
-                        this.descriptions = response.data.data.products.descriptions;
-                        this.spesifications =JSON.parse(response.data.data.products.spesifications);
-                        this.productImages =  response.data.data.product_images;
-                        this.productTecnologyImages =  response.data.data.product_tecnology_images;
 
                     }
                 });

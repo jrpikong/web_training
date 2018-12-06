@@ -17,7 +17,7 @@
     </div>
     <div class="container">
         <div class="row pt-1 pb-4 mb-3">
-            <form method="POST" action="{{ route('register') }}" class="contact-form custom-contact-form-style-1" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('register') }}" class="contact-form custom-contact-form-style-1 col-md-12" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-group row">

@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
         /*Product*/
         Route::get('/list_product', 'ProductController@index')->name('list_product');
+        Route::delete('/delete_product/{id}', 'ProductController@destroy')->name('delete_product');
         Route::get('/add_product', 'ProductController@add')->name('add_product');
         Route::get('/edit_product/{id}', 'ProductController@edit')->name('edit_product');
         Route::put('/update_product/{id}', 'ProductController@update')->name('update_product');
@@ -68,3 +69,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get_training_quiz/{id}', 'TrainingQuizController@getTrainingQuiz')->name('get_training_quiz');
     Route::post('/post_quiz', 'TrainingQuizController@postQuiz')->name('post_quiz');
 });
+
+Route::post('uploadFile', 'ProductController@uploadMedia');

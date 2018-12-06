@@ -33,6 +33,22 @@ class ProductController extends Controller
         return view('admin.products.form_add',compact('id'));
     }
 
+    public function destroy($id)
+    {
+        $product = Product::find($id);
+        $product->delete();
+
+        try {
+            return back()->with('success','You have successfully delete Product.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error delete Product.');
+        }
+    }
+
+    public function uploadMedia(Request $request)
+    {
+        return 'http://203.142.68.250:17888/porto/img/slides/slide-corporate-7-1.jpg';
+    }
     public function update(Request $request,$id)
     {
         $n = $request->file('productImages');
