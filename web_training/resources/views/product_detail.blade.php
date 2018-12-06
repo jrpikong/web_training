@@ -95,6 +95,7 @@
                                                 </div>
                                             </div>
                                         @endforeach
+
                                     </div>
                                 </div>
 
@@ -102,6 +103,7 @@
                                     <button type="button" role="presentation" class="owl-prev"></button>
                                     <button type="button" role="presentation" class="owl-next"></button>
                                 </div>
+                                <iframe style="width: 100%; height: 500px; object-fit: cover"  src="https://www.youtube.com/embed/{{$product->product_video}}?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
 
                             </div>
                         </div>

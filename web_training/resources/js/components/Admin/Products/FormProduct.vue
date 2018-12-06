@@ -41,7 +41,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Descriptions</label>
                         <div class="col-lg-10">
-                            <ckeditor type="classic" v-model="descriptions" :upload-adapter="UploadAdapter"></ckeditor>
+                            <ckeditor type="classic" style="height: 200px;" v-model="descriptions" :upload-adapter="UploadAdapter"></ckeditor>
                         </div>
                     </div>
 
@@ -84,6 +84,21 @@
                                 </div>
                                 <div class="col-md-2">
                                     <!--<button type="button" v-on:click="addImageTecnologyProducts()" class="btn btn-file">Add Files</button>-->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-2">
+                            <label class="col-form-label">Video</label>
+                        </div>
+                        <div class="col-md-10">
+
+                            <div class="form-group row">
+                                <div class="col-md-10">
+                                    <input id="productVideo" ref="productVideo" placeholder="input url terakhir youtube ex: mx_dolESHco" type="text" multiple class="form-control" v-model="product_video"/>
                                 </div>
                             </div>
                         </div>
@@ -149,6 +164,7 @@
                 descriptions: '',
                 productImages: [],
                 productTecnologyImages: [],
+                product_video: '',
                 spesifications: [
                     {
                         key: '',
@@ -251,6 +267,7 @@
                 formData.append('product_category',this.product_category);
                 formData.append('price', this.price);
                 formData.append('sort_descriptions', this.sort_descriptions);
+                formData.append('product_video', this.product_video);
                 formData.append('descriptions',this.descriptions);
                 formData.append('spesifications', JSON.stringify(this.spesifications));
                 /*
@@ -277,3 +294,9 @@
         }
     }
 </script>
+
+<style>
+    .ck-editor__editable {
+        min-height: 400px;
+    }
+</style>

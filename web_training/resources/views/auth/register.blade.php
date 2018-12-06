@@ -319,7 +319,11 @@
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Bank Account') }}</label>
 
                     <div class="col-md-6">
-                        <input id="bank_account" type="text" placeholder="fill your bank account prefer BANK MANDIRI" class="form-control{{ $errors->has('bank_account') ? ' is-invalid' : '' }}" name="bank_account" value="{{ old('bank_account') }}" required autofocus>
+                        <select class="form-control" id="bankType">
+                            <option value="Mandiri">Mandiri</option>
+                            <option value="Others">Others</option>
+                        </select>
+                        <input id="bank_account" type="text" placeholder="fill your bank account prefer BANK MANDIRI" class="mt-2 form-control{{ $errors->has('bank_account') ? ' is-invalid' : '' }}" name="bank_account" value="{{ old('bank_account') }}">
 
                         @if ($errors->has('bank_account'))
                             <span class="invalid-feedback" role="alert">
@@ -447,6 +451,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <script>
         $(document).ready(function () {
+            $('#bankType').change(function () {
+                if(this.value === 'Others') {
+                    $('#bank_account').hide();
+                }else {
+                    $('#bank_account').show();
+                }
+            });
             $('#province_of_birth').select2();
             const provinces = $('#provinces')
             const cities = $('#cities')

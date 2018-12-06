@@ -63,6 +63,7 @@ class ProductController extends Controller
         $product->category_id = $request->input('product_category');
         $product->price = $request->input('price');
         $product->sort_descriptions = $request->input('sort_descriptions');
+        $product->product_video = $request->input('product_video');
         $product->descriptions = $request->input('descriptions');
         $product->spesifications =$request->input('spesifications');
         $product->save();
