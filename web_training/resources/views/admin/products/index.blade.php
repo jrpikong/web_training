@@ -33,9 +33,9 @@
                                 <td> {{ $product->sort_descriptions}} </td>
                                 <td> {{ $product->product_category->category_name }} </td>
                                 <td>
-                                    <a class="btn btn-outline-danger" href="{{route('edit_product',$product->id)}}" class="">
-                                        <i class="icon-pencil4 mr-2"></i>
-                                        Edit</a>
+                                    {{--<a class="btn btn-outline-danger" href="{{route('edit_product',$product->id)}}" class="">--}}
+                                        {{--<i class="icon-pencil4 mr-2"></i>--}}
+                                        {{--Edit</a>--}}
                                     <form action="{{ route('delete_product', $product->id)}}" method="post">
                                         @csrf
                                         @method('DELETE')
