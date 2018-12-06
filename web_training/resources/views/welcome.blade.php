@@ -12,66 +12,66 @@
                          data-bgrepeat="no-repeat"
                          class="rev-slidebg">
 
-                    <div class="tp-caption"
-                         data-x="center" data-hoffset="['-165','-165','-165','-215']"
-                         data-y="center" data-voffset="['-110','-110','-110','-135']"
-                         data-start="1000"
-                         data-transform_in="x:[-300%];opacity:0;s:500;"
-                         data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>
+                    {{--<div class="tp-caption"--}}
+                         {{--data-x="center" data-hoffset="['-165','-165','-165','-215']"--}}
+                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
+                         {{--data-start="1000"--}}
+                         {{--data-transform_in="x:[-300%];opacity:0;s:500;"--}}
+                         {{--data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>--}}
 
-                    <div class="tp-caption text-color-light font-weight-normal"
-                         data-x="center"
-                         data-y="center" data-voffset="['-110','-110','-110','-135']"
-                         data-start="700"
-                         data-fontsize="['22','22','22','40']"
-                         data-lineheight="['25','25','25','45']"
-                         data-transform_in="y:[-50%];opacity:0;s:500;">WE ROCK AND WE MAKE</div>
+                    {{--<div class="tp-caption text-color-light font-weight-normal"--}}
+                         {{--data-x="center"--}}
+                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
+                         {{--data-start="700"--}}
+                         {{--data-fontsize="['22','22','22','40']"--}}
+                         {{--data-lineheight="['25','25','25','45']"--}}
+                         {{--data-transform_in="y:[-50%];opacity:0;s:500;">WE ROCK AND WE MAKE</div>--}}
 
-                    <div class="tp-caption"
-                         data-x="center" data-hoffset="['165','165','165','215']"
-                         data-y="center" data-voffset="['-110','-110','-110','-135']"
-                         data-start="1000"
-                         data-transform_in="x:[300%];opacity:0;s:500;"
-                         data-transform_idle="opacity:0.1;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>
+                    {{--<div class="tp-caption"--}}
+                         {{--data-x="center" data-hoffset="['165','165','165','215']"--}}
+                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
+                         {{--data-start="1000"--}}
+                         {{--data-transform_in="x:[300%];opacity:0;s:500;"--}}
+                         {{--data-transform_idle="opacity:0.1;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>--}}
 
-                    <h1 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"
-                        data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                        data-x="center"
-                        data-y="center" data-voffset="['-60','-60','-60','-85']"
-                        data-fontsize="['50','50','50','90']"
-                        data-lineheight="['55','55','55','95']">AWESOME DESIGNS</h1>
+                    {{--<h1 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"--}}
+                        {{--data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
+                        {{--data-x="center"--}}
+                        {{--data-y="center" data-voffset="['-60','-60','-60','-85']"--}}
+                        {{--data-fontsize="['50','50','50','90']"--}}
+                        {{--data-lineheight="['55','55','55','95']">AWESOME DESIGNS</h1>--}}
 
-                    <div class="tp-caption font-weight-light text-center"
-                         data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
-                         data-x="center"
-                         data-y="center" data-voffset="['-10','-10','-10','-25']"
-                         data-fontsize="['18','18','18','50']"
-                         data-lineheight="['29','29','29','40']"
-                         style="color: #b5b5b5;">Porto is a huge success in the of one of the world’s largest MarketPlace.</div>
+                    {{--<div class="tp-caption font-weight-light text-center"--}}
+                         {{--data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'--}}
+                         {{--data-x="center"--}}
+                         {{--data-y="center" data-voffset="['-10','-10','-10','-25']"--}}
+                         {{--data-fontsize="['18','18','18','50']"--}}
+                         {{--data-lineheight="['29','29','29','40']"--}}
+                         {{--style="color: #b5b5b5;">Porto is a huge success in the of one of the world’s largest MarketPlace.</div>--}}
 
-                    <a class="tp-caption btn btn-light font-weight-bold text-color-primary"
-                       href="/login"
-                       data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                       data-x="center" data-hoffset="['-120','-120','-120','-195']"
-                       data-y="center" data-voffset="['65','65','65','210']"
-                       data-paddingtop="['15','15','15','30']"
-                       data-paddingbottom="['15','15','15','30']"
-                       data-paddingleft="['33','33','33','50']"
-                       data-paddingright="['33','33','33','50']"
-                       data-fontsize="['13','13','13','25']"
-                       data-lineheight="['20','20','20','25']">LOGIN</a>
+                    {{--<a class="tp-caption btn btn-light font-weight-bold text-color-primary"--}}
+                       {{--href="/login"--}}
+                       {{--data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
+                       {{--data-x="center" data-hoffset="['-120','-120','-120','-195']"--}}
+                       {{--data-y="center" data-voffset="['65','65','65','210']"--}}
+                       {{--data-paddingtop="['15','15','15','30']"--}}
+                       {{--data-paddingbottom="['15','15','15','30']"--}}
+                       {{--data-paddingleft="['33','33','33','50']"--}}
+                       {{--data-paddingright="['33','33','33','50']"--}}
+                       {{--data-fontsize="['13','13','13','25']"--}}
+                       {{--data-lineheight="['20','20','20','25']">LOGIN</a>--}}
 
-                    <a class="tp-caption btn btn-primary font-weight-bold"
-                       href="/register"
-                       data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                       data-x="center" data-hoffset="['90','90','90','165']"
-                       data-y="center" data-voffset="['65','65','65','210']"
-                       data-paddingtop="['15','15','15','30']"
-                       data-paddingbottom="['15','15','15','30']"
-                       data-paddingleft="['33','33','33','50']"
-                       data-paddingright="['33','33','33','50']"
-                       data-fontsize="['13','13','13','25']"
-                       data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>
+                    {{--<a class="tp-caption btn btn-primary font-weight-bold"--}}
+                       {{--href="/register"--}}
+                       {{--data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
+                       {{--data-x="center" data-hoffset="['90','90','90','165']"--}}
+                       {{--data-y="center" data-voffset="['65','65','65','210']"--}}
+                       {{--data-paddingtop="['15','15','15','30']"--}}
+                       {{--data-paddingbottom="['15','15','15','30']"--}}
+                       {{--data-paddingleft="['33','33','33','50']"--}}
+                       {{--data-paddingright="['33','33','33','50']"--}}
+                       {{--data-fontsize="['13','13','13','25']"--}}
+                       {{--data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>--}}
 
                 </li>
                 <li class="slide-overlay" data-transition="fade">
@@ -82,54 +82,54 @@
                          data-bgrepeat="no-repeat"
                          class="rev-slidebg">
 
-                    <div class="tp-caption"
-                         data-x="center" data-hoffset="['-115','-115','-115','-185']"
-                         data-y="center" data-voffset="['-110','-110','-110','-135']"
-                         data-start="1000"
-                         data-transform_in="x:[-300%];opacity:0;s:500;"
-                         data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>
+                    {{--<div class="tp-caption"--}}
+                         {{--data-x="center" data-hoffset="['-115','-115','-115','-185']"--}}
+                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
+                         {{--data-start="1000"--}}
+                         {{--data-transform_in="x:[-300%];opacity:0;s:500;"--}}
+                         {{--data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>--}}
 
-                    <div class="tp-caption text-color-light font-weight-normal"
-                         data-x="center"
-                         data-y="center" data-voffset="['-110','-110','-110','-135']"
-                         data-start="700"
-                         data-fontsize="['22','22','22','40']"
-                         data-lineheight="['25','25','25','45']"
-                         data-transform_in="y:[-50%];opacity:0;s:500;">HELLO, THIS IS</div>
+                    {{--<div class="tp-caption text-color-light font-weight-normal"--}}
+                         {{--data-x="center"--}}
+                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
+                         {{--data-start="700"--}}
+                         {{--data-fontsize="['22','22','22','40']"--}}
+                         {{--data-lineheight="['25','25','25','45']"--}}
+                         {{--data-transform_in="y:[-50%];opacity:0;s:500;">HELLO, THIS IS</div>--}}
 
-                    <div class="tp-caption"
-                         data-x="center" data-hoffset="['115','115','115','185']"
-                         data-y="center" data-voffset="['-110','-110','-110','-135']"
-                         data-start="1000"
-                         data-transform_in="x:[300%];opacity:0;s:500;"
-                         data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>
+                    {{--<div class="tp-caption"--}}
+                         {{--data-x="center" data-hoffset="['115','115','115','185']"--}}
+                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
+                         {{--data-start="1000"--}}
+                         {{--data-transform_in="x:[300%];opacity:0;s:500;"--}}
+                         {{--data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>--}}
 
-                    <div class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"
-                         data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                         data-x="center"
-                         data-y="center" data-voffset="['-60','-60','-60','-85']"
-                         data-fontsize="['50','50','50','90']"
-                         data-lineheight="['55','55','55','95']">PORTO HTML TEMPLATE</div>
+                    {{--<div class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"--}}
+                         {{--data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
+                         {{--data-x="center"--}}
+                         {{--data-y="center" data-voffset="['-60','-60','-60','-85']"--}}
+                         {{--data-fontsize="['50','50','50','90']"--}}
+                         {{--data-lineheight="['55','55','55','95']">PORTO HTML TEMPLATE</div>--}}
 
-                    <div class="tp-caption font-weight-light text-center"
-                         data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'
-                         data-x="center"
-                         data-y="center" data-voffset="['-10','-10','-10','-25']"
-                         data-fontsize="['18','18','18','50']"
-                         data-lineheight="['29','29','29','40']"
-                         style="color: #b5b5b5;">Trusted by over <strong>30,000</strong> satisfied users.</div>
+                    {{--<div class="tp-caption font-weight-light text-center"--}}
+                         {{--data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'--}}
+                         {{--data-x="center"--}}
+                         {{--data-y="center" data-voffset="['-10','-10','-10','-25']"--}}
+                         {{--data-fontsize="['18','18','18','50']"--}}
+                         {{--data-lineheight="['29','29','29','40']"--}}
+                         {{--style="color: #b5b5b5;">Trusted by over <strong>30,000</strong> satisfied users.</div>--}}
 
-                    <a class="tp-caption btn btn-primary font-weight-bold"
-                       href="/register"
-                       data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'
-                       data-x="center"
-                       data-y="center" data-voffset="['65','65','65','210']"
-                       data-paddingtop="['15','15','15','30']"
-                       data-paddingbottom="['15','15','15','30']"
-                       data-paddingleft="['33','33','33','50']"
-                       data-paddingright="['33','33','33','50']"
-                       data-fontsize="['13','13','13','25']"
-                       data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>
+                    {{--<a class="tp-caption btn btn-primary font-weight-bold"--}}
+                       {{--href="/register"--}}
+                       {{--data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
+                       {{--data-x="center"--}}
+                       {{--data-y="center" data-voffset="['65','65','65','210']"--}}
+                       {{--data-paddingtop="['15','15','15','30']"--}}
+                       {{--data-paddingbottom="['15','15','15','30']"--}}
+                       {{--data-paddingleft="['33','33','33','50']"--}}
+                       {{--data-paddingright="['33','33','33','50']"--}}
+                       {{--data-fontsize="['13','13','13','25']"--}}
+                       {{--data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>--}}
 
                 </li>
             </ul>
@@ -213,15 +213,15 @@
             <div class="row align-items-center justify-content-center justify-content-lg-between pb-5 pb-lg-0">
                 <div class="col-lg-5 order-2 order-lg-1 pt-4 pt-lg-0 pb-5 pb-lg-0 mt-5 mt-lg-0 appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="200">
                     <h2 class="font-weight-bold text-color-light text-7 mb-2">JOIN SAMSUNG STUDENT AMBASADOR</h2>
-                    <p class="lead font-weight-light text-color-light text-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit massa enim. Nullam id varius nunc.</p>
-                    <p class="font-weight-light text-color-light text-2 mb-4 opacity-7">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus blandit massa enim. Nullam id varius nunc. Vivamus bibendun magna ex, et faucibus lacus venenatis eget</p>
+                    <p class="lead font-weight-light text-color-light text-4">Kesempatan membangun mental.</p>
+                    <p class="font-weight-light text-color-light text-2 mb-4 opacity-7">Kesempatan membangun mental entrepreneurship dan memperoleh penghasilan yang lumayan bagi para mahasiswa atau yang fresh graduate.</p>
                     <a href="#" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
                 </div>
                 <div class="col-md-6 col-lg-5 offset-lg-1 order-1 order-lg-2 scale-2">
                     <div class="owl-carousel owl-theme nav-style-1 stage-margin mb-0" data-plugin-options="{'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 1}, '1200': {'items': 1}}, 'margin': 25, 'loop': true, 'nav': true, 'dots': false, 'stagePadding': 40}">
                         <div class="p-4">
                             <div class="videoWrapper">
-                                <iframe style="width: 100%; height: auto; object-fit: cover"  src="https://www.youtube.com/embed/U1qLerI9Kzo?rel=0&hd=1&autoplay=1&modestbranding=1" allowfullscreen></iframe>
+                                <iframe style="width: 100%; height: auto; object-fit: cover"  src="https://www.youtube.com/embed/U1qLerI9Kzo?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
                             </div>
                         </div>
                         <div class="p-4">

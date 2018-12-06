@@ -47,12 +47,13 @@ class ProductController extends Controller
 
     public function uploadMedia(Request $request)
     {
-        return 'http://203.142.68.250:17888/porto/img/slides/slide-corporate-7-1.jpg';
+        $fileName = "desc".time().'.'.request()->file->getClientOriginalExtension();
+        $pathName = $request->file->storeAs('public/img_descriptions',$fileName);
+        return '/storage/img_descriptions/'.$fileName;
     }
     public function update(Request $request,$id)
     {
         $n = $request->file('productImages');
-        dd($n);
     }
     public function store(Request $request)
     {

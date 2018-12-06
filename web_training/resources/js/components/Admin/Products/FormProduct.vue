@@ -166,10 +166,12 @@
                 this.loader = loader
                 this.upload = () => {
                     const body = new FormData();
-                    console.log(body)
                     body.append('file', this.loader.file);
-                    return axios.post('/uploadFile', {
-                        body: body,
+                    return axios.post('/uploadFile',body,{
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+
+                        }
                     }).then(response =>{
                         console.log(response);
                         return {default: response.data};
