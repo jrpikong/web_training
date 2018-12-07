@@ -113,11 +113,11 @@
                                                     Product
                                                 </a>
                                             </li>
-                                            <li class="dropdown">
-                                                <a class="dropdown-item dropdown-toggle" href="#">
-                                                    FAQ
-                                                </a>
-                                            </li>
+                                            {{--<li class="dropdown">--}}
+                                                {{--<a class="dropdown-item dropdown-toggle" href="#">--}}
+                                                    {{--FAQ--}}
+                                                {{--</a>--}}
+                                            {{--</li>--}}
                                             <li class="dropdown">
                                                 <a class="dropdown-item dropdown-toggle" href="/login">
                                                     Login
