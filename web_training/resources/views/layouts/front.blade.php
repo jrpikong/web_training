@@ -53,6 +53,26 @@
     <!-- Head Libs -->
     <script src="{{asset('porto/vendor/modernizr/modernizr.min.js')}}"></script>
 
+    <!-- WhatsHelp.io widget -->
+    <script type="text/javascript">
+        (function () {
+            var options = {
+                whatsapp: "+6287888015988", // WhatsApp number
+                company_logo_url: "//warungkomputer.com/wp-content/uploads/2018/12/logo-wa.png", // URL of company logo (png, jpg, gif)
+                greeting_message: "Hello.. ada yang bisa kami bantu?", // Text of greeting message
+                call_to_action: "Klik disini untuk bertanya!", // Call to action
+                button_color: "#FF6550", // Color of button
+                position: "right", // Position may be 'right' or 'left'
+                order: "whatsapp,call" // Order of buttons
+            };
+            var proto = document.location.protocol, host = "whatshelp.io", url = proto + "//static." + host;
+            var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = url + '/widget-send-button/js/init.js';
+            s.onload = function () { WhWidgetSendButton.init(host, proto, options); };
+            var x = document.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x);
+        })();
+    </script>
+    <!-- /WhatsHelp.io widget -->
+
 
 </head>
 <body>
