@@ -4,7 +4,7 @@
     <div class="slider-container rev_slider_wrapper" style="height: 100vh;">
         <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'sliderLayout': 'fullscreen', 'delay': 9000, 'gridwidth': 1170, 'gridheight': 700, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }}">
             <ul>
-                <li class="slide-overlay" data-transition="fade">
+                <li class="" data-transition="fade">
                     <img src="{{asset('porto/img/slides/slide-corporate-7-1.jpg')}}"
                          alt=""
                          data-bgposition="center center"
@@ -74,7 +74,7 @@
                        {{--data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>--}}
 
                 </li>
-                <li class="slide-overlay" data-transition="fade">
+                <li class="" data-transition="fade">
                     <img src="{{asset('porto/img/slides/slide-corporate-7-2.jpg')}}"
                          alt=""
                          data-bgposition="center center"
@@ -296,40 +296,5 @@
             </div>
         </div>
     </section>
-
-    <div class="container">
-        <div class="row py-5 my-5">
-            <div class="col">
-
-                <div class="owl-carousel owl-theme mb-0" data-plugin-options="{'responsive': {'0': {'items': 1}, '476': {'items': 1}, '768': {'items': 5}, '992': {'items': 7}, '1200': {'items': 7}}, 'autoplay': true, 'autoplayTimeout': 3000, 'dots': false}">
-                    <div>
-                        <img class="img-fluid opacity-2" src="{{asset('porto/img/logos/logo-1.png')}}" alt="">
-                    </div>
-                    <div>
-                        <img class="img-fluid opacity-2" src="{{asset('porto/img/logos/logo-2.png')}}" alt="">
-                    </div>
-                    <div>
-                        <img class="img-fluid opacity-2" src="{{asset('porto/img/logos/logo-3.png')}}" alt="">
-                    </div>
-                    <div>
-                        <img class="img-fluid opacity-2" src="{{asset('porto/img/logos/logo-4.png')}}" alt="">
-                    </div>
-                    <div>
-                        <img class="img-fluid opacity-2" src="{{asset('porto/img/logos/logo-5.png')}}" alt="">
-                    </div>
-                    <div>
-                        <img class="img-fluid opacity-2" src="{{asset('porto/img/logos/logo-6.png')}}" alt="">
-                    </div>
-                    <div>
-                        <img class="img-fluid opacity-2" src="{{asset('porto/img/logos/logo-4.png')}}" alt="">
-                    </div>
-                    <div>
-                        <img class="img-fluid opacity-2" src="{{asset('porto/img/logos/logo-2.png')}}" alt="">
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 @endsection
