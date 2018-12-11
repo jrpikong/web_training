@@ -50,6 +50,7 @@
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block">{{ __('Login') }} <i class="icon-circle-right2 ml-2"></i></button>
+                    <a href="/" class="btn btn-danger btn-block">{{ __('Cancel') }} <i class="icon-circle-left2 ml-2"></i></a>
                 </div>
             </div>
         </div>
