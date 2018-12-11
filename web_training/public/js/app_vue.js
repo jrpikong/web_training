@@ -66991,7 +66991,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: { click: _vm.handleResults }
                   },
-                  [_vm._v("Kirim Jawaban")]
+                  [_vm._v("Selesai & Lihat Hasil")]
                 )
               ]
             )

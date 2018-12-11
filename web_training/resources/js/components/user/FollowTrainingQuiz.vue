@@ -48,7 +48,7 @@
                 </ul>
 
                 <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
-                    <button type="button" v-show="(questionIndex + 1) === questions.length" class="btn bg-blue" v-on:click="handleResults">Kirim Jawaban</button>
+                    <button type="button" v-show="(questionIndex + 1) === questions.length" class="btn bg-blue" v-on:click="handleResults">Selesai & Lihat Hasil</button>
                 </ul>
             </div>
         </div>
