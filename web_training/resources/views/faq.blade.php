@@ -27,53 +27,45 @@
                 <section class="toggle">
                     <label>Bagaimana cara join Samsung Student Ambassador ?</label>
                     <p>
-                        <ol>
-                            <li>Status mahasiswa aktif atau baru lulus kuliah</li>
-                            <li>Registrasi melalui http://samsungstudentambassador.com dan mentandatangani perjanjian freelance sebagai Samsung Student Ambassador (sebelum ditandatangani mohon untuk dibaca dan memahami perjanjian freelance tersebut)</li>
-                        </ol>
+                        1. Status mahasiswa aktif atau baru lulus kuliah <br>
+                        2. Registrasi melalui http://samsungstudentambassador.com dan mentandatangani perjanjian freelance sebagai Samsung Student Ambassador (sebelum ditandatangani mohon untuk dibaca dan memahami perjanjian freelance tersebut)
                     </p>
                 </section>
 
                 <section class="toggle">
                     <label>Apa keuntungan/benefit join Samsung Student Ambassador?</label>
                     <p>
-                        <ol>
-                            <li>menjadi bagian dari perusahaan samsung (10 perusahaan terbaik dunia)</li>
-                            <li>mendapatkan pengalaman sebelum terjun ke dunia kerja</li>
-                            <li>meningkatkan semangat entrepeneur</li>
-                            <li>meningkatkan kepercayaan diri</li>
-                            <li>berkesempatan bergabung dengan perusahaan samsung setelah lulus kuliah</li>
-                            <li>waktu yang fleksibel</li>
-                            <li>mendapatkan pendapatan tambahan sampai Rp 5 juta atau lebih setiap bulannya</li>
-                        </ol>
+                        1. menjadi bagian dari perusahaan samsung (10 perusahaan terbaik dunia)<br>
+                        2. mendapatkan pengalaman sebelum terjun ke dunia kerja<br>
+                        3. meningkatkan semangat entrepeneur<br>
+                        4. meningkatkan kepercayaan diri<br>
+                        5. berkesempatan bergabung dengan perusahaan samsung setelah lulus kuliah<br>
+                        6. waktu yang fleksibel<br>
+                        7. mendapatkan pendapatan tambahan sampai Rp 5 juta atau lebih setiap bulannya<br>
                     </p>
                 </section>
 
                 <section class="toggle">
                     <label>Apa job desk SSA ?</label>
                     <p>
-                        <ol>
-                            <li>mengikuti training product knowladge dan selling skill yang sudah di sediakan web Samsung Student Ambassador</li>
-                            <li>mengetahui info promo produk yang sedang berjalan</li>
-                            <li>aktif menawarkan produk elektronik untuk menarik pelanggan untuk transaksi</li>
-                            <li>melakukan transaksi hanya melalui microsite samsung student ambassador (link khusus)</li>
-                            <li>melakukan report transaksi kepada admin</li>
-                        </ol>
+                        1. mengikuti training product knowladge dan selling skill yang sudah di sediakan web Samsung Student Ambassador<br>
+                        2. mengetahui info promo produk yang sedang berjalan<br>
+                        3. aktif menawarkan produk elektronik untuk menarik pelanggan untuk transaksi<br>
+                        4. melakukan transaksi hanya melalui microsite samsung student ambassador (link khusus)<br>
+                        5. melakukan report transaksi kepada admin<br>
                     </p>
                 </section>
 
                 <section class="toggle">
                     <label>Bagaimana cara transaksi melalui Samsung Student Ambassador ?</label>
                     <p>
-                        <ol>
-                            <li>klik link https://www.blibli.com/promosi/pel-student-promotor-samsung</li>
-                            <li>pilih produk yang mau di beli dan pilih beli sekarang</li>
-                            <li>masukan akun Blibli jika belum login dan jika belum ada akun blibli registrasi terlebih dahulu</li>
-                            <li>masukan alamat lengkap pembeli untuk pengiriman produk beserta nomor telpon yang aktif</li>
-                            <li>klik lanjutkan pembayaran</li>
-                            <li>pilih metode pembayaran (kartu kredit, kartu debit, cicilan tanpa kartu kredit, internet banking, kredivo, transfer, uang elektronik, pospay) kemudian klik bayar sekarang</li>
-                            <li>transaksi berhasil dan akan muncul kode pesanan serta akan mendapatkan email pemesanan produk</li>
-                        </ol>
+                        1. klik link https://www.blibli.com/promosi/pel-student-promotor-samsung<br>
+                        2. pilih produk yang mau di beli dan pilih beli sekarang<br>
+                        3. masukan akun Blibli jika belum login dan jika belum ada akun blibli registrasi terlebih dahulu<br>
+                        4. masukan alamat lengkap pembeli untuk pengiriman produk beserta nomor telpon yang aktif<br>
+                        5. klik lanjutkan pembayaran<br>
+                        6. pilih metode pembayaran (kartu kredit, kartu debit, cicilan tanpa kartu kredit, internet banking, kredivo, transfer, uang elektronik, pospay) kemudian klik bayar sekarang<br>
+                        7. transaksi berhasil dan akan muncul kode pesanan serta akan mendapatkan email pemesanan produk<br>
                     </p>
                 </section>
 
@@ -81,22 +73,22 @@
                     <label>Berapa besar insentif yang diperoleh ?</label>
                     <p>
                         <span>Skema insentif baru</span>
-                        <ul>
-                            <li>1 unit - Rp.4,9jt = Rp.300rb</li>
-                            <li>Rp.5jt - Rp.7,49jt = Rp.400rb</li>
-                            <li>Rp.7,5 - Rp.9,9jt = Rp.600rb</li>
-                            <li>Rp.10jt ke atas = 10% X sell out</li>
-                        </ul>
+                        - 1 unit - Rp.4,9jt = Rp.300rb<br>
+                        - Rp.5jt - Rp.7,49jt = Rp.400rb<br>
+                        - Rp.7,5 - Rp.9,9jt = Rp.600rb<br>
+                        - Rp.10jt ke atas = 10% X sell out<br>
                     </p>
                 </section>
 
                 <section class="toggle">
                     <label>Bagaimana cara klaim insentif yang diterima ?</label>
-                    <p>Report penjualan produk ke admin dengan format</p>
-                    <p>Tanggal transaksi :</p>
-                    <p>Kode pesanan :</p>
-                    <p>Nama produk :</p>
-                    <p>Harga produk :</p>
+                    <p>
+                        - Report penjualan produk ke admin dengan format<br>
+                        - Tanggal transaksi :<br>
+                        - Kode pesanan :<br>
+                        - Nama produk :<br>
+                        - Harga produk :<br>
+                    </p>
                 </section>
 
             </div>
