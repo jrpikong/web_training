@@ -1,8 +1,12 @@
 @extends('layouts.front')
 
 @section('content')
-    <section class="page-header page-header-modern page-header-background page-header-background-sm custom-page-header parallax mt-0" data-plugin-parallax data-plugin-options="{'speed': 1.5}" data-image-src="{{asset('porto/img/slides/black_bg.png')}}">
+    <section class="page-header page-header-modern bg-color-primary page-header-md">
+        <div class="container">
+            <div class="row">
 
+            </div>
+        </div>
     </section>
     <div class="container">
         <div class="row">

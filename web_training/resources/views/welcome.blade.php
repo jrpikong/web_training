@@ -135,6 +135,7 @@
             </ul>
         </div>
     </div>
+
     <div class="home-intro mb-0" id="home-intro">
         <div class="container">
 
@@ -201,21 +202,21 @@
                 </div>
             </div>
         </div>
-        <div class="row pb-5 mb-5 mt-3">
+        <div class="row pb-5 mb-2 mt-2">
             <div class="col text-center">
                 <a href="#" class="btn btn-primary btn-px-5 py-3 font-weight-semibold text-2 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">LEARN MORE</a>
             </div>
         </div>
     </div>
 
-    <section class="section section-secondary border-0 py-0 m-0 appear-animation" data-appear-animation="fadeIn">
+    <section class="section section-no-border row mt-5 mb-5 pt-5 pb-5" data-appear-animation="fadeIn">
         <div class="container">
             <div class="row align-items-center justify-content-center justify-content-lg-between pb-5 pb-lg-0">
                 <div class="col-lg-5 order-2 order-lg-1 pt-4 pt-lg-0 pb-5 pb-lg-0 mt-5 mt-lg-0 appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="200">
-                    <h2 class="font-weight-bold text-color-light text-7 mb-2">JOIN SAMSUNG STUDENT AMBASADOR</h2>
-                    <p class="lead font-weight-light text-color-light text-4">Kesempatan membangun mental.</p>
-                    <p class="font-weight-light text-color-light text-2 mb-4 opacity-7">Kesempatan membangun mental entrepreneurship dan memperoleh penghasilan yang lumayan bagi para mahasiswa atau yang fresh graduate.</p>
-                    <a href="#" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
+                    <h2 class="font-weight-semibold mb-0">JOIN SAMSUNG STUDENT AMBASADOR</h2>
+                    <p class="lead font-weight-light text-color-dark text-4">Kesempatan membangun mental.</p>
+                    <p class="font-weight-light text-color-dark text-2 mb-4 opacity-7">Kesempatan membangun mental entrepreneurship dan memperoleh penghasilan yang lumayan bagi para mahasiswa atau yang fresh graduate.</p>
+                    <a href="{{ route('login') }}" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
                 </div>
                 <div class="col-md-6 col-lg-5 offset-lg-1 order-1 order-lg-2 scale-2">
                     <div class="owl-carousel owl-theme nav-style-1 stage-margin mb-0" data-plugin-options="{'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 1}, '1200': {'items': 1}}, 'margin': 25, 'loop': true, 'nav': true, 'dots': false, 'stagePadding': 40}">
@@ -241,53 +242,84 @@
         </div>
     </section>
 
-    <section class="section section-height-4 bg-color-grey-scale-1 border-0 m-0 pb-5">
+    <section class="team pb-2">
         <div class="container">
-            <div class="row justify-content-center my-4">
-                <div class="col appear-animation" data-appear-animation="fadeInUpShorter">
-                    <div class="owl-carousel owl-theme nav-bottom rounded-nav" data-plugin-options="{'items': 1, 'loop': true, 'autoHeight': true}">
-                        <div>
-                            <div class="col">
-                                <div class="testimonial testimonial-style-2 testimonial-with-quotes testimonial-quotes-dark mb-0">
-                                    <div class="testimonial-author">
-                                        <img src="{{asset('porto/img/clients/client-1.jpg')}}" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <blockquote>
-                                        <p class="text-color-dark text-5 line-height-5">Your time is limited, so don’t waste it living someone else’s life. Don’t be trapped by dogma - which is living with the results of other people’s thinking. Don’t let the noise of others’ opinions drown out your own inner voice.</p>
-                                    </blockquote>
-                                    <div class="testimonial-author">
-                                        <p class="opacity-10"><strong class="font-weight-extra-bold text-2">- John Smith. Okler</strong></p>
-                                    </div>
+            <div class="row pt-4">
+                <div class="col">
+                    <h2 class="font-weight-semibold mb-0">Products</h2>
+                    {{--<p class="lead font-weight-normal">Our Specialists</p>--}}
+
+                    <div id="porfolioAjaxBoxMedical" class="ajax-box ajax-box-init mb-4">
+
+                        <div class="bounce-loader">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+
+                        <div class="ajax-box-content" id="porfolioAjaxBoxContentMedical"></div>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="row pb-4">
+                <div class="owl-carousel owl-theme nav-bottom rounded-nav pl-1 pr-1" data-plugin-options="{'items': 4, 'loop': false, 'dots': false, 'nav': true}">
+                    @if($products)
+                        @foreach($products as $product)
+                            <div class="pr-3 pl-3">
+                                <a href="{{ route('product_detail',$product->id) }}" data-href="demo-medical-doctors-detail.html" data-ajax-on-page class="text-decoration-none">
+                                    <span class="thumb-info thumb-info-no-zoom thumb-info-hide-wrapper-bg">
+                                        <span class="thumb-info-wrapper m-0">
+                                            <img src="{{asset($product->getFirstMediaUrl('product_images'))}}" class="img-fluid" style="height: 200px;" alt="">
+                                        </span>
+                                        <span class="thumb-info-caption p-4">
+                                            <span class="custom-thumb-info-title">
+                                                <span class="custom-thumb-info-type font-weight-light text-4">{{ $product->product_name }}</span>
+                                                <span class="custom-thumb-info-inner font-weight-semibold text-5">{{ $product->price }}</span>
+                                                <i class="icon-arrow-right-circle icons font-weight-semibold text-5 "></i>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-secondary">
+        <div class="container">
+            <div class="row pt-5 pb-5">
+                <div class="owl-carousel owl-theme nav-bottom rounded-nav" data-plugin-options="{'items': 1, 'loop': false, 'dots': false}">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 pt-4 mt-3">
+                            <div class="testimonial testimonial-style-2 testimonial-with-quotes mb-0">
+                                <div class="testimonial-quote">“</div>
+                                <blockquote>
+                                    <p class="font-weight-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, leo vitae interdum pretium, tortor risus dapibus tortor, eu suscipit orci leo sed nisl. Integer et ipsum eu nulla auctor mattis sit amet in diam. Vestibulum non.</p>
+                                </blockquote>
+                                <div class="testimonial-author">
+                                    <p class="text-uppercase">
+                                        <strong>John Smith</strong>
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <div class="col">
-                                <div class="testimonial testimonial-style-2 testimonial-with-quotes testimonial-quotes-dark mb-0">
-                                    <div class="testimonial-author">
-                                        <img src="{{asset('porto/img/clients/client-1.jpg')}}" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <blockquote>
-                                        <p class="text-color-dark text-5 line-height-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. Suspendisse potenti. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Fusce ante tellus, convallis non consectetur sed, pharetra nec ex.</p>
-                                    </blockquote>
-                                    <div class="testimonial-author">
-                                        <p class="opacity-10"><strong class="font-weight-extra-bold text-2">- John Smith. Okler</strong></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="col">
-                                <div class="testimonial testimonial-style-2 testimonial-with-quotes testimonial-quotes-dark mb-0">
-                                    <div class="testimonial-author">
-                                        <img src="{{asset('porto/img/clients/client-1.jpg')}}" class="img-fluid rounded-circle" alt="">
-                                    </div>
-                                    <blockquote>
-                                        <p class="text-color-dark text-5 line-height-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget risus porta, tincidunt turpis at, interdum tortor. Suspendisse potenti. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                    </blockquote>
-                                    <div class="testimonial-author">
-                                        <p class="opacity-10"><strong class="font-weight-extra-bold text-2">- John Smith. Okler</strong></p>
-                                    </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 pt-4 mt-3">
+                            <div class="testimonial testimonial-style-2 testimonial-with-quotes mb-0">
+                                <div class="testimonial-quote">“</div>
+                                <blockquote>
+                                    <p class="font-weight-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, leo vitae interdum pretium, tortor risus dapibus tortor, eu suscipit orci leo sed nisl. Integer et ipsum eu nulla auctor mattis sit amet in diam. Vestibulum non.</p>
+                                </blockquote>
+                                <div class="testimonial-author">
+                                    <p class="text-uppercase">
+                                        <strong>John Smith</strong>
+                                    </p>
                                 </div>
                             </div>
                         </div>
