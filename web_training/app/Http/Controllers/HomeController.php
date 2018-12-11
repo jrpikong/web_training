@@ -38,6 +38,20 @@ class HomeController extends Controller
         return view('home',compact('user','province','city','disctric'));
     }
 
+    public function profile()
+    {
+        $user = Auth::user();
+        $indonesia = new Indonesia();
+        $province = $indonesia->findProvince($user->province);
+        $province_of_birth = $indonesia->findProvince($user->province_of_birth);
+        $province_of_birth = $province_of_birth->name;
+        $province = $province->name;
+        $city = $indonesia->findCity($user->city);
+        $city = $city->name;
+        $disctric = $indonesia->findDistrict($user->districts);
+        $disctric = $disctric->name;
+        return view('profile',compact('user','province','city','disctric','province_of_birth'));
+    }
     public function term_and_condition()
     {
         return view('term_and_condition');
