@@ -4,8 +4,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
 @endpush
 @section('content')
-    <section class="page-header page-header-modern page-header-background page-header-background-sm custom-page-header parallax mt-0" data-plugin-parallax data-plugin-options="{'speed': 1.5}" data-image-src="{{asset('porto/img/slides/black_bg.png')}}">
+    <section class="page-header page-header-modern bg-color-primary page-header-md">
+        <div class="container">
+            <div class="row">
 
+            </div>
+        </div>
     </section>
     <div class="container mb-5">
         <div class="row">

@@ -45,7 +45,8 @@
     <link rel="stylesheet" href="{{asset('porto/vendor/rs-plugin/css/navigation.css')}}">
 
     <!-- Skin CSS -->
-    <link rel="stylesheet" href="{{asset('porto/css/skins/skin-corporate-7.css')}}">
+    <link rel="stylesheet" href="{{asset('porto/css/demos/demo-medical.css')}}">
+    <link rel="stylesheet" href="{{asset('porto/css/skins/skin-medical.css')}}">
 
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="{{asset('css/custom.css')}}">
@@ -78,53 +79,54 @@
 <body>
 
 <div class="body">
-    <header id="header" class="header-transparent header-transparent-dark-bottom-border header-transparent-dark-bottom-border-1 header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 30, 'stickyHeaderContainerHeight': 70}">
-        <div class="header-body border-top-0 bg-dark box-shadow-none">
+    <header id="header" class="header-effect-shrink" data-plugin-options="{'stickyEnabled': true, 'stickyEffect': 'shrink', 'stickyEnableOnBoxed': true, 'stickyEnableOnMobile': true, 'stickyChangeLogo': true, 'stickyStartAt': 120, 'stickyHeaderContainerHeight': 70}">
+        <div class="header-body border-top-0">
             <div class="header-container container">
                 <div class="header-row">
                     <div class="header-column">
                         <div class="header-row">
                             <div class="header-logo">
                                 <a href="/">
-                                    <h3 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2 mt-3" style="margin-bottom:0;">SSA</h3>
-                                    <span class="text-color-light">Samsung Student Ambassador</span>
+                                    {{--<img alt="Porto" width="143" height="40" src="img/demos/medical/logo-medical.png">--}}
+                                    <h3 class="tp-caption font-weight-extra-bold text-color-primary negative-ls-2 mt-3" style="margin-bottom:0;">SSA</h3>
+                                    <span class="text-color-primary">Samsung Student Ambassador</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="header-column justify-content-end">
                         <div class="header-row">
-                            <div class="header-nav header-nav-links header-nav-dropdowns-dark header-nav-light-text order-2 order-lg-1">
-                                <div class="header-nav-main header-nav-main-mobile-dark header-nav-main-square header-nav-main-dropdown-no-borders header-nav-main-effect-2 header-nav-main-sub-effect-1">
+                            <div class="header-nav order-2 order-lg-1">
+                                <div class="header-nav-main header-nav-main-square header-nav-main-effect-1 header-nav-main-sub-effect-1">
                                     <nav class="collapse">
                                         <ul class="nav nav-pills" id="mainNav">
-                                            <li class="dropdown">
-                                                <a class="dropdown-item dropdown-toggle active" href="/">
+                                            <li class="dropdown-full-color dropdown-secondary">
+                                                <a class="nav-link active" href="/">
                                                     Home
                                                 </a>
                                             </li>
-                                            <li class="dropdown dropdown-mega">
-                                                <a class="dropdown-item dropdown-toggle" href="#">
+                                            <li class="dropdown-full-color dropdown-secondary">
+                                                <a class="nav-link" href="#">
                                                     About Samsung
                                                 </a>
                                             </li>
-                                            <li class="dropdown">
-                                                <a class="dropdown-item dropdown-toggle" href="{{ route('products') }}">
+                                            <li class="dropdown-full-color dropdown-secondary">
+                                                <a class="nav-link" href="{{ route('products') }}">
                                                     Product
                                                 </a>
                                             </li>
-                                            {{--<li class="dropdown">--}}
-                                                {{--<a class="dropdown-item dropdown-toggle" href="#">--}}
-                                                    {{--FAQ--}}
-                                                {{--</a>--}}
-                                            {{--</li>--}}
-                                            <li class="dropdown">
-                                                <a class="dropdown-item dropdown-toggle" href="/login">
+                                            <li class="dropdown-full-color dropdown-secondary">
+                                                <a class="nav-link" href="#">
+                                                    FAQ
+                                                </a>
+                                            </li>
+                                            <li class="dropdown-full-color dropdown-secondary">
+                                                <a class="nav-link" href="/login">
                                                     Login
                                                 </a>
                                             </li>
-                                            <li class="dropdown">
-                                                <a class="dropdown-item dropdown-toggle active" href="/register">
+                                            <li class="dropdown-full-color dropdown-secondary">
+                                                <a class="nav-link" href="/register">
                                                     Register
                                                 </a>
                                             </li>
@@ -135,7 +137,6 @@
                                     <i class="fas fa-bars"></i>
                                 </button>
                             </div>
-
                         </div>
                     </div>
                 </div>
