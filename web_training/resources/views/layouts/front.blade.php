@@ -106,8 +106,8 @@
                                                 </a>
                                             </li>
                                             <li class="dropdown-full-color dropdown-secondary">
-                                                <a class="nav-link" href="#">
-                                                    About Samsung
+                                                <a class="nav-link" href="{{ route('aboutUs') }}">
+                                                    About Us
                                                 </a>
                                             </li>
                                             <li class="dropdown-full-color dropdown-secondary">

@@ -13,6 +13,7 @@
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/faq', 'WelcomeController@faq')->name('faq');
+Route::get('/about-us', 'WelcomeController@aboutUs')->name('aboutUs');
 
 Auth::routes();
 

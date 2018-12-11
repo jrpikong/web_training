@@ -18,8 +18,8 @@
   height: 100%;
 }
 
-.img-thumbnail {
-  height: 255px;
+.product-image {
+  height: 255px !important;
 }
 
 .product-image {

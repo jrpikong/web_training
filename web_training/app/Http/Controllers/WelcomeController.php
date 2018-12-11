@@ -17,4 +17,9 @@ class WelcomeController extends Controller
     {
         return view('faq');
     }
+
+    public function aboutUs()
+    {
+        return view('about_us');
+    }
 }
