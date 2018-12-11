@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
+Route::get('/faq', 'WelcomeController@faq')->name('faq');
 
 Auth::routes();
 
