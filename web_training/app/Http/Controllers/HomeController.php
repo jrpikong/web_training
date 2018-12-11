@@ -80,4 +80,6 @@ class HomeController extends Controller
             return back()->with('Failed','You have error Update Back Account.');
         }
     }
+
+
 }
