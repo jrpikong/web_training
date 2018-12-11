@@ -81,5 +81,13 @@ class HomeController extends Controller
         }
     }
 
+    public function ssaAgreement()
+    {
+        $user = Auth::user();
+
+        $user->addMediaFromRequest('img_digital_signature')->toMediaCollection('img_digital_signature');
+        return view('ssa_agreement',compact('user'));
+    }
+
 
 }
