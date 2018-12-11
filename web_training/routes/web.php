@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post_personal_quiz','QuizController@postPersonalQuiz')->name('post_personal_quiz');
     Route::get('/trainings', 'TrainingController@getTraining')->name('trainings');
     Route::get('/ssa_agreement', 'HomeController@ssaAgreement')->name('ssa_agreement');
+    Route::get('/profile', 'HomeController@profile')->name('profile');
     Route::get('/history_training', 'TrainingQuizResultController@historyTraining')->name('history_training');
     Route::get('/add_training', 'TrainingController@addTraining')->name('add_training');
     Route::post('/submit_training', 'TrainingController@submitTraining')->name('submit_training');

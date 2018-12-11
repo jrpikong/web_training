@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <section class="page-header page-header-modern page-header-background page-header-background-sm custom-page-header parallax mt-0" data-plugin-parallax data-plugin-options="{'speed': 1.5}" data-image-src="{{asset('porto/img/slides/black_bg.png')}}">
-
-    </section>
-
     <div class="container">
         <div class="row justify-content-center pt-1 pb-4 mb-3">
             <div class="col-md-12">
@@ -41,13 +37,13 @@
                         </p>
 
                         <h4 class="text-center">Pasal 2</h4>
-                        <h4 class="text-center">Masa Kerja</h4>>
+                        <h4 class="text-center">Masa Kerja</h4>
                         <p>
                             Pelaksanaan Kerja yang lakukan oleh <b>PIHAK PERTAMA</b> kepada <b>PIHAK KEDUA</b> selama 3 (tiga) Bulan, yang di mulai pada tanggal {{$dateNow}} sampai dengan 26 Desember 2018.
                         </p>
 
                         <h4 class="text-center">Pasal 3</h4>
-                        <h4 class="text-center">Hak & Kewajiban Pihak Pertama</h4>>
+                        <h4 class="text-center">Hak & Kewajiban Pihak Pertama</h4>
                         {{--<p>--}}
                         <ol>
                             <li><b>PIHAK PERTAMA</b> merupakan Vendor dari PT. Samsung Elektronik Indonesia, dan <b>PIHAK PERTAMA</b> mempunyai kewajiban untuk mencari Peserta Program yang bersedia untuk Samsung Student Ambasador dengan syarat dan ketentuan yang berlaku.</li>
