@@ -116,7 +116,7 @@
                                                 </a>
                                             </li>
                                             <li class="dropdown-full-color dropdown-secondary">
-                                                <a class="nav-link" href="#">
+                                                <a class="nav-link" href="{{ route('faq') }}">
                                                     FAQ
                                                 </a>
                                             </li>

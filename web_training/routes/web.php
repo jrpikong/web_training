@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
+Route::get('/faq', 'WelcomeController@faq')->name('faq');
 
 Auth::routes();
 
@@ -21,6 +22,7 @@ Route::get('/products/{id}', 'ProductController@getDetailProduct')->name('produc
 Route::get('/about-us', 'HomeController@aboutUs')->name('aboutUs');
 Route::get('/term_and_condition', 'HomeController@term_and_condition')->name('term_and_condition');
 Route::post('/term_and_condition_pos', 'HomeController@term_and_condition_post')->name('term_and_condition_pos');
+Route::put('/update_bank_account/{id}', 'HomeController@updateBankAccount')->name('update_bank_account');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/admin')->group(function () {

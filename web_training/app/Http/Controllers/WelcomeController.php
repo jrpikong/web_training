@@ -12,4 +12,9 @@ class WelcomeController extends Controller
         $products = Product::limit(8)->get();
         return view('welcome', compact('products'));
     }
+
+    public function faq()
+    {
+        return view('faq');
+    }
 }
