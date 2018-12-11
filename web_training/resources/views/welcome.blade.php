@@ -273,13 +273,13 @@
                                         <span class="thumb-info-wrapper m-0">
                                             <img src="{{asset($product->getFirstMediaUrl('product_images'))}}" class="img-fluid" style="height: 200px;" alt="">
                                         </span>
-                                        <span class="thumb-info-caption p-4">
-                                            <span class="custom-thumb-info-title">
-                                                <span class="custom-thumb-info-type font-weight-light text-4">{{ $product->product_name }}</span>
-                                                <span class="custom-thumb-info-inner font-weight-semibold text-5">{{ $product->price }}</span>
-                                                <i class="icon-arrow-right-circle icons font-weight-semibold text-5 "></i>
-                                            </span>
-                                        </span>
+                                        {{--<span class="thumb-info-caption p-4">--}}
+                                            {{--<span class="custom-thumb-info-title">--}}
+                                                {{--<span class="custom-thumb-info-type font-weight-light text-4">{{ $product->product_name }}</span>--}}
+                                                {{--<span class="custom-thumb-info-inner font-weight-semibold text-5">{{ $product->price }}</span>--}}
+                                                {{--<i class="icon-arrow-right-circle icons font-weight-semibold text-5 "></i>--}}
+                                            {{--</span>--}}
+                                        {{--</span>--}}
                                     </span>
                                 </a>
                             </div>
