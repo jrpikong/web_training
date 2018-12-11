@@ -18,13 +18,9 @@
   height: 100%;
 }
 
-.img-thumbnail {
-  height: 255px;
-}
-
 .product-image {
   width: 255px;
-  hight: 255px !important;
+  hight: 255px;
   -o-object-fit: cover;
      object-fit: cover;
 }

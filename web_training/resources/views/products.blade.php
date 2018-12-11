@@ -20,7 +20,7 @@
                                     <article class="post post-medium border-0 pb-0 mb-5">
                                         <div class="post-image">
                                             <a href="{{ route('product_detail',$product->id) }}">
-                                                <img src="{{asset($product->getFirstMediaUrl('product_images'))}}" class="product-image img-fluid img-thumbnail img-thumbnail-no-borders rounded-0 " alt="">
+                                                <img src="{{asset($product->getFirstMediaUrl('product_images'))}}" class="product-image img-fluid rounded-0 " alt="{{ $product->product_name }}" style="height: 255px;">
                                             </a>
                                         </div>
 
