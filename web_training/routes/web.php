@@ -21,6 +21,7 @@ Route::get('/products', 'ProductController@getAll')->name('products');
 Route::get('/products/{id}', 'ProductController@getDetailProduct')->name('product_detail');
 Route::get('/term_and_condition', 'HomeController@term_and_condition')->name('term_and_condition');
 Route::post('/term_and_condition_pos', 'HomeController@term_and_condition_post')->name('term_and_condition_pos');
+Route::put('/update_bank_account/{id}', 'HomeController@updateBankAccount')->name('update_bank_account');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/admin')->group(function () {

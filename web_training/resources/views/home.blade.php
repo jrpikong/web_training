@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Auth::user()->id == 10)
-        @include('dashboard')
-    @endif
+    {{--@if(Auth::user()->id == 10)--}}
+        {{--@include('dashboard')--}}
+    {{--@endif--}}
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -46,6 +46,36 @@
                                     </div>
                                 </div>
                             </a>
+                        </div>
+
+                        <div class="col-md-12">
+                            @if ($message = Session::get('success'))
+
+                                <div class="alert alert-success alert-block">
+
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+
+                                    <strong>{{ $message }}</strong>
+
+                                </div>
+
+                            @endif
+                            <form class="" method="post" action="{{ route('update_bank_account',Auth::user()->id) }}">
+                                @csrf
+                                @method('PUT')
+                                <div class="input-group mb-3">
+                                    <input type="text" placeholder="fill your mandiri bank account" name="bank_account" value="{{ Auth::user()->bank_account }}" class="form-control {{ $errors->has('bank_account') ? ' is-invalid' : '' }}">
+
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><button type="submit" class="btn btn-primary btn-block">Simpan</button></span>
+                                    </div>
+                                    @if ($errors->has('bank_account'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('bank_account') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
