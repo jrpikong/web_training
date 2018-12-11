@@ -160,7 +160,7 @@
                             </div>
                             <div class="feature-box-info">
                                 <h4 class="mb-2">TOP 10 Global Brand</h4>
-                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing metus elit. Quisque rutrum pellentesque imperdiet.</p>
+                                <p class="mb-4">Samsung merupakan satu dari10 merek dan perusahaan terbaik dunia.</p>
                             </div>
                         </div>
                     </div>
@@ -171,7 +171,7 @@
                             </div>
                             <div class="feature-box-info">
                                 <h4 class="mb-2">EARN EXTRA INCOME</h4>
-                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum pellentesque imperdiet. Nulla lacinia iaculis nulla.</p>
+                                <p class="mb-4">Dapat memiliki penghasilan tambahan yang lumayan besar.</p>
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
                             </div>
                             <div class="feature-box-info">
                                 <h4 class="mb-2">FLEXIBLE WORKING TIME</h4>
-                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque rutrum pellentesque imperdiet. Nulla lacinia iaculis nulla.</p>
+                                <p class="mb-4">Waktu kerja yang fleksibel dan dapat dilakukan di mana saja secara mobile.</p>
                             </div>
                         </div>
                     </div>
@@ -194,8 +194,8 @@
                                 <i class="icon-star icons text-color-primary"></i>
                             </div>
                             <div class="feature-box-info">
-                                <h4 class="mb-2">HELP YOUR FRIENDS OUT</h4>
-                                <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing metus elit. Quisque rutrum pellentesque imperdiet.</p>
+                                <h4 class="mb-2">INCREASE ENTREPRENEURSHIP SKILL</h4>
+                                <p class="mb-4">Membangun dan mengembangkan karakter dan keterampilan wirausaha.</p>
                             </div>
                         </div>
                     </div>
@@ -295,45 +295,6 @@
                             </div>
                         @endforeach
                     @endif
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section-secondary">
-        <div class="container">
-            <div class="row pt-5 pb-5">
-                <div class="owl-carousel owl-theme nav-bottom rounded-nav" data-plugin-options="{'items': 1, 'loop': false, 'dots': false}">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 pt-4 mt-3">
-                            <div class="testimonial testimonial-style-2 testimonial-with-quotes mb-0">
-                                <div class="testimonial-quote">“</div>
-                                <blockquote>
-                                    <p class="font-weight-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, leo vitae interdum pretium, tortor risus dapibus tortor, eu suscipit orci leo sed nisl. Integer et ipsum eu nulla auctor mattis sit amet in diam. Vestibulum non.</p>
-                                </blockquote>
-                                <div class="testimonial-author">
-                                    <p class="text-uppercase">
-                                        <strong>John Smith</strong>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row justify-content-center">
-                        <div class="col-lg-8 pt-4 mt-3">
-                            <div class="testimonial testimonial-style-2 testimonial-with-quotes mb-0">
-                                <div class="testimonial-quote">“</div>
-                                <blockquote>
-                                    <p class="font-weight-light">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur hendrerit, leo vitae interdum pretium, tortor risus dapibus tortor, eu suscipit orci leo sed nisl. Integer et ipsum eu nulla auctor mattis sit amet in diam. Vestibulum non.</p>
-                                </blockquote>
-                                <div class="testimonial-author">
-                                    <p class="text-uppercase">
-                                        <strong>John Smith</strong>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@
                     <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nick Name') }}</label>
 
                     <div class="col-md-6">
-                        <input id="nic_name" type="text" placeholder="fill your nic name" class="form-control{{ $errors->has('nic_name') ? ' is-invalid' : '' }}" name="nic_name" value="{{ old('nic_name') }}" required autofocus>
+                        <input id="nic_name" type="text" placeholder="fill your nick name" class="form-control{{ $errors->has('nic_name') ? ' is-invalid' : '' }}" name="nic_name" value="{{ old('nic_name') }}" required autofocus>
 
                         @if ($errors->has('nic_name'))
                             <span class="invalid-feedback" role="alert">
@@ -420,7 +420,7 @@
                     <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                     <div class="col-md-6">
-                        <input id="password" type="password" placeholder="fill your password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                        <input id="password" type="password" placeholder="fill your password : minimum 8 caracter" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
                         @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
@@ -434,7 +434,7 @@
                     <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                     <div class="col-md-6">
-                        <input id="password-confirm" placeholder="fill your confirm password" type="password" class="form-control" name="password_confirmation" required>
+                        <input id="password-confirm" placeholder="fill your confirm password : minimum 8 caracter" type="password" class="form-control" name="password_confirmation" required>
                     </div>
                 </div>
 

@@ -101,22 +101,22 @@
                                     <nav class="collapse">
                                         <ul class="nav nav-pills" id="mainNav">
                                             <li class="dropdown-full-color dropdown-secondary">
-                                                <a class="nav-link active" href="/">
+                                                <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">
                                                     Home
                                                 </a>
                                             </li>
                                             <li class="dropdown-full-color dropdown-secondary">
-                                                <a class="nav-link" href="{{ route('aboutUs') }}">
+                                                <a class="nav-link {{ request()->is('about-us') ? 'active' : '' }}" href="{{ route('aboutUs') }}">
                                                     About Us
                                                 </a>
                                             </li>
                                             <li class="dropdown-full-color dropdown-secondary">
-                                                <a class="nav-link" href="{{ route('products') }}">
+                                                <a class="nav-link {{ request()->is('products') ? 'active' : '' }}" href="{{ route('products') }}">
                                                     Product
                                                 </a>
                                             </li>
                                             <li class="dropdown-full-color dropdown-secondary">
-                                                <a class="nav-link" href="{{ route('faq') }}">
+                                                <a class="nav-link {{ request()->is('faq') ? 'active' : '' }}" href="{{ route('faq') }}">
                                                     FAQ
                                                 </a>
                                             </li>
@@ -126,7 +126,7 @@
                                                 </a>
                                             </li>
                                             <li class="dropdown-full-color dropdown-secondary">
-                                                <a class="nav-link" href="/register">
+                                                <a class="nav-link {{ request()->is('register') ? 'active' : '' }}" href="/register">
                                                     Register
                                                 </a>
                                             </li>
@@ -153,28 +153,15 @@
             <div class="row py-5">
                 <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
                     <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4">Contact Details</h5>
-                    <p class="text-4 mb-1">Porto Template 123</p>
-                    <p class="text-4 mb-4 pb-1">Porto Blvd, Suite</p>
+                    <p class="text-4 mb-1">Satrio Tower Building 10th Floor,</p>
+                    <p class="text-4 mb-4 pb-1">Jln. Prof. Dr. Satrio KAV. 1-4 Block C4, Jakarta, 12950, Indonesia.</p>
 
-                    <p class="text-5 mb-1 pt-2">Call: 123-456-7890</p>
-                    <p class="text-5 mb-0">Email: <a href="mailto:info@porto.com">info@porto.com</a></p>
                 </div>
                 <div class="col-lg-6">
-                    <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4">Newsletter</h5>
-                    <p class="text-4 mb-1">Get all the latest informationon Sales and Offers.</p>
-                    <p class="text-4">Sign up for newsletter today.</p>
-                    <div class="alert alert-success d-none" id="newsletterSuccess">
-                        <strong>Success!</strong> You've been added to our email list.
-                    </div>
-                    <div class="alert alert-danger d-none" id="newsletterError"></div>
-                    <form id="newsletterForm" action="php/newsletter-subscribe.php" method="POST" class="mw-100">
-                        <div class="input-group input-group-rounded">
-                            <input class="form-control form-control-sm bg-light px-4 text-3" placeholder="Email Address..." name="newsletterEmail" id="newsletterEmail" type="text">
-                            <span class="input-group-append">
-                                <button class="btn btn-primary text-color-light text-2 py-3 px-4" type="submit"><strong>SUBSCRIBE!</strong></button>
-                            </span>
-                        </div>
-                    </form>
+                    <h5 class="text-6 text-transform-none font-weight-semibold text-color-light mb-4"></h5>
+                    <p class="text-5 mb-1 pt-2">Call: (+6221) 2205 7125 </p>
+                    <p class="text-5 mb-1 pt-2">Fax:  (+6221) 2205 7496 </p>
+                    <p class="text-5 mb-0">Email: <a href="mailto: samsungstudentambassador@gmail.com"> samsungstudentambassador@gmail.com</a></p>
                 </div>
             </div>
         </div>
