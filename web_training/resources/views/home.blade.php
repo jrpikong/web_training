@@ -48,6 +48,7 @@
                             </a>
                         </div>
 
+                        @if(!Auth::user()->bank_account)
                         <div class="col-md-12">
                             @if ($message = Session::get('success'))
 
@@ -60,6 +61,10 @@
                                 </div>
 
                             @endif
+                            <h3 class="text-center">
+                                Segera Buka Rekenning Di <span class="text-uppercase">Bank Mandiri</span> Untuk Keperluan Pembayaran Insentif Anda Nantinya ! <br>
+                                Jika Sudah Membuka dan Memiliki Nomor Rekening <span class="text-uppercase"> Dibank Mandiri </span>, Silahkan Masukkan Nomor Rekening Tersebut Pada Kotak di Bawah Ini
+                            </h3>
                             <form class="" method="post" action="{{ route('update_bank_account',Auth::user()->id) }}">
                                 @csrf
                                 @method('PUT')
@@ -77,6 +82,8 @@
                                 </div>
                             </form>
                         </div>
+
+                        @endif
                     </div>
                 </div>
             </div>

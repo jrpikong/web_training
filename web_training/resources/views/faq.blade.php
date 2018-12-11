@@ -26,7 +26,7 @@
 
                 <section class="toggle">
                     <label>Bagaimana cara join Samsung Student Ambassador ?</label>
-                    <p>
+                    <p style="height: 0px;">
                         1. Status mahasiswa aktif atau baru lulus kuliah <br>
                         2. Registrasi melalui http://samsungstudentambassador.com dan mentandatangani perjanjian freelance sebagai Samsung Student Ambassador (sebelum ditandatangani mohon untuk dibaca dan memahami perjanjian freelance tersebut)
                     </p>
@@ -34,7 +34,7 @@
 
                 <section class="toggle">
                     <label>Apa keuntungan/benefit join Samsung Student Ambassador?</label>
-                    <p>
+                    <p style="height: 0px;">
                         1. menjadi bagian dari perusahaan samsung (10 perusahaan terbaik dunia)<br>
                         2. mendapatkan pengalaman sebelum terjun ke dunia kerja<br>
                         3. meningkatkan semangat entrepeneur<br>
@@ -47,7 +47,7 @@
 
                 <section class="toggle">
                     <label>Apa job desk SSA ?</label>
-                    <p>
+                    <p style="height: 0px;">
                         1. mengikuti training product knowladge dan selling skill yang sudah di sediakan web Samsung Student Ambassador<br>
                         2. mengetahui info promo produk yang sedang berjalan<br>
                         3. aktif menawarkan produk elektronik untuk menarik pelanggan untuk transaksi<br>
@@ -58,7 +58,7 @@
 
                 <section class="toggle">
                     <label>Bagaimana cara transaksi melalui Samsung Student Ambassador ?</label>
-                    <p>
+                    <p style="height: 0px;">
                         1. klik link https://www.blibli.com/promosi/pel-student-promotor-samsung<br>
                         2. pilih produk yang mau di beli dan pilih beli sekarang<br>
                         3. masukan akun Blibli jika belum login dan jika belum ada akun blibli registrasi terlebih dahulu<br>
@@ -71,7 +71,7 @@
 
                 <section class="toggle">
                     <label>Berapa besar insentif yang diperoleh ?</label>
-                    <p>
+                    <p style="height: 0px;">
                         <span>Skema insentif baru</span>
                         - 1 unit - Rp.4,9jt = Rp.300rb<br>
                         - Rp.5jt - Rp.7,49jt = Rp.400rb<br>
@@ -82,7 +82,7 @@
 
                 <section class="toggle">
                     <label>Bagaimana cara klaim insentif yang diterima ?</label>
-                    <p>
+                    <p style="height: 0px;">
                         - Report penjualan produk ke admin dengan format<br>
                         - Tanggal transaksi :<br>
                         - Kode pesanan :<br>
