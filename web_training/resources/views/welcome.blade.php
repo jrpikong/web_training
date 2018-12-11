@@ -204,7 +204,7 @@
         </div>
         <div class="row pb-5 mb-2 mt-2">
             <div class="col text-center">
-                <a href="#" class="btn btn-primary btn-px-5 py-3 font-weight-semibold text-2 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">LEARN MORE</a>
+                <a href="{{ route('faq') }}" class="btn btn-primary btn-px-5 py-3 font-weight-semibold text-2 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">LEARN MORE</a>
             </div>
         </div>
     </div>
