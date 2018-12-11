@@ -51,7 +51,7 @@
                 <li class="nav-item">
                     <a href="{{ route('start_quiz') }}" class="nav-link">
                         <i class="icon-lab"></i>
-                        <span>Test Kepribadian</span>
+                        <span>Personality Test</span>
                     </a>
                 </li>
 
@@ -66,6 +66,13 @@
                     <a href="{{ route('history_training') }}" class="nav-link">
                         <i class="icon-accessibility"></i>
                         <span>History Training</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('ssa_agreement') }}" class="nav-link">
+                        <i class="icon-lab"></i>
+                        <span>SSA Agreement</span>
                     </a>
                 </li>
                 @if(Auth::user()->id == 10)
