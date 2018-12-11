@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravolt\Indonesia\Indonesia;
@@ -60,6 +61,23 @@ class HomeController extends Controller
 
             $user->addMediaFromRequest('img_digital_signature')->toMediaCollection('img_digital_signature');
             return view('preview_user',compact('user'));
+        }
+    }
+
+    public function updateBankAccount(Request $request, $id)
+    {
+        $this->validate($request, [
+            'bank_account' => 'required|max:13|min:13',
+        ]);
+
+        $user = User::find($id);
+        $user->bank_account = $request->input('bank_account');
+        $user->save();
+
+        try {
+            return back()->with('success','You have successfully Update Back Account.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error Update Back Account.');
         }
     }
 }
