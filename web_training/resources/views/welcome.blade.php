@@ -184,7 +184,7 @@
                             </div>
                             <div class="feature-box-info">
                                 <h4 class="mb-2">FLEXIBLE WORKING TIME</h4>
-                                <p class="mb-4">Waktu kerja yang fleksibel dan dapat dilakukan di mana saja secara mobile.</p>
+                                <p class="mb-4">Waktu kerja yang fleksibel dan dapat dilakukan di mana.</p>
                             </div>
                         </div>
                     </div>
