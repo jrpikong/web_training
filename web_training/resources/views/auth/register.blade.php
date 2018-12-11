@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 {{--<input id="date" type="text" placeholder="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" value="{{ old('date') }}" required autofocus>--}}
-                                <select id="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" required>
+                                <select id="date" class="form-control{{ $errors->has('date') ? ' is-invalid' : '' }}" name="date" required autofocus>
                                     @php
                                     $now = time();
                                     $days = '';
@@ -327,7 +327,7 @@
                             <option value="Mandiri">Mandiri</option>
                             <option value="Others">Others</option>
                         </select>
-                        <input id="bank_account" type="text" placeholder="fill your bank account prefer BANK MANDIRI" class="mt-2 form-control{{ $errors->has('bank_account') ? ' is-invalid' : '' }}" name="bank_account" value="{{ old('bank_account') }}">
+                        <input id="bank_account" type="text" placeholder="fill your bank account prefer BANK MANDIRI" class="mt-2 form-control{{ $errors->has('bank_account') ? ' is-invalid' : '' }}" minlength="13" maxlength="13" name="bank_account" value="{{ old('bank_account') }}">
 
                         @if ($errors->has('bank_account'))
                             <span class="invalid-feedback" role="alert">

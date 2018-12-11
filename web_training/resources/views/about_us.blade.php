@@ -17,7 +17,7 @@
                     <h2 class="text-color-dark font-weight-bold text-8 mb-0 pt-0 mt-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="300">About</h2>
                 </div>
                 <div class="overflow-hidden mb-3">
-                    <p class="font-weight-bold text-primary text-uppercase mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="500">Samsung Student Ambassador</p>
+                    {{--<p class="font-weight-bold text-primary text-uppercase mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="500">Samsung Student Ambassador</p>--}}
                 </div>
                 <p class="lead appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="700">Program Samsung yang mewadahi mahasiswa untuk mempromosikan dan menjual produk elektronik seperti TV, kulkas dan mesim cuci melalui microsite Samsung Student Ambassador yang sudah kerja sama dengan Blibli (transaksi melalui link Samsung Student Ambassador.</p>
                 <p class="pb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800">
