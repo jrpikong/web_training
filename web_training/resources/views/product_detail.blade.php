@@ -11,25 +11,25 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
-
-                <div class="owl-carousel owl-theme owl-loaded owl-drag owl-carousel-init" data-plugin-options="{'items': 1}" style="height: auto;">
-
-                    <div class="owl-stage-outer">
-                        <div class="owl-stage" style="transform: translate3d(-1080px, 0px, 0px); transition: all 0s ease 0s; width: 3780px;">
-                            @foreach($product_images as $product_image)
-                            <div class="owl-item" style="width: 540px;">
-                                <div>
+                <div class="col-md-12 col-lg-12">
+                    <div class="owl-carousel owl-theme manual thumb-gallery-detail show-nav-hover" id="thumbGalleryDetail">
+                        @foreach($product_images as $product_image)
+                        <div>
+                                <span class="img-thumbnail img-thumbnail-no-borders">
                                     <img alt="" class="img-fluid" src="{{$product_image->getUrl()}}">
-                                </div>
-                            </div>
-                            @endforeach
+                                </span>
                         </div>
+                        @endforeach
                     </div>
-                    <div class="owl-nav disabled">
-                        <button type="button" role="presentation" class="owl-prev"></button>
-                        <button type="button" role="presentation" class="owl-next"></button>
+                    <div class="owl-carousel owl-theme manual thumb-gallery-thumbs mt" id="thumbGalleryThumbs">
+                        @foreach($product_images as $product_image)
+                        <div>
+                                <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
+                                   <img alt="Project Image" src="{{$product_image->getUrl()}}" class="img-fluid">
+                                </span>
+                        </div>
+                        @endforeach
                     </div>
-
                 </div>
 
             </div>
@@ -45,8 +45,6 @@
                     </p>
 
                     <p class="mb-4">{{ $product->sort_descriptions }}</p>
-
-
                     <div class="product-meta">
                         <span class="posted-in">Categories: {{ $product->product_category->category_name }}.</span>
                     </div>
@@ -117,3 +115,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('porto/js/examples/examples.gallery.js') }}"></script>
+@endpush

@@ -120,6 +120,7 @@
                                                     FAQ
                                                 </a>
                                             </li>
+                                            @guest
                                             <li class="dropdown-full-color dropdown-secondary">
                                                 <a class="nav-link" href="/login">
                                                     Login
@@ -130,6 +131,8 @@
                                                     Register
                                                 </a>
                                             </li>
+                                            @endguest
+
                                         </ul>
                                     </nav>
                                 </div>
