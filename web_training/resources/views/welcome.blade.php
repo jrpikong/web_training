@@ -219,21 +219,38 @@
                     <a href="{{ route('login') }}" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
                 </div>
                 <div class="col-md-6 col-lg-5 offset-lg-1 order-1 order-lg-2 scale-2">
-                    <div class="owl-carousel owl-theme nav-style-1 stage-margin mb-0" data-plugin-options="{'responsive': {'576': {'items': 1}, '768': {'items': 1}, '992': {'items': 1}, '1200': {'items': 1}}, 'margin': 25, 'loop': true, 'nav': true, 'dots': false, 'stagePadding': 40}">
-                        <div class="p-4">
-                            <div class="videoWrapper">
-                                <iframe style="width: 100%; height: auto; object-fit: cover"  src="https://www.youtube.com/embed/U1qLerI9Kzo?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
-                            </div>
+                    <div class="owl-carousel owl-theme manual thumb-gallery-detail show-nav-hover" id="thumbGalleryDetail">
+                        <div>
+                                <span class="img-thumbnail img-thumbnail-no-borders d-block">
+                                    <iframe style="width: 100%; height: 100%; object-fit: cover"  src="https://www.youtube.com/embed/U1qLerI9Kzo?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
+                                </span>
                         </div>
-                        <div class="p-4">
-                            <div class="videoWrapper">
-                                <iframe style="width: 100%; height: auto; object-fit: cover" src="https://www.youtube.com/embed/be7QGWQnJVg?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
-                            </div>
+                        <div>
+                                <span class="img-thumbnail img-thumbnail-no-borders d-block">
+                                    <iframe style="width: 100%; height: 100%; object-fit: cover"  src="https://www.youtube.com/embed/be7QGWQnJVg?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
+                                </span>
                         </div>
-                        <div class="p-4">
-                            <div class="videoWrapper">
-                                <iframe style="width: 100%; height: auto; object-fit: cover" src="https://www.youtube.com/embed/WOPehPhfHS4?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
-                            </div>
+                        <div>
+                                <span class="img-thumbnail img-thumbnail-no-borders d-block">
+                                    <iframe style="width: 100%; height: 100%; object-fit: cover"  src="https://www.youtube.com/embed/WOPehPhfHS4?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
+                                </span>
+                        </div>
+                    </div>
+                    <div class="owl-carousel owl-theme manual thumb-gallery-thumbs mt" id="thumbGalleryThumbs">
+                        <div>
+                                <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
+                                   <img alt="Project Image" src="http://img.youtube.com/vi/U1qLerI9Kzo/hqdefault.jpg" class="img-fluid">
+                                </span>
+                        </div>
+                        <div>
+                                <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
+                                    <img alt="Project Image" src="http://img.youtube.com/vi/be7QGWQnJVg/hqdefault.jpg" class="img-fluid">
+                                </span>
+                        </div>
+                        <div>
+                                <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
+                                    <img alt="Project Image" src="http://img.youtube.com/vi/WOPehPhfHS4/hqdefault.jpg" class="img-fluid">
+                                </span>
                         </div>
                     </div>
                 </div>
@@ -273,13 +290,6 @@
                                         <span class="thumb-info-wrapper m-0">
                                             <img src="{{asset($product->getFirstMediaUrl('product_images'))}}" class="img-fluid" style="height: 200px;" alt="">
                                         </span>
-                                        {{--<span class="thumb-info-caption p-4">--}}
-                                            {{--<span class="custom-thumb-info-title">--}}
-                                                {{--<span class="custom-thumb-info-type font-weight-light text-4">{{ $product->product_name }}</span>--}}
-                                                {{--<span class="custom-thumb-info-inner font-weight-semibold text-5">{{ $product->price }}</span>--}}
-                                                {{--<i class="icon-arrow-right-circle icons font-weight-semibold text-5 "></i>--}}
-                                            {{--</span>--}}
-                                        {{--</span>--}}
                                     </span>
                                 </a>
                             </div>
@@ -330,3 +340,7 @@
     </section>
 
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('porto/js/examples/examples.gallery.js') }}"></script>
+@endpush
