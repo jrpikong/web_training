@@ -1,8 +1,8 @@
 @extends('layouts.front')
 
 @section('content')
-    <div class="slider-container rev_slider_wrapper" style="height: 650px;">
-        <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 650, 'disableProgressBar': 'on', 'navigation': {'bullets': {'enable': true, 'direction': 'vertical', 'h_align': 'right', 'v_align': 'center', 'space': 5}, 'arrows': {'enable': false}}}">
+    <div class="slider-container rev_slider_wrapper" style="height: 700px;">
+        <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 700, 'disableProgressBar': 'on', 'navigation': {'bullets': {'enable': true, 'direction': 'vertical', 'h_align': 'right', 'v_align': 'center', 'space': 5}, 'arrows': {'enable': false}}}">
             <ul>
                 <li data-transition="fade">
                     <img src="{{asset('porto/img/slides/slide-corporate-7-1.jpg')}}"
@@ -212,7 +212,7 @@
             <div class="row text-center">
                 <div class="col">
                     <p class="mb-0">
-                        WHY JOIN <span class="highlighted-word text-color-light font-weight-semibold text-5">SAMSUNG STUDENT AMBASADOR ?</span>
+                        WHY JOIN <span class="highlighted-word text-color-light font-weight-semibold text-5">SAMSUNG STUDENT AMBASSADOR ?</span>
                     </p>
                 </div>
             </div>
@@ -283,7 +283,7 @@
         <div class="container">
             <div class="row align-items-center justify-content-center justify-content-lg-between pb-5 pb-lg-0">
                 <div class="col-lg-5 order-2 order-lg-1 pt-4 pt-lg-0 pb-5 pb-lg-0 mt-5 mt-lg-0 appear-animation" data-appear-animation="fadeInRightShorter" data-appear-animation-delay="200">
-                    <h2 class="font-weight-semibold mb-0">JOIN SAMSUNG STUDENT AMBASADOR</h2>
+                    <h2 class="font-weight-semibold mb-0">JOIN SAMSUNG STUDENT AMBASSADOR</h2>
                     <p class="lead font-weight-light text-color-dark text-4">Kesempatan membangun mental.</p>
                     <p class="font-weight-light text-color-dark text-2 mb-4 opacity-7">Kesempatan membangun mental entrepreneurship dan memperoleh penghasilan yang lumayan bagi para mahasiswa atau yang fresh graduate.</p>
                     <a href="{{ route('login') }}" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
