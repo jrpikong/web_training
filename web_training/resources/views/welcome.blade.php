@@ -1,16 +1,86 @@
 @extends('layouts.front')
 
 @section('content')
-    <div class="slider-container rev_slider_wrapper" style="height: 100vh;">
-        <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'sliderLayout': 'fullscreen', 'delay': 9000, 'gridwidth': 1170, 'gridheight': 700, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }}">
+    <div class="slider-container rev_slider_wrapper" style="height: 650px;">
+        <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 650, 'disableProgressBar': 'on', 'navigation': {'bullets': {'enable': true, 'direction': 'vertical', 'h_align': 'right', 'v_align': 'center', 'space': 5}, 'arrows': {'enable': false}}}">
             <ul>
-                <li class="" data-transition="fade">
+                <li data-transition="fade">
                     <img src="{{asset('porto/img/slides/slide-corporate-7-1.jpg')}}"
                          alt=""
                          data-bgposition="center center"
                          data-bgfit="cover"
                          data-bgrepeat="no-repeat"
                          class="rev-slidebg">
+
+                    {{--<div class="tp-caption main-label"--}}
+                         {{--data-x="left" data-hoffset="25"--}}
+                         {{--data-y="center" data-voffset="-5"--}}
+                         {{--data-start="1500"--}}
+                         {{--data-whitespace="nowrap"--}}
+                         {{--data-transform_in="y:[100%];s:500;"--}}
+                         {{--data-transform_out="opacity:0;s:500;"--}}
+                         {{--style="z-index: 5; font-size: 1.5em; text-transform: uppercase;"--}}
+                         {{--data-mask_in="x:0px;y:0px;">20 Years Caring About You</div>--}}
+
+                    {{--<div class="tp-caption main-label"--}}
+                         {{--data-x="left" data-hoffset="25"--}}
+                         {{--data-y="center" data-voffset="-55"--}}
+                         {{--data-start="500"--}}
+                         {{--style="z-index: 5; text-transform: uppercase; font-size: 52px;"--}}
+                         {{--data-transform_in="y:[-300%];opacity:0;s:500;">Specialists</div>--}}
+
+                    {{--<div class="tp-caption bottom-label"--}}
+                         {{--data-x="left" data-hoffset="25"--}}
+                         {{--data-y="center" data-voffset="40"--}}
+                         {{--data-start="2000"--}}
+                         {{--style="z-index: 5; border-bottom: 1px solid #fff; padding-bottom: 3px;"--}}
+                         {{--data-transform_in="y:[100%];opacity:0;s:500;" style="font-size: 1.2em;">We are located in New York</div>--}}
+                </li>
+                <li data-transition="fade">
+                    <img src="{{asset('porto/img/slides/slide-corporate-7-2.jpg')}}"
+                         alt=""
+                         data-bgposition="center center"
+                         data-bgfit="cover"
+                         data-bgrepeat="no-repeat"
+                         class="rev-slidebg">
+
+                    {{--<div class="tp-caption main-label"--}}
+                         {{--data-x="left" data-hoffset="25"--}}
+                         {{--data-y="center" data-voffset="-5"--}}
+                         {{--data-start="1500"--}}
+                         {{--data-whitespace="nowrap"--}}
+                         {{--data-transform_in="y:[100%];s:500;"--}}
+                         {{--data-transform_out="opacity:0;s:500;"--}}
+                         {{--style="z-index: 5; font-size: 1.5em; text-transform: uppercase;"--}}
+                         {{--data-mask_in="x:0px;y:0px;">Talk to us now to schedule a medical appointment</div>--}}
+
+                    {{--<div class="tp-caption main-label"--}}
+                         {{--data-x="left" data-hoffset="25"--}}
+                         {{--data-y="center" data-voffset="-55"--}}
+                         {{--data-start="500"--}}
+                         {{--style="z-index: 5; text-transform: uppercase; font-size: 52px;"--}}
+                         {{--data-transform_in="y:[-300%];opacity:0;s:500;">Medical Appointment</div>--}}
+
+                    {{--<div class="tp-caption bottom-label"--}}
+                         {{--data-x="left" data-hoffset="25"--}}
+                         {{--data-y="center" data-voffset="40"--}}
+                         {{--data-start="2000"--}}
+                         {{--style="z-index: 5; border-bottom: 1px solid #fff; padding-bottom: 3px;"--}}
+                         {{--data-transform_in="y:[100%];opacity:0;s:500;" style="font-size: 1.2em;">Online or Over the Phone</div>--}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    {{--<div class="slider-container rev_slider_wrapper" style="height: 100vh;">--}}
+        {{--<div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'sliderLayout': 'fullscreen', 'delay': 9000, 'gridwidth': 1170, 'gridheight': 700, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }}">--}}
+            {{--<ul>--}}
+                {{--<li class="" data-transition="fade">--}}
+                    {{--<img src="{{asset('porto/img/slides/slide-corporate-7-1.jpg')}}"--}}
+                         {{--alt=""--}}
+                         {{--data-bgposition="center center"--}}
+                         {{--data-bgfit="cover"--}}
+                         {{--data-bgrepeat="no-repeat"--}}
+                         {{--class="rev-slidebg">--}}
 
                     {{--<div class="tp-caption"--}}
                          {{--data-x="center" data-hoffset="['-165','-165','-165','-215']"--}}
@@ -73,14 +143,14 @@
                        {{--data-fontsize="['13','13','13','25']"--}}
                        {{--data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>--}}
 
-                </li>
-                <li class="" data-transition="fade">
-                    <img src="{{asset('porto/img/slides/slide-corporate-7-2.jpg')}}"
-                         alt=""
-                         data-bgposition="center center"
-                         data-bgfit="cover"
-                         data-bgrepeat="no-repeat"
-                         class="rev-slidebg">
+                {{--</li>--}}
+                {{--<li class="" data-transition="fade">--}}
+                    {{--<img src="{{asset('porto/img/slides/slide-corporate-7-2.jpg')}}"--}}
+                         {{--alt=""--}}
+                         {{--data-bgposition="center center"--}}
+                         {{--data-bgfit="cover"--}}
+                         {{--data-bgrepeat="no-repeat"--}}
+                         {{--class="rev-slidebg">--}}
 
                     {{--<div class="tp-caption"--}}
                          {{--data-x="center" data-hoffset="['-115','-115','-115','-185']"--}}
@@ -131,10 +201,10 @@
                        {{--data-fontsize="['13','13','13','25']"--}}
                        {{--data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>--}}
 
-                </li>
-            </ul>
-        </div>
-    </div>
+                {{--</li>--}}
+            {{--</ul>--}}
+        {{--</div>--}}
+    {{--</div>--}}
 
     <div class="home-intro mb-0" id="home-intro">
         <div class="container">
