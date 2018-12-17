@@ -29,7 +29,7 @@
   display: none !important;
 }
 
-figure .image img {
+.image img {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
