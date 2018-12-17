@@ -22,7 +22,9 @@ class SliderController extends Controller
     public function submitForm(Request $request)
     {
         $request->validate([
-            'image' => 'file|max:10120',
+            'caption' => 'required',
+            'status' => 'required',
+            'image' => 'required|file|max:10120',
         ]);
         $fileName = "sliders_".time().'.'.request()->image->getClientOriginalExtension();
         $pathName = $request->image->storeAs('public/sliders',$fileName);
@@ -43,6 +45,12 @@ class SliderController extends Controller
 
     }
 
+    public function editSlider($id)
+    {
+        $slider = Slider::find($id);
+        return view('admin.sliders.form_edit', compact('slider'));
+    }
+
     public function desTroy($id)
     {
         $slider = Slider::find($id);
@@ -53,6 +61,33 @@ class SliderController extends Controller
             return back()->with('success','You have successfully delete slider.');
         } catch (Exception $e) {
             return back()->with('Failed','You have error delete slider.');
+        }
+    }
+
+    public function updateSlider(Request $request, $id)
+    {
+        $request->validate([
+            'caption' => 'required',
+            'status' => 'required',
+        ]);
+        $slider = Slider::find($id);
+        if ($request->image) {
+            $request->validate([
+                'image' => 'file|max:10120',
+            ]);
+            $fileName = "sliders_" . time() . '.' . request()->image->getClientOriginalExtension();
+            $pathName = $request->image->storeAs('public/sliders', $fileName);
+            $slider->image = 'sliders/'.$fileName;
+        }
+
+        $slider->caption = $request->caption;
+        $slider->status = $request->status;
+        $slider->save();
+
+        try {
+            return back()->with('success','You have successfully update slider.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error update slider.');
         }
     }
 }

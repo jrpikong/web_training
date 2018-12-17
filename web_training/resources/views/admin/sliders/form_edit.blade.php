@@ -8,18 +8,15 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('submit_slider') }}" enctype="multipart/form-data" method="post">
+            <form action="{{ route('update_slider',$slider->id) }}" enctype="multipart/form-data" method="post">
                 @csrf
+                @method('PUT')
                 @if ($message = Session::get('success'))
 
                     <div class="alert alert-success alert-block">
-
                         <button type="button" class="close" data-dismiss="alert">×</button>
-
                         <strong>{{ $message }}</strong>
-
                     </div>
-
                 @endif
                 <fieldset class="mb-3">
                     <legend class="text-uppercase font-size-sm font-weight-bold">Sliders</legend>
@@ -27,7 +24,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Caption</label>
                         <div class="col-lg-10">
-                            <input type="text" name="caption" class="form-control" required>
+                            <input type="text" name="caption" class="form-control" value="{{ $slider->caption }}" required>
                             @if ($errors->has('caption'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('caption') }}</strong>
@@ -40,13 +37,13 @@
                         <label class="col-form-label col-lg-2">Status</label>
                         <div class="col-lg-10">
                             <select name="status" class="form-control" required>
-                                <option value="">Select Status</option>
-                                <option value="1">Active</option>
-                                <option value="0">In Active</option>
+                                <option value="1" @if($slider->satus ===1) selected @endif>Active</option>
+                                <option value="0" @if($slider->satus ===0) selected @endif>In Active</option>
                             </select>
-                            @if ($errors->has('status'))
+
+                            @if ($errors->has('satus'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('status') }}</strong>
+                                    <strong>{{ $errors->first('satus') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -56,11 +53,6 @@
                         <label class="col-form-label col-lg-2">Image</label>
                         <div class="col-lg-10">
                             <input type="file" class="form-control" name="image">
-                            @if ($errors->has('image'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('image') }}</strong>
-                                </span>
-                            @endif
                         </div>
                     </div>
                 </fieldset>

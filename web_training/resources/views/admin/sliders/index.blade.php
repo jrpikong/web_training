@@ -43,7 +43,7 @@
                             <td> {{ $slider->caption }} </td>
                             <td> <img src="{{ asset( 'storage/'.$slider->image) }}" class="img-thumbnail" width="300px" height="300px"> </td>
                             <td> @if($slider->status) Active @else In Active @endif </td>
-                            <td> <a href="" class="btn btn-outline-primary btn-block mb-2" >Edit</a>
+                            <td> <a href="{{route('edit_slider',$slider->id)}}" class="btn btn-outline-primary btn-block mb-2" >Edit</a>
                                 <form action="{{ route('delete_slider', $slider->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
