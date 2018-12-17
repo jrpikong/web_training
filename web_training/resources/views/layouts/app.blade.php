@@ -17,6 +17,7 @@
     <link href="{{asset('limitless/assets/css/layout.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('limitless/assets/css/components.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('limitless/assets/css/colors.min.css')}}" rel="stylesheet" type="text/css">
+    @stack('style')
     <link href="{{asset('css/custom.css')}}" rel="stylesheet" type="text/css">
     <!-- /global stylesheets -->
     <!-- Scripts -->

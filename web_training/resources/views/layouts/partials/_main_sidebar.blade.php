@@ -104,6 +104,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('pages') }}" class="nav-link">
+                            <i class="icon-add-to-list"></i>
+                            <span>Pages</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('list_product') }}" class="nav-link">
                             <i class="icon-package"></i>
                             <span>Products</span>
