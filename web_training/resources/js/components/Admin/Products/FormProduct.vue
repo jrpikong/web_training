@@ -34,7 +34,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Sort Descriptions</label>
                         <div class="col-lg-10">
-                            <textarea class="form-control" v-model="sort_descriptions" required></textarea>
+                            <textarea class="form-control" v-model="sort_descriptions" style="height: 200px;" required></textarea>
                         </div>
                     </div>
 
@@ -186,7 +186,6 @@
                     return axios.post('/uploadFile',body,{
                         headers: {
                             'Content-Type': 'multipart/form-data',
-
                         }
                     }).then(response =>{
                         console.log(response);

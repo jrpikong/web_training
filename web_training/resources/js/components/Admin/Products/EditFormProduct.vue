@@ -34,14 +34,14 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Sort Descriptions</label>
                         <div class="col-lg-10">
-                            <textarea class="form-control" v-model="sort_descriptions" required></textarea>
+                            <textarea class="form-control" v-model="sort_descriptions" style="height: 200px;" required></textarea>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Descriptions</label>
                         <div class="col-lg-10">
-                            <textarea class="form-control" v-model="descriptions" required></textarea>
+                            <ckeditor type="classic" style="height: 200px;" v-model="descriptions" :upload-adapter="UploadAdapter"></ckeditor>
                         </div>
                     </div>
 
@@ -125,6 +125,14 @@
 </template>
 
 <script>
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+    import VueCkeditor from 'vue-ckeditor5'
+    const options = {
+        editors: {
+            classic: ClassicEditor,
+        },
+        name: 'ckeditor'
+    }
     export default {
         name: "EditFormProduct",
         props: ['id'],
@@ -154,6 +162,28 @@
             }
         },
         methods: {
+            UploadAdapter: function (loader) {
+                this.loader = loader
+                this.upload = () => {
+                    const body = new FormData();
+                    body.append('file', this.loader.file);
+                    return axios.post('/uploadFile',body,{
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    }).then(response =>{
+                        console.log(response);
+                        return {default: response.data};
+                        // return downloadUrl
+                    })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+                this.abort = () => {
+                    console.log('Abort upload.')
+                }
+            },
             addNewQuestions: function () {
                 this.spesifications.push(Vue.util.extend({},this.spec))
             },

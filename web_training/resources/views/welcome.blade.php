@@ -1,210 +1,33 @@
 @extends('layouts.front')
 
 @section('content')
+    @if($sliders)
     <div class="slider-container rev_slider_wrapper" style="height: 700px;">
         <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 700, 'disableProgressBar': 'on', 'navigation': {'bullets': {'enable': true, 'direction': 'vertical', 'h_align': 'right', 'v_align': 'center', 'space': 5}, 'arrows': {'enable': false}}}">
             <ul>
+                @foreach($sliders as $i => $slider)
                 <li data-transition="fade">
-                    <img src="{{asset('porto/img/slides/slide-corporate-7-1.jpg')}}"
+                    <img src="{{ asset( 'storage/'.$slider->image) }}"
                          alt=""
                          data-bgposition="center center"
                          data-bgfit="cover"
                          data-bgrepeat="no-repeat"
                          class="rev-slidebg">
-
-                    {{--<div class="tp-caption main-label"--}}
-                         {{--data-x="left" data-hoffset="25"--}}
-                         {{--data-y="center" data-voffset="-5"--}}
-                         {{--data-start="1500"--}}
-                         {{--data-whitespace="nowrap"--}}
-                         {{--data-transform_in="y:[100%];s:500;"--}}
-                         {{--data-transform_out="opacity:0;s:500;"--}}
-                         {{--style="z-index: 5; font-size: 1.5em; text-transform: uppercase;"--}}
-                         {{--data-mask_in="x:0px;y:0px;">20 Years Caring About You</div>--}}
-
-                    {{--<div class="tp-caption main-label"--}}
-                         {{--data-x="left" data-hoffset="25"--}}
-                         {{--data-y="center" data-voffset="-55"--}}
-                         {{--data-start="500"--}}
-                         {{--style="z-index: 5; text-transform: uppercase; font-size: 52px;"--}}
-                         {{--data-transform_in="y:[-300%];opacity:0;s:500;">Specialists</div>--}}
-
-                    {{--<div class="tp-caption bottom-label"--}}
-                         {{--data-x="left" data-hoffset="25"--}}
-                         {{--data-y="center" data-voffset="40"--}}
-                         {{--data-start="2000"--}}
-                         {{--style="z-index: 5; border-bottom: 1px solid #fff; padding-bottom: 3px;"--}}
-                         {{--data-transform_in="y:[100%];opacity:0;s:500;" style="font-size: 1.2em;">We are located in New York</div>--}}
                 </li>
-                <li data-transition="fade">
-                    <img src="{{asset('porto/img/slides/slide-corporate-7-2.jpg')}}"
-                         alt=""
-                         data-bgposition="center center"
-                         data-bgfit="cover"
-                         data-bgrepeat="no-repeat"
-                         class="rev-slidebg">
+                @endforeach
 
-                    {{--<div class="tp-caption main-label"--}}
-                         {{--data-x="left" data-hoffset="25"--}}
-                         {{--data-y="center" data-voffset="-5"--}}
-                         {{--data-start="1500"--}}
-                         {{--data-whitespace="nowrap"--}}
-                         {{--data-transform_in="y:[100%];s:500;"--}}
-                         {{--data-transform_out="opacity:0;s:500;"--}}
-                         {{--style="z-index: 5; font-size: 1.5em; text-transform: uppercase;"--}}
-                         {{--data-mask_in="x:0px;y:0px;">Talk to us now to schedule a medical appointment</div>--}}
-
-                    {{--<div class="tp-caption main-label"--}}
-                         {{--data-x="left" data-hoffset="25"--}}
-                         {{--data-y="center" data-voffset="-55"--}}
-                         {{--data-start="500"--}}
-                         {{--style="z-index: 5; text-transform: uppercase; font-size: 52px;"--}}
-                         {{--data-transform_in="y:[-300%];opacity:0;s:500;">Medical Appointment</div>--}}
-
-                    {{--<div class="tp-caption bottom-label"--}}
-                         {{--data-x="left" data-hoffset="25"--}}
-                         {{--data-y="center" data-voffset="40"--}}
-                         {{--data-start="2000"--}}
-                         {{--style="z-index: 5; border-bottom: 1px solid #fff; padding-bottom: 3px;"--}}
-                         {{--data-transform_in="y:[100%];opacity:0;s:500;" style="font-size: 1.2em;">Online or Over the Phone</div>--}}
-                </li>
-            </ul>
-        </div>
-    </div>
-    {{--<div class="slider-container rev_slider_wrapper" style="height: 100vh;">--}}
-        {{--<div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'sliderLayout': 'fullscreen', 'delay': 9000, 'gridwidth': 1170, 'gridheight': 700, 'disableProgressBar': 'on', 'responsiveLevels': [4096,1200,992,500], 'parallax': { 'type': 'scroll', 'origo': 'enterpoint', 'speed': 1000, 'levels': [2,3,4,5,6,7,8,9,12,50], 'disable_onmobile': 'on' }}">--}}
-            {{--<ul>--}}
-                {{--<li class="" data-transition="fade">--}}
-                    {{--<img src="{{asset('porto/img/slides/slide-corporate-7-1.jpg')}}"--}}
-                         {{--alt=""--}}
-                         {{--data-bgposition="center center"--}}
-                         {{--data-bgfit="cover"--}}
-                         {{--data-bgrepeat="no-repeat"--}}
-                         {{--class="rev-slidebg">--}}
-
-                    {{--<div class="tp-caption"--}}
-                         {{--data-x="center" data-hoffset="['-165','-165','-165','-215']"--}}
-                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
-                         {{--data-start="1000"--}}
-                         {{--data-transform_in="x:[-300%];opacity:0;s:500;"--}}
-                         {{--data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>--}}
-
-                    {{--<div class="tp-caption text-color-light font-weight-normal"--}}
-                         {{--data-x="center"--}}
-                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
-                         {{--data-start="700"--}}
-                         {{--data-fontsize="['22','22','22','40']"--}}
-                         {{--data-lineheight="['25','25','25','45']"--}}
-                         {{--data-transform_in="y:[-50%];opacity:0;s:500;">WE ROCK AND WE MAKE</div>--}}
-
-                    {{--<div class="tp-caption"--}}
-                         {{--data-x="center" data-hoffset="['165','165','165','215']"--}}
-                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
-                         {{--data-start="1000"--}}
-                         {{--data-transform_in="x:[300%];opacity:0;s:500;"--}}
-                         {{--data-transform_idle="opacity:0.1;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>--}}
-
-                    {{--<h1 class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"--}}
-                        {{--data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
-                        {{--data-x="center"--}}
-                        {{--data-y="center" data-voffset="['-60','-60','-60','-85']"--}}
-                        {{--data-fontsize="['50','50','50','90']"--}}
-                        {{--data-lineheight="['55','55','55','95']">AWESOME DESIGNS</h1>--}}
-
-                    {{--<div class="tp-caption font-weight-light text-center"--}}
-                         {{--data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'--}}
-                         {{--data-x="center"--}}
-                         {{--data-y="center" data-voffset="['-10','-10','-10','-25']"--}}
-                         {{--data-fontsize="['18','18','18','50']"--}}
-                         {{--data-lineheight="['29','29','29','40']"--}}
-                         {{--style="color: #b5b5b5;">Porto is a huge success in the of one of the world’s largest MarketPlace.</div>--}}
-
-                    {{--<a class="tp-caption btn btn-light font-weight-bold text-color-primary"--}}
-                       {{--href="/login"--}}
-                       {{--data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
-                       {{--data-x="center" data-hoffset="['-120','-120','-120','-195']"--}}
-                       {{--data-y="center" data-voffset="['65','65','65','210']"--}}
-                       {{--data-paddingtop="['15','15','15','30']"--}}
-                       {{--data-paddingbottom="['15','15','15','30']"--}}
-                       {{--data-paddingleft="['33','33','33','50']"--}}
-                       {{--data-paddingright="['33','33','33','50']"--}}
-                       {{--data-fontsize="['13','13','13','25']"--}}
-                       {{--data-lineheight="['20','20','20','25']">LOGIN</a>--}}
-
-                    {{--<a class="tp-caption btn btn-primary font-weight-bold"--}}
-                       {{--href="/register"--}}
-                       {{--data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
-                       {{--data-x="center" data-hoffset="['90','90','90','165']"--}}
-                       {{--data-y="center" data-voffset="['65','65','65','210']"--}}
-                       {{--data-paddingtop="['15','15','15','30']"--}}
-                       {{--data-paddingbottom="['15','15','15','30']"--}}
-                       {{--data-paddingleft="['33','33','33','50']"--}}
-                       {{--data-paddingright="['33','33','33','50']"--}}
-                       {{--data-fontsize="['13','13','13','25']"--}}
-                       {{--data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>--}}
-
-                {{--</li>--}}
-                {{--<li class="" data-transition="fade">--}}
+                {{--<li data-transition="fade">--}}
                     {{--<img src="{{asset('porto/img/slides/slide-corporate-7-2.jpg')}}"--}}
                          {{--alt=""--}}
                          {{--data-bgposition="center center"--}}
                          {{--data-bgfit="cover"--}}
                          {{--data-bgrepeat="no-repeat"--}}
                          {{--class="rev-slidebg">--}}
-
-                    {{--<div class="tp-caption"--}}
-                         {{--data-x="center" data-hoffset="['-115','-115','-115','-185']"--}}
-                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
-                         {{--data-start="1000"--}}
-                         {{--data-transform_in="x:[-300%];opacity:0;s:500;"--}}
-                         {{--data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>--}}
-
-                    {{--<div class="tp-caption text-color-light font-weight-normal"--}}
-                         {{--data-x="center"--}}
-                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
-                         {{--data-start="700"--}}
-                         {{--data-fontsize="['22','22','22','40']"--}}
-                         {{--data-lineheight="['25','25','25','45']"--}}
-                         {{--data-transform_in="y:[-50%];opacity:0;s:500;">HELLO, THIS IS</div>--}}
-
-                    {{--<div class="tp-caption"--}}
-                         {{--data-x="center" data-hoffset="['115','115','115','185']"--}}
-                         {{--data-y="center" data-voffset="['-110','-110','-110','-135']"--}}
-                         {{--data-start="1000"--}}
-                         {{--data-transform_in="x:[300%];opacity:0;s:500;"--}}
-                         {{--data-transform_idle="opacity:0.2;s:500;"><img src="{{asset('porto/img/slides/slide-title-border.png')}}" alt=""></div>--}}
-
-                    {{--<div class="tp-caption font-weight-extra-bold text-color-light negative-ls-2"--}}
-                         {{--data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:1.5;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
-                         {{--data-x="center"--}}
-                         {{--data-y="center" data-voffset="['-60','-60','-60','-85']"--}}
-                         {{--data-fontsize="['50','50','50','90']"--}}
-                         {{--data-lineheight="['55','55','55','95']">PORTO HTML TEMPLATE</div>--}}
-
-                    {{--<div class="tp-caption font-weight-light text-center"--}}
-                         {{--data-frames='[{"from":"opacity:0;","speed":300,"to":"o:1;","delay":2000,"split":"chars","splitdelay":0.05,"ease":"Power2.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]'--}}
-                         {{--data-x="center"--}}
-                         {{--data-y="center" data-voffset="['-10','-10','-10','-25']"--}}
-                         {{--data-fontsize="['18','18','18','50']"--}}
-                         {{--data-lineheight="['29','29','29','40']"--}}
-                         {{--style="color: #b5b5b5;">Trusted by over <strong>30,000</strong> satisfied users.</div>--}}
-
-                    {{--<a class="tp-caption btn btn-primary font-weight-bold"--}}
-                       {{--href="/register"--}}
-                       {{--data-frames='[{"delay":3000,"speed":2000,"frame":"0","from":"y:50%;opacity:0;","to":"y:0;o:1;","ease":"Power3.easeInOut"},{"delay":"wait","speed":300,"frame":"999","to":"opacity:0;fb:0;","ease":"Power3.easeInOut"}]'--}}
-                       {{--data-x="center"--}}
-                       {{--data-y="center" data-voffset="['65','65','65','210']"--}}
-                       {{--data-paddingtop="['15','15','15','30']"--}}
-                       {{--data-paddingbottom="['15','15','15','30']"--}}
-                       {{--data-paddingleft="['33','33','33','50']"--}}
-                       {{--data-paddingright="['33','33','33','50']"--}}
-                       {{--data-fontsize="['13','13','13','25']"--}}
-                       {{--data-lineheight="['20','20','20','25']">GET STARTED NOW <i class="fas fa-arrow-right ml-1"></i></a>--}}
-
                 {{--</li>--}}
-            {{--</ul>--}}
-        {{--</div>--}}
-    {{--</div>--}}
+            </ul>
+        </div>
+    </div>
+    @endif
 
     <div class="home-intro mb-0" id="home-intro">
         <div class="container">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Slider;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -10,7 +11,8 @@ class WelcomeController extends Controller
     public function index()
     {
         $products = Product::limit(8)->get();
-        return view('welcome', compact('products'));
+        $sliders = Slider::where('status', '=', 1)->get();
+        return view('welcome', compact('products','sliders'));
     }
 
     public function faq()
