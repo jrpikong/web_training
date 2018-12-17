@@ -36,6 +36,7 @@
                         <label class="col-form-label col-lg-2">Description</label>
                         <div class="col-lg-10">
                             <textarea name="description" class="form-control" required></textarea>
+                            <span class="valid-tooltip" role="alert">Untuk Membuat Baris Baru ( ENTER ) ketikan <code> &lt;br&gt;</code> </span>
                             @if ($errors->has('description'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('description') }}</strong>
