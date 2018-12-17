@@ -97,6 +97,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('admin_faq') }}" class="nav-link">
+                            <i class="icon-address-book"></i>
+                            <span>Faq</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('list_product') }}" class="nav-link">
                             <i class="icon-package"></i>
                             <span>Products</span>

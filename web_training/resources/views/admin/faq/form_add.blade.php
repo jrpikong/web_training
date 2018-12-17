@@ -4,30 +4,41 @@
 @section('content')
     <div class="card my-3">
         <div class="card-header header-elements-inline">
-            <h5 class="card-title">Form Input Slider</h5>
+            <h5 class="card-title">Form Input Faq</h5>
         </div>
 
         <div class="card-body">
-            <form action="{{ route('update_slider',$slider->id) }}" enctype="multipart/form-data" method="post">
+            <form action="{{ route('post_faq') }}" method="post">
                 @csrf
-                @method('PUT')
                 @if ($message = Session::get('success'))
-
                     <div class="alert alert-success alert-block">
                         <button type="button" class="close" data-dismiss="alert">×</button>
                         <strong>{{ $message }}</strong>
                     </div>
+
                 @endif
                 <fieldset class="mb-3">
-                    <legend class="text-uppercase font-size-sm font-weight-bold">Sliders</legend>
+                    <legend class="text-uppercase font-size-sm font-weight-bold">Faq</legend>
 
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Caption</label>
+                        <label class="col-form-label col-lg-2">Titel</label>
                         <div class="col-lg-10">
-                            <input type="text" name="caption" class="form-control" value="{{ $slider->caption }}" required>
-                            @if ($errors->has('caption'))
+                            <input type="text" name="title" class="form-control" required>
+                            @if ($errors->has('title'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('caption') }}</strong>
+                                    <strong>{{ $errors->first('title') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Description</label>
+                        <div class="col-lg-10">
+                            <textarea name="description" class="form-control" required></textarea>
+                            @if ($errors->has('description'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('description') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -37,22 +48,15 @@
                         <label class="col-form-label col-lg-2">Status</label>
                         <div class="col-lg-10">
                             <select name="status" class="form-control" required>
-                                <option value="1" @if($slider->status ===1) selected @endif>Active</option>
-                                <option value="0" @if($slider->status ===0) selected @endif>In Active</option>
+                                <option value="">Select Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">In Active</option>
                             </select>
-
-                            @if ($errors->has('satus'))
+                            @if ($errors->has('status'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('satus') }}</strong>
+                                    <strong>{{ $errors->first('status') }}</strong>
                                 </span>
                             @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Image</label>
-                        <div class="col-lg-10">
-                            <input type="file" class="form-control" name="image">
                         </div>
                     </div>
                 </fieldset>
