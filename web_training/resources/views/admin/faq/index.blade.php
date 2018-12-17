@@ -3,7 +3,7 @@
 @section('content')
     <div class="card my-3">
         <div class="card-header header-elements-inline">
-            <h5 class="card-title">SSA Slider</h5>
+            <h5 class="card-title">SSA FAQ</h5>
             <div class="header-elements">
                 @if(Auth::user()->id == 10)
                     <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
@@ -29,22 +29,22 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Caption</th>
-                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                @if($sliders)
-                    @foreach($sliders as $key => $slider)
+                @if(!$faq->isEmpty())
+                    @foreach($faq as $key => $item)
                         <tr>
                             <td width="100"> {{ $key + 1 }} </td>
-                            <td> {{ $slider->caption }} </td>
-                            <td> <img src="{{ asset( 'storage/'.$slider->image) }}" class="img-thumbnail" width="300px" height="300px"> </td>
-                            <td> @if($slider->status) Active @else In Active @endif </td>
-                            <td> <a href="{{route('edit_slider',$slider->id)}}" class="btn btn-outline-primary btn-block mb-2" >Edit</a>
-                                <form action="{{ route('delete_slider', $slider->id)}}" method="post">
+                            <td> {{ $item->title }} </td>
+                            <td> {{ $item->description }}</td>
+                            <td> @if($item->status) Active @else In Active @endif </td>
+                            <td> <a href="{{route('edit_faq',$item->id)}}" class="btn btn-outline-primary btn-block mb-2" >Edit</a>
+                                <form action="{{ route('delete_faq', $item->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-outline-danger btn-block" type="submit">Delete</button>
@@ -64,3 +64,5 @@
     <!-- Theme JS files -->
     <script src="{{asset('limitless/assets/js/app.js')}}"></script>
 @endpush
+
+

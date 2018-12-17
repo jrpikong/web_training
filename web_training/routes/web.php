@@ -36,6 +36,13 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/update_slider/{id}', 'SliderController@updateSlider')->name('update_slider');
         Route::delete('/delete_slider/{id}', 'SliderController@desTroy')->name('delete_slider');
 
+        Route::get('/faq', 'FaqController@index')->name('admin_faq');
+        Route::get('/add_faq', 'FaqController@add')->name('add_faq');
+        Route::post('/post_faq', 'FaqController@store')->name('post_faq');
+        Route::get('/edit_faq/{id}', 'FaqController@edit')->name('edit_faq');
+        Route::put('/update_faq/{id}', 'FaqController@update')->name('update_faq');
+        Route::delete('/delete_faq/{id}', 'FaqController@destroy')->name('delete_faq');
+
 
         /*Quize*/
         Route::get('/list_quiz', 'QuizController@index')->name('list_quiz');

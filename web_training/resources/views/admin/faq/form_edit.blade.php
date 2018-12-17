@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('update_slider',$slider->id) }}" enctype="multipart/form-data" method="post">
+            <form action="{{ route('update_faq',$faq->id) }}" method="post">
                 @csrf
                 @method('PUT')
                 @if ($message = Session::get('success'))
@@ -22,12 +22,25 @@
                     <legend class="text-uppercase font-size-sm font-weight-bold">Sliders</legend>
 
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Caption</label>
+                        <label class="col-form-label col-lg-2">Title</label>
                         <div class="col-lg-10">
-                            <input type="text" name="caption" class="form-control" value="{{ $slider->caption }}" required>
-                            @if ($errors->has('caption'))
+                            <input type="text" name="title" class="form-control" value="{{ $faq->title }}" required>
+                            @if ($errors->has('title'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('caption') }}</strong>
+                                    <strong>{{ $errors->first('title') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Descriptions</label>
+                        <div class="col-lg-10">
+                            <textarea name="description" class="form-control" required>{{ $faq->description }}</textarea>
+                            <span class="" role="alert">Untuk Membuat Baris Baru ( ENTER ) ketikan <code> &lt;br&gt;</code> </span>
+                            @if ($errors->has('description'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('description') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -37,8 +50,8 @@
                         <label class="col-form-label col-lg-2">Status</label>
                         <div class="col-lg-10">
                             <select name="status" class="form-control" required>
-                                <option value="1" @if($slider->status ===1) selected @endif>Active</option>
-                                <option value="0" @if($slider->status ===0) selected @endif>In Active</option>
+                                <option value="1" @if($faq->status ==1) selected @endif>Active</option>
+                                <option value="0" @if($faq->status ==0) selected @endif>In Active</option>
                             </select>
 
                             @if ($errors->has('satus'))
@@ -46,13 +59,6 @@
                                     <strong>{{ $errors->first('satus') }}</strong>
                                 </span>
                             @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Image</label>
-                        <div class="col-lg-10">
-                            <input type="file" class="form-control" name="image">
                         </div>
                     </div>
                 </fieldset>

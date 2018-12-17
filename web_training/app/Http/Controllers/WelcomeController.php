@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Faq;
 use App\Product;
 use App\Slider;
 use Illuminate\Http\Request;
@@ -17,7 +18,8 @@ class WelcomeController extends Controller
 
     public function faq()
     {
-        return view('faq');
+        $faq = Faq::where('status','=',1)->get();
+        return view('faq',compact('faq'));
     }
 
     public function aboutUs()
