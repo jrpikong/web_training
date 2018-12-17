@@ -13,6 +13,47 @@
                 </ul>
             </div>
         </div>
+        <div class="card-body">
+            <form enctype="multipart/form-data" @submit.prevent="fetchEventsList" class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Name</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="search.user_name">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Gender</label>
+                        <div class="col-lg-10">
+                            <select class="form-control" v-model="search.gender">
+                                <option value="male">Male</option>
+                                <option value="Fimale">Fimale</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">University</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="search.university">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Phone Number</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="search.phone_number">
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary">Search <i class="icon-search4"></i></button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-xs table-bordered">
@@ -59,7 +100,13 @@
         data : function () {
             return {
                 items:[],
-                loading:true
+                loading:true,
+                search:{
+                    user_name: '',
+                    gender: '',
+                    university: '',
+                    phone_number: '',
+                }
             }
         },
         created() {
@@ -69,7 +116,7 @@
             async fetchEventsList() {
                 this.loading = true
                 setTimeout(() => {
-                    axios.get('get_members').then((response)=>{
+                    axios.get('get_members',{params:this.search}).then((response)=>{
                         this.items = response.data.data
                         this.loading = false
                     });

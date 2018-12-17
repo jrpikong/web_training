@@ -85,7 +85,7 @@
                     <li class="nav-item">
                         <a href="{{ route('admin_members') }}" class="nav-link">
                             <i class="icon-traffic-lights"></i>
-                            <span>All Member</span>
+                            <span>Member Report</span>
                         </a>
                     </li>
 
@@ -114,6 +114,22 @@
                         <a href="{{ route('list_product') }}" class="nav-link">
                             <i class="icon-package"></i>
                             <span>Products</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('profile') }}" class="nav-link">
+                            <i class="icon-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="icon-switch2"></i> Logout
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
                         </a>
                     </li>
                 @endif

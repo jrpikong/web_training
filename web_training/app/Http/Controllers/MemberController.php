@@ -13,9 +13,14 @@ class MemberController extends Controller
         return view('admin.members.index');
     }
 
-    public function getMember()
+    public function getMember(Request $request)
     {
-        $members = User::all();
+        $members = User::where([
+            ['name', 'like', '%' . $request->user_name . '%'],
+            ['gender', 'like', '%' . $request->gender . '%'],
+            ['university', 'like', '%' . $request->university . '%'],
+            ['phone_number', 'like', '%' . $request->phone_number . '%']
+        ])->get();
 
         return response()->json(
             [
