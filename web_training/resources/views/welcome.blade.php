@@ -1,7 +1,7 @@
 @extends('layouts.front')
 
 @section('content')
-    @if($sliders)
+    @if(!$sliders->isEmpty())
     <div class="slider-container rev_slider_wrapper" style="height: 700px;">
         <div id="revolutionSlider" class="slider rev_slider" data-version="5.4.8" data-plugin-revolution-slider data-plugin-options="{'delay': 9000, 'gridwidth': 1170, 'gridheight': 700, 'disableProgressBar': 'on', 'navigation': {'bullets': {'enable': true, 'direction': 'vertical', 'h_align': 'right', 'v_align': 'center', 'space': 5}, 'arrows': {'enable': false}}}">
             <ul>
