@@ -43,6 +43,16 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/update_faq/{id}', 'FaqController@update')->name('update_faq');
         Route::delete('/delete_faq/{id}', 'FaqController@destroy')->name('delete_faq');
 
+        Route::resource('pages', 'PageController',[
+            'names' => [
+                'index' => 'pages',
+                'create' => 'create_page',
+                'store' => 'store_page',
+                'edit' => 'edit_page',
+                'update' => 'edit_page',
+                'destroy' => 'destroy_page'
+            ]
+        ]);
 
         /*Quize*/
         Route::get('/list_quiz', 'QuizController@index')->name('list_quiz');
