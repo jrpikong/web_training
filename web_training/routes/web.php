@@ -30,6 +30,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/get_members', 'MemberController@getMember');
         Route::get('/get_member/{id}', 'MemberController@getMemberByID');
         Route::get('/sliders', 'SliderController@index')->name('admin_sliders');
+        Route::get('/add_slider', 'SliderController@addSlider')->name('add_sliders');
+        Route::post('/submit_slider', 'SliderController@submitForm')->name('submit_slider');
+        Route::delete('/delete_slider/{id}', 'SliderController@desTroy')->name('delete_slider');
 
 
         /*Quize*/
