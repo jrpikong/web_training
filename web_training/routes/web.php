@@ -49,7 +49,7 @@ Route::middleware(['auth'])->group(function () {
                 'create' => 'create_page',
                 'store' => 'store_page',
                 'edit' => 'edit_page',
-                'update' => 'edit_page',
+                'update' => 'update_page',
                 'destroy' => 'destroy_page'
             ]
         ]);

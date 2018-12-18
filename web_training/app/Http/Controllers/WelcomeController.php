@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Faq;
+use App\Page;
 use App\Product;
 use App\Slider;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class WelcomeController extends Controller
 
     public function aboutUs()
     {
-        return view('about_us');
+        $about = Page::where('slug', 'like', '%about%')->first();
+        return view('about_us',compact('about'));
     }
 }
