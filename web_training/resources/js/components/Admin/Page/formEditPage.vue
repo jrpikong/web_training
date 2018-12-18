@@ -32,7 +32,7 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Description</label>
                     <div class="col-lg-10">
-                        <ckeditor type="classic"  v-model="form.description" :upload-adapter="UploadAdapter"></ckeditor>
+                        <ckeditor type="decouple"  v-model="form.description" :upload-adapter="UploadAdapter"></ckeditor>
                     </div>
                 </div>
 
@@ -47,10 +47,12 @@
 
 <script>
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+    import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document/build/ckeditor'
     import VueCkeditor from 'vue-ckeditor5'
     const options = {
         editors: {
-            classic: ClassicEditor,
+            decouple: DecoupledEditor,
+
         },
         name: 'ckeditor'
     }
