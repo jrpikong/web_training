@@ -1,0 +1,123 @@
+<template>
+    <div>
+        <form @submit.prevent="sumbitForm" method="post">
+            <fieldset class="mb-3">
+                <legend class="text-uppercase font-size-sm font-weight-bold">Page</legend>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Name</label>
+                    <div class="col-lg-10">
+                        <input type="text" name="name" v-model="form.name" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Titel</label>
+                    <div class="col-lg-10">
+                        <input type="text" name="title" v-model="form.title" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Status</label>
+                    <div class="col-lg-10">
+                        <select name="status" v-model="form.status" class="form-control" required>
+                            <option value="">Select Status</option>
+                            <option value="1">Active</option>
+                            <option value="0">In Active</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Description</label>
+                    <div class="col-lg-10">
+                        <ckeditor type="classic"  v-model="form.description" :upload-adapter="UploadAdapter"></ckeditor>
+                    </div>
+                </div>
+
+            </fieldset>
+
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">Save {{pageData.title}} <i class="icon-paperplane ml-2"></i></button>
+            </div>
+        </form>
+    </div>
+</template>
+
+<script>
+    import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+    import VueCkeditor from 'vue-ckeditor5'
+    const options = {
+        editors: {
+            classic: ClassicEditor,
+        },
+        name: 'ckeditor'
+    }
+
+    Vue.use(VueCkeditor.plugin, options);
+
+    export default {
+        name: "formEditPage",
+        props: ['page'],
+        data() {
+            return {
+                pageData: JSON.parse(this.page),
+                form: {
+                    id: '',
+                    name: '',
+                    title: '',
+                    status: '',
+                    description:''
+                }
+            }
+        },
+        created() {
+            this.form.id = this.pageData.id;
+            this.form.name = this.pageData.name
+            this.form.title = this.pageData.title
+            this.form.status = this.pageData.status
+            this.form.description = this.pageData.description
+        },
+        methods: {
+            UploadAdapter: function (loader) {
+                this.loader = loader
+                this.upload = () => {
+                    const body = new FormData();
+                    body.append('file', this.loader.file);
+                    return axios.post('/uploadFile', body, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        }
+                    }).then(response => {
+                        console.log(response);
+                        return {default: response.data};
+                        // return downloadUrl
+                    })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                }
+                this.abort = () => {
+                    console.log('Abort upload.')
+                }
+            },
+            sumbitForm: function () {
+                axios.put( '/admin/pages/'+this.form.id, this.form).then(function(response){
+                    if(response.data.status === '00') {
+                        setTimeout(function () {
+                            window.location = '/admin/pages';
+                        }, 400)
+                    }
+                }).catch(function(){
+                    console.log('FAILURE!!');
+                });
+            }
+        }
+    }
+</script>
+<style>
+    .ck-editor__editable {
+        min-height: 400px;
+    }
+</style>

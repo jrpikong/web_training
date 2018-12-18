@@ -37,18 +37,28 @@ class PageController extends Controller
     public function store(Request $request)
     {
         //
-        dd($request);
-    }
+        $page = new Page();
+        $page->name = $request->name;
+        $page->slug = str_slug($request->name,'-');
+        $page->title = $request->title;
+        $page->status = $request->status;
+        $page->description = $request->description;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Page  $page
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Page $page)
-    {
-        //
+        $page->save();
+
+        try {
+            return response()->json([
+                'status' => '00',
+                'message' => 'Insert Success',
+                'data' => $page,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => '04',
+                'message' => 'Insert Failed',
+                'data' => $page,
+            ]);
+        }
     }
 
     /**
@@ -59,7 +69,7 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
-        //
+        return view('admin.pages.form_edit',compact('page'));
     }
 
     /**
@@ -71,7 +81,27 @@ class PageController extends Controller
      */
     public function update(Request $request, Page $page)
     {
-        //
+//        $page = $page::find($page);
+        $page->name = $request->name;
+        $page->title = $request->title;
+        $page->status = $request->status;
+        $page->description = $request->description;
+
+        $page->save();
+
+        try {
+            return response()->json([
+                'status' => '00',
+                'message' => 'Update Success',
+                'data' => $page,
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => '04',
+                'message' => 'Update Failed',
+                'data' => $page,
+            ]);
+        }
     }
 
     /**
@@ -82,6 +112,12 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
-        //
+        $page_ = $page::find($page)->each->delete();
+
+        try {
+            return back()->with('success','You have successfully delete Product.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error delete Product.');
+        }
     }
 }

@@ -29,8 +29,8 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Name</th>
                     <th>Title</th>
-                    <th>Description</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -40,11 +40,11 @@
                     @foreach($pages as $key => $page)
                         <tr>
                             <td width="100"> {{ $key + 1 }} </td>
+                            <td> {{ $page->name }} </td>
                             <td> {{ $page->title }} </td>
-                            <td> {{ $page->description }}</td>
                             <td> @if($page->status) Active @else In Active @endif </td>
-                            <td> <a href="{{route('edit_faq',$item->id)}}" class="btn btn-outline-primary btn-block mb-2" >Edit</a>
-                                <form action="{{ route('delete_faq', $item->id)}}" method="post">
+                            <td> <a href="{{route('edit_page',$page->id)}}" class="btn btn-outline-primary btn-block mb-2" >Edit</a>
+                                <form action="{{ route('destroy_page', $page->id)}}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-outline-danger btn-block" type="submit">Delete</button>

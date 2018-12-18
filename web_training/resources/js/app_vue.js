@@ -24,6 +24,8 @@ Vue.component('edit-form-product', require('./components/Admin/Products/EditForm
 Vue.component('follow-training-quiz', require('./components/user/FollowTrainingQuiz'));
 Vue.component('training-quiz-form', require('./components/Admin/Training/TrainingQuizForm'));
 Vue.component('training-quiz-edit', require('./components/Admin/Training/TrainingQuizEdit'));
+Vue.component('form-add-page', require('./components/Admin/Page/formAddPage'));
+Vue.component('form-edit-page', require('./components/Admin/Page/formEditPage'));
 
 const app_vue = new Vue({
     el: '#app'

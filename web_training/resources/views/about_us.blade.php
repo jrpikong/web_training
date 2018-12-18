@@ -19,16 +19,8 @@
                 <div class="overflow-hidden mb-3">
                     {{--<p class="font-weight-bold text-primary text-uppercase mb-0 appear-animation" data-appear-animation="maskUp" data-appear-animation-delay="500">Samsung Student Ambassador</p>--}}
                 </div>
-                <p class="lead appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="700">Program Samsung yang mewadahi mahasiswa untuk mempromosikan dan menjual produk elektronik seperti TV, kulkas dan mesim cuci melalui microsite Samsung Student Ambassador yang sudah kerja sama dengan Blibli (transaksi melalui link Samsung Student Ambassador.</p>
-                <p class="pb-3 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="800">
-                    1. menjadi bagian dari perusahaan samsung (10 perusahaan terbaik dunia) <br>
-                    2. mendapatkan pengalaman sebelum terjun ke dunia kerja <br>
-                    3. meningkatkan semangat entrepeneur <br>
-                    4. meningkatkan kepercayaan diri <br>
-                    5. berkesempatan bergabung dengan perusahaan samsung setelah lulus kuliah <br>
-                    6. waktu yang fleksibel <br>
-                    7. mendapatkan pendapatan tambahan sampai Rp 5 juta atau lebih setiap bulannya <br>
-                </p>
+                <p class="lead appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="700">{!! $about->title !!}</p>
+                <div>{!! $about->description !!}</div>
                 <hr class="solid my-4 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="900">
             </div>
             <div class="col-md-5 order-md-2 mb-4 mb-lg-0 appear-animation" data-appear-animation="fadeInRightShorter">
