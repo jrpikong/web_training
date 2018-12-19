@@ -1,4 +1,5 @@
-
+<template>
+    <div>
         <div :class="'alert alert-'+alert_info+' border-0 alert-dismissible'" v-if="alert">
             <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
             <span class="font-weight-semibold">Info!</span> {{ message }}
