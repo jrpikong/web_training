@@ -68673,7 +68673,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var options = {
     editors: {
-        decouple: __WEBPACK_IMPORTED_MODULE_1__ckeditor_ckeditor5_build_decoupled_document_build_ckeditor___default.a
+        classic: __WEBPACK_IMPORTED_MODULE_0__ckeditor_ckeditor5_build_classic___default.a
 
     },
     name: 'ckeditor'
@@ -68904,7 +68904,7 @@ var render = function() {
               [
                 _c("ckeditor", {
                   attrs: {
-                    type: "decouple",
+                    type: "classic",
                     "upload-adapter": _vm.UploadAdapter
                   },
                   model: {
@@ -68921,21 +68921,25 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "text-right" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [
-              _vm._v("Save " + _vm._s(_vm.pageData.title) + " "),
-              _c("i", { staticClass: "icon-paperplane ml-2" })
-            ]
-          )
-        ])
+        _vm._m(0)
       ]
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-right" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+        [_vm._v("Save "), _c("i", { staticClass: "icon-paperplane ml-2" })]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

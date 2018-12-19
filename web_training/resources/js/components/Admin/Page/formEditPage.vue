@@ -32,14 +32,14 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Description</label>
                     <div class="col-lg-10">
-                        <ckeditor type="decouple"  v-model="form.description" :upload-adapter="UploadAdapter"></ckeditor>
+                        <ckeditor type="classic"  v-model="form.description" :upload-adapter="UploadAdapter"></ckeditor>
                     </div>
                 </div>
 
             </fieldset>
 
             <div class="text-right">
-                <button type="submit" class="btn btn-primary">Save {{pageData.title}} <i class="icon-paperplane ml-2"></i></button>
+                <button type="submit" class="btn btn-primary">Save <i class="icon-paperplane ml-2"></i></button>
             </div>
         </form>
     </div>
@@ -51,7 +51,7 @@
     import VueCkeditor from 'vue-ckeditor5'
     const options = {
         editors: {
-            decouple: DecoupledEditor,
+            classic: ClassicEditor,
 
         },
         name: 'ckeditor'
