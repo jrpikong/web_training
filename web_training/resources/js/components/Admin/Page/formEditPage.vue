@@ -75,10 +75,10 @@
         },
         created() {
             this.form.id = this.pageData.id;
-            this.form.name = this.pageData.name
-            this.form.title = this.pageData.title
-            this.form.status = this.pageData.status
-            this.form.description = this.pageData.description
+            this.form.name = this.pageData.name;
+            this.form.title = this.pageData.title;
+            this.form.status = this.pageData.status;
+            this.form.description = this.pageData.description;
         },
         methods: {
             UploadAdapter: function (loader) {
