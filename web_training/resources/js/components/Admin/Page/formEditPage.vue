@@ -79,6 +79,7 @@
             this.form.title = this.pageData.title;
             this.form.status = this.pageData.status;
             this.form.description = this.pageData.description;
+
         },
         methods: {
             UploadAdapter: function (loader) {
