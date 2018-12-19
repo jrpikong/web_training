@@ -39,7 +39,7 @@
             </fieldset>
 
             <div class="text-right">
-                <button type="submit" class="btn btn-primary">Save {{pageData.title}} <i class="icon-paperplane ml-2"></i></button>
+                <button type="submit" class="btn btn-primary">Save <i class="icon-paperplane ml-2"></i></button>
             </div>
         </form>
     </div>
@@ -47,10 +47,12 @@
 
 <script>
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+    import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document/build/ckeditor'
     import VueCkeditor from 'vue-ckeditor5'
     const options = {
         editors: {
             classic: ClassicEditor,
+
         },
         name: 'ckeditor'
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Page;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +55,8 @@ class HomeController extends Controller
     }
     public function term_and_condition()
     {
-        return view('term_and_condition');
+        $page = Page::where('slug', 'like', '%term-and-condition%')->first();
+        return view('term_and_condition',compact('page'));
     }
 
     public function term_and_condition_post(Request $request)
