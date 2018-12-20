@@ -86,10 +86,10 @@
                                 }
                             }
                     @endphp
-                    <p>Melankolis: {{ $melankolis / count($personality) * 100}} %</p>
-                    <p>Kolerik: {{ $kolerik / count($personality) * 100}} %</p>
-                    <p>Sanguinis: {{ $sanguinis / count($personality) * 100}} %</p>
-                    <p>Plegmati: {{ $plegmatis / count($personality) * 100}} %</p>
+                    <p>Melankolis: {{ round($melankolis / count($personality) * 100)}} %</p>
+                    <p>Kolerik: {{ round($kolerik / count($personality) * 100)}} %</p>
+                    <p>Sanguinis: {{ round($sanguinis / count($personality) * 100)}} %</p>
+                    <p>Plegmati: {{ round($plegmatis / count($personality) * 100)}} %</p>
                 </td>
             </tr>
             <tr>
