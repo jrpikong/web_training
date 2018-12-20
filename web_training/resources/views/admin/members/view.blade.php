@@ -59,6 +59,10 @@
                 <td>{{$member->grade_point_average}}</td>
             </tr>
             <tr>
+                <td>Rekening Mandiri</td>
+                <td>{{ $member->bank_account }}</td>
+            </tr>
+            <tr>
                 <td>Alamat</td>
                 <td>{{ $province.' - '.$city.' - '.$disctric }} - {{$member->address}} {{$member->postal_code}}</td>
             </tr>
@@ -82,10 +86,10 @@
                                 }
                             }
                     @endphp
-                    <p>Melankolis: {{ $melankolis / count($personality) * 100}}</p>
-                    <p>Kolerik: {{ $kolerik / count($personality) * 100}}</p>
-                    <p>Sanguinis: {{ $sanguinis / count($personality) * 100}}</p>
-                    <p>Plegmati: {{ $plegmatis / count($personality) * 100}}</p>
+                    <p>Melankolis: {{ $melankolis / count($personality) * 100}} %</p>
+                    <p>Kolerik: {{ $kolerik / count($personality) * 100}} %</p>
+                    <p>Sanguinis: {{ $sanguinis / count($personality) * 100}} %</p>
+                    <p>Plegmati: {{ $plegmatis / count($personality) * 100}} %</p>
                 </td>
             </tr>
             <tr>
