@@ -47,7 +47,6 @@
 
 <script>
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-    import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
     import VueCkeditor from 'vue-ckeditor5'
     const options = {
         editors: {
