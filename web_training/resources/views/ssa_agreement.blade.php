@@ -33,13 +33,13 @@
                         <h4 class="text-center">Pasal 1</h4>
                         <h4 class="text-center">Kesepakatan</h4>
                         <p>
-                            PIHAK PERTAMA bersedia menerima <b>PIHAK KEDUA</b> sebagai peserta Program Samsung Student Ambasador dan <b>PIHAK KEDUA</b> menyatakan kesediaannya untuk mengikuti Program Samsung Student Ambasador yang dilaksanakan oleh PIHAK PERTAMA.
+                            PIHAK PERTAMA bersedia menerima <b>PIHAK KEDUA</b> sebagai peserta Program Samsung Student Ambassador dan <b>PIHAK KEDUA</b> menyatakan kesediaannya untuk mengikuti Program Samsung Student Ambassador yang dilaksanakan oleh PIHAK PERTAMA.
                         </p>
 
                         <h4 class="text-center">Pasal 2</h4>
                         <h4 class="text-center">Masa Kerja</h4>
                         <p>
-                            Pelaksanaan Kerja yang lakukan oleh <b>PIHAK PERTAMA</b> kepada <b>PIHAK KEDUA</b> selama 3 (tiga) Bulan, yang di mulai pada tanggal {{$dateNow}} sampai dengan 26 Desember 2018.
+                            Pelaksanaan Kerja yang lakukan oleh <b>PIHAK PERTAMA</b> kepada <b>PIHAK KEDUA</b> selama 3 (tiga) Bulan, yang di mulai sejak perjanjian ditandatangani yaitu pada tanggal {{ $dateNow }}
                         </p>
 
                         <h4 class="text-center">Pasal 3</h4>
@@ -51,7 +51,7 @@
                             <li><b>PIHAK PERTAMA</b> akan memberikan Penilaian kepada Hasil Kerja dari Peserta Program yang akan di evaluasi secara berkala.</li>
                             <li>Setiap Personal Samsung Student Ambasador wajib membawa nama baik Brand SAMSUNG dan Agency PT Accentuates.</li>
                             <li>Setiap bulan Team Samsung Student Ambasador akan direview atas hasil penjualannya.</li>
-                            <li>Bagi yang tidak aktif (tidak ada penjualan selama 3 bulan) akan di Non Aktifkan ID nya untuk di stop tunjangan pulsa / paket datanya serta tidak berlaku untuk insentif penjualan selanjutnya.</li>
+                            <li>Bagi yang tidak aktif (tidak ada penjualan selama 3 bulan) akan di Non Aktifkan ID-nya untuk dihentikan tunjangan pulsa / paket datanya serta tidak berlaku untuk insentif penjualan selanjutnya.</li>
                         </ol>
 
                         <h4 class="text-center">Pasal 4</h4>
@@ -62,15 +62,10 @@
                             <li><b>PIHAK KEDUA</b> bersedia untuk menjadi Partner PT. Samsung Elektronik Indonesia untuk melakukan proses penjualan online melalui “Blibli” dimana <b>PIHAK KEDUA</b> berhak mendapatkan pengajaran materi penjualan dari Pihak Samsung dan berhak atas insentif dari penjualan tersebut.</li>
                             <li>Selama masa program <b>PIHAK KEDUA</b> wajib mengikuti ketentuan yang berlaku sesuai dengan aturan yang telah diberikan oleh <b>PIHAK PERTAMA</b>. </li>
                             <li>
-                                <p>3. <b>PIHAK KEDUA</b> berhak untuk mendapatkan benefit sebagai berikut: </p>
-                                <p>• Tunjangan Pulsa	: Rp. 100.000,-/bulan</p>
-                                <p>• Insentif : sesuai pencapaian penjualan</p>
-
+                                <b>PIHAK KEDUA</b> berhak untuk mendapatkan benefit berupa Insentif sesuai pencapaian penjualan
                             </li>
+                            <li>Hasil kerja dari <b>PIHAK KEDUA</b> akan dievaluasi oleh PIHAK PERTAMA secara berkala. </li>
                         </ol>
-                        <p>
-                            Hasil kerja dari <b>PIHAK KEDUA</b> akan di evaluasi oleh <b>PIHAK PERTAMA</b> secara berkala.
-                        </p>
                         <p class="text-center">Pasal 5</p>
                         <p>
                             Setelah masa program (pasal 2 diatas) berakhir, maka berakhir pula perjanjian ini dan tidak ada kewajiban atau tuntutan dari <b>PIHAK PERTAMA</b> dan <b>PIHAK KEDUA</b> terhadap perjanjian program ini.
