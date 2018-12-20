@@ -8,7 +8,7 @@
         </div>
 
         <div class="card-body">
-            <form-edit-page :page="'{{ json_encode($page) }}'"></form-edit-page>
+            <form-edit-page :page="'{{ $page }}'"></form-edit-page>
         </div>
     </div>
 @endsection
