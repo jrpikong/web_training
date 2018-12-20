@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    {{--@if(Auth::user()->id == 10)--}}
-        {{--@include('dashboard')--}}
-    {{--@endif--}}
+    @if(Auth::user()->id == 10)
+        @include('dashboard')
+    @endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">

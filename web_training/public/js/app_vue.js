@@ -61583,6 +61583,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
 
 
 
@@ -61610,6 +61611,14 @@ Vue.component('v-select', __WEBPACK_IMPORTED_MODULE_1_vue_select___default.a);
     },
 
     methods: {
+        delete_data: function delete_data(id) {
+            alert('Anda Yakin Akan Menghapus User Ini?');
+            axios.get('delete_member/' + id).then(function (response) {
+                setTimeout(function () {
+                    window.location = '/admin/members';
+                }, 100);
+            });
+        },
         fetchEventsList: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var _this = this;
@@ -62826,9 +62835,28 @@ var render = function() {
                     _c("td", [_vm._v(" " + _vm._s(item.address))]),
                     _vm._v(" "),
                     _c("td", [
-                      _c("a", { attrs: { href: "get_member/" + item.id } }, [
-                        _vm._v(" Detail")
-                      ])
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { href: "get_member/" + item.id }
+                        },
+                        [_vm._v(" Detail")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          staticStyle: { cursor: "pointer", color: "red" },
+                          on: {
+                            click: function($event) {
+                              _vm.delete_data(item.id)
+                            }
+                          }
+                        },
+                        [_vm._v(" Delete")]
+                      )
                     ])
                   ])
                 : _vm._e()

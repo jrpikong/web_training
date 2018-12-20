@@ -116,7 +116,8 @@
                     <td> {{item.postal_code}}</td>
                     <td> {{item.address}}</td>
                     <td>
-                        <a :href="'get_member/'+item.id"> Detail</a>
+                        <a :href="'get_member/'+item.id" class="nav-link"> Detail</a>
+                        <a style="cursor:pointer; color: red;" @click="delete_data(item.id)" class="nav-link"> Delete</a>
                     </td>
                 </tr>
                 <tr v-if="loading">
@@ -154,6 +155,14 @@
             this.fetchProvincesList()
         },
         methods: {
+            delete_data (id) {
+                alert('Anda Yakin Akan Menghapus User Ini?')
+                axios.get('delete_member/'+id).then((response)=>{
+                    setTimeout(function () {
+                        window.location = '/admin/members';
+                    }, 100)
+                });
+            },
             async fetchEventsList() {
                 this.loading = true
                 setTimeout(() => {

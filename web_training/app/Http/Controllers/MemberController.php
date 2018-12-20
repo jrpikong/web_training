@@ -55,6 +55,12 @@ class MemberController extends Controller
         );
     }
 
+    public function Delete($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+    }
+
     public function getMemberByID($id)
     {
         //ResultPersonalQuiz::with('personality_detail')->where('user_id', '=', $id)->get();
