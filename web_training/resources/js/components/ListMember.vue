@@ -33,6 +33,21 @@
                             </select>
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Provinces</label>
+                        <div class="col-lg-10">
+                            <v-select v-model="search.selected"  :options="options"></v-select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Jurusan</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="search.jurusan">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-md-6">
                     <div class="form-group row">
@@ -45,6 +60,18 @@
                         <label class="col-form-label col-lg-2">Phone Number</label>
                         <div class="col-lg-10">
                             <input type="text" class="form-control" v-model="search.phone_number">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">IPK</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="search.ipk">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Tahun Lahir</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="search.tahun_lahir">
                         </div>
                     </div>
                     <div class="text-right">
@@ -95,22 +122,29 @@
 </template>
 
 <script>
+    import vSelect from 'vue-select'
+
+    Vue.component('v-select', vSelect)
     export default {
         name: "ListMember",
         data : function () {
             return {
                 items:[],
+                provinces: [],
                 loading:true,
                 search:{
                     user_name: '',
                     gender: '',
                     university: '',
                     phone_number: '',
-                }
+                    selected: ''
+                },
+                options:[]
             }
         },
         created() {
             this.fetchEventsList()
+            this.fetchProvincesList()
         },
         methods: {
             async fetchEventsList() {
@@ -119,6 +153,13 @@
                     axios.get('get_members',{params:this.search}).then((response)=>{
                         this.items = response.data.data
                         this.loading = false
+                    });
+                },500)
+            },
+            async fetchProvincesList() {
+                setTimeout(() => {
+                    axios.get('get_province').then((response)=>{
+                        this.options = response.data.data
                     });
                 },500)
             }
