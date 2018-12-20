@@ -43,6 +43,10 @@
                 <td>{{$member->university}}</td>
             </tr>
             <tr>
+                <td>Jurusan</td>
+                <td>{{$member->majors}}</td>
+            </tr>
+            <tr>
                 <td>Nomor KTP</td>
                 <td>{{$member->id_identity}}</td>
             </tr>
@@ -73,6 +77,10 @@
             <tr>
                 <td>Upload scan KTP</td>
                 <td><img src="{{$member->getFirstMediaUrl('img_identity')}}" class="img-thumbnail"></td>
+            </tr>
+            <tr>
+                <td>Upload scan NPWP</td>
+                <td><img src="{{$member->getFirstMediaUrl('img_npwp')}}" class="img-thumbnail"></td>
             </tr>
         </table>
     </div>

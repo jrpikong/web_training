@@ -65,7 +65,14 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">IPK</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" v-model="search.ipk">
+                            <select v-model="search.ipk" class="form-control">
+                                <option value="New Student">New Student</option>
+                                <option value="< 2">< 2</option>
+                                <option value="2 - 2,5">2 - 2,5</option>
+                                <option value="> 2,5 - 3">> 2,5 - 3</option>
+                                <option value="> 3 - 3,5">> 3 - 3,5</option>
+                                <option value="> 3,5 - 4">> 3,5 - 4 </option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">

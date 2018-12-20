@@ -61576,6 +61576,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -62697,27 +62704,62 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-10" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.search.ipk,
-                      expression: "search.ipk"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.search.ipk },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.search.ipk,
+                        expression: "search.ipk"
                       }
-                      _vm.$set(_vm.search, "ipk", $event.target.value)
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.search,
+                          "ipk",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
                     }
-                  }
-                })
+                  },
+                  [
+                    _c("option", { attrs: { value: "New Student" } }, [
+                      _vm._v("New Student")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "< 2" } }, [_vm._v("< 2")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2 - 2,5" } }, [
+                      _vm._v("2 - 2,5")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "> 2,5 - 3" } }, [
+                      _vm._v("> 2,5 - 3")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "> 3 - 3,5" } }, [
+                      _vm._v("> 3 - 3,5")
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "> 3,5 - 4" } }, [
+                      _vm._v("> 3,5 - 4 ")
+                    ])
+                  ]
+                )
               ])
             ]),
             _vm._v(" "),
