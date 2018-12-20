@@ -50,9 +50,11 @@ Route::middleware(['auth'])->group(function () {
                 'store' => 'store_page',
                 'edit' => 'edit_page',
                 'update' => 'update_page',
-                'destroy' => 'destroy_page'
+                'destroy' => 'destroy_page',
             ]
         ]);
+
+        Route::get('/page_get_by/{id}', 'PageController@getId');
 
         /*Quize*/
         Route::get('/list_quiz', 'QuizController@index')->name('list_quiz');

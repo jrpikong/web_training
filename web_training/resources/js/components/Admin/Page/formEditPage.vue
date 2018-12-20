@@ -12,13 +12,6 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Titel</label>
-                    <div class="col-lg-10">
-                        <input type="text" name="title" v-model="form.title" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="form-group row">
                     <label class="col-form-label col-lg-2">Status</label>
                     <div class="col-lg-10">
                         <select name="status" v-model="form.status" class="form-control" required>
@@ -30,7 +23,14 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Description</label>
+                    <label class="col-form-label col-lg-2">Description 1</label>
+                    <div class="col-lg-10">
+                        <ckeditor type="classic" name="title" v-model="form.title" class="form-control" required></ckeditor>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Description 2</label>
                     <div class="col-lg-10">
                         <ckeditor type="classic"  v-model="form.description" :upload-adapter="UploadAdapter"></ckeditor>
                     </div>
@@ -60,10 +60,9 @@
 
     export default {
         name: "formEditPage",
-        props: ['page'],
+        props: ['id_page'],
         data() {
             return {
-                pageData: JSON.parse(this.page),
                 form: {
                     id: '',
                     name: '',
@@ -73,12 +72,17 @@
                 }
             }
         },
-        created() {
-            // this.form.id = this.pageData.id;
-            // this.form.name = this.pageData.name;
-            // this.form.title = this.pageData.title;
-            // this.form.status = this.pageData.status;
-            // this.form.description = this.pageData.description;
+        mounted() {
+            axios.get('/admin/page_get_by/'+this.id_page).then((response)=>{
+                if(response.data.status === '00') {
+                    this.form.id = response.data.data.id;
+                    this.form.name = response.data.data.name;
+                    this.form.title = response.data.data.title;
+                    this.form.status = response.data.data.status;
+                    this.form.description = response.data.data.description;
+                }
+            });
+
         },
         methods: {
             UploadAdapter: function (loader) {
@@ -102,6 +106,21 @@
                 this.abort = () => {
                     console.log('Abort upload.')
                 }
+            },
+            async getById() {
+                setTimeout(() => {
+                axios.get('/admin/page_get_by/'+this.form.id).then(function(response){
+
+                            console.log(this.form.id)
+                        });
+                    // if(response.data.status === '00') {
+                    //     this.form.id = response.data.id;
+                    //     this.form.name = response.data.name;
+                    //     this.form.title = response.data.title;
+                    //     this.form.status = response.data.status;
+                    //     this.form.description = response.data.description;
+                    // }
+                },200)
             },
             sumbitForm: function () {
                 axios.put( '/admin/pages/'+this.form.id, this.form).then(function(response){

@@ -12,13 +12,6 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Titel</label>
-                    <div class="col-lg-10">
-                        <input type="text" name="title" v-model="form.title" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="form-group row">
                     <label class="col-form-label col-lg-2">Status</label>
                     <div class="col-lg-10">
                         <select name="status" v-model="form.status" class="form-control" required>
@@ -30,9 +23,16 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Description</label>
+                    <label class="col-form-label col-lg-2">Description 1</label>
                     <div class="col-lg-10">
-                        <ckeditor type="classic"  v-model="form.description" :upload-adapter="UploadAdapter"></ckeditor>
+                        <ckeditor type="classic" name="title" v-model="form.title" class="form-control"></ckeditor>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-form-label col-lg-2">Description 2</label>
+                    <div class="col-lg-10">
+                        <ckeditor type="classic" v-model="form.description" :upload-adapter="UploadAdapter"></ckeditor>
                     </div>
                 </div>
 
@@ -47,6 +47,7 @@
 
 <script>
     import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+    import Alignment from '@ckeditor/ckeditor5-alignment/src/alignment'
     import VueCkeditor from 'vue-ckeditor5'
     const options = {
         editors: {
@@ -66,7 +67,7 @@
                     title: '',
                     status: '',
                     description:''
-                }
+                },
             }
         },
         methods: {
@@ -83,10 +84,9 @@
                         console.log(response);
                         return {default: response.data};
                         // return downloadUrl
-                    })
-                        .catch(error => {
-                            console.log(error);
-                        });
+                    }).catch(error => {
+                        console.log(error);
+                    });
                 }
                 this.abort = () => {
                     console.log('Abort upload.')

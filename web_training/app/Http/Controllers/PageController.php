@@ -72,6 +72,15 @@ class PageController extends Controller
         return view('admin.pages.form_edit',compact('page'));
     }
 
+    public function getId($id)
+    {
+        $page = Page::find($id);
+        return response()->json([
+            'status' => '00',
+            'message' => 'Get Success',
+            'data' => $page,
+        ]);
+    }
     /**
      * Update the specified resource in storage.
      *

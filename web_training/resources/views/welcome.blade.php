@@ -97,7 +97,7 @@
         </div>
         <div class="row pb-5 mb-2 mt-2">
             <div class="col text-center">
-                <a href="{{ route('faq') }}" class="btn btn-primary btn-px-5 py-3 font-weight-semibold text-2 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">LEARN MORE</a>
+                <a href="{{ route('aboutUs') }}" class="btn btn-primary btn-px-5 py-3 font-weight-semibold text-2 appear-animation" data-appear-animation="fadeInUpShorter" data-appear-animation-delay="300">LEARN MORE</a>
             </div>
         </div>
     </div>
@@ -109,7 +109,7 @@
                     <h2 class="font-weight-semibold mb-0">JOIN SAMSUNG STUDENT AMBASSADOR</h2>
                     <p class="lead font-weight-light text-color-dark text-4">Kesempatan membangun mental.</p>
                     <p class="font-weight-light text-color-dark text-2 mb-4 opacity-7">Kesempatan membangun mental entrepreneurship dan memperoleh penghasilan yang lumayan bagi para mahasiswa atau yang fresh graduate.</p>
-                    <a href="{{ route('login') }}" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
+                    <a href="{{ route('register') }}" class="btn btn-dark-scale-2 btn-px-5 btn-py-2 text-2">JOIN NOW</a>
                 </div>
                 <div class="col-md-6 col-lg-5 offset-lg-1 order-1 order-lg-2 scale-2">
                     <div class="owl-carousel owl-theme manual thumb-gallery-detail show-nav-hover" id="thumbGalleryDetail">
