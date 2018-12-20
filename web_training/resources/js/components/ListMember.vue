@@ -156,12 +156,17 @@
         },
         methods: {
             delete_data (id) {
-                alert('Anda Yakin Akan Menghapus User Ini?')
-                axios.get('delete_member/'+id).then((response)=>{
-                    setTimeout(function () {
-                        window.location = '/admin/members';
-                    }, 100)
-                });
+                if(confirm("Are you sure you want to delete this?")){
+                    axios.get('delete_member/'+id).then((response)=>{
+                        setTimeout(function () {
+                            window.location = '/admin/members';
+                        }, 100)
+                    });
+                }
+                else{
+                    return false;
+                }
+
             },
             async fetchEventsList() {
                 this.loading = true

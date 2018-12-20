@@ -61612,12 +61612,15 @@ Vue.component('v-select', __WEBPACK_IMPORTED_MODULE_1_vue_select___default.a);
 
     methods: {
         delete_data: function delete_data(id) {
-            alert('Anda Yakin Akan Menghapus User Ini?');
-            axios.get('delete_member/' + id).then(function (response) {
-                setTimeout(function () {
-                    window.location = '/admin/members';
-                }, 100);
-            });
+            if (confirm("Are you sure you want to delete this?")) {
+                axios.get('delete_member/' + id).then(function (response) {
+                    setTimeout(function () {
+                        window.location = '/admin/members';
+                    }, 100);
+                });
+            } else {
+                return false;
+            }
         },
         fetchEventsList: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
