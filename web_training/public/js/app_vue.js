@@ -64852,7 +64852,7 @@ var render = function() {
                           _c(
                             "label",
                             { staticClass: "col-form-label col-lg-2" },
-                            [_vm._v("Hasil")]
+                            [_vm._v("Hasil " + _vm._s(_vm.items.length))]
                           ),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-lg-10" }, [
@@ -64864,7 +64864,11 @@ var render = function() {
                                   _c("li", { staticClass: "list-group-item" }, [
                                     _vm._v(
                                       "Melankolis = " +
-                                        _vm._s(_vm.result[0].Melankolis) +
+                                        _vm._s(
+                                          (_vm.result[0].Melankolis /
+                                            _vm.items.quiz_detail.length) *
+                                            100
+                                        ) +
                                         " %"
                                     )
                                   ]),
@@ -64872,7 +64876,11 @@ var render = function() {
                                   _c("li", { staticClass: "list-group-item" }, [
                                     _vm._v(
                                       "Plegmati = " +
-                                        _vm._s(_vm.result[0].Plegmati) +
+                                        _vm._s(
+                                          (_vm.result[0].Plegmati /
+                                            _vm.items.quiz_detail.length) *
+                                            100
+                                        ) +
                                         "%"
                                     )
                                   ]),
@@ -64880,7 +64888,11 @@ var render = function() {
                                   _c("li", { staticClass: "list-group-item" }, [
                                     _vm._v(
                                       "Kolerik = " +
-                                        _vm._s(_vm.result[0].Kolerik) +
+                                        _vm._s(
+                                          (_vm.result[0].Kolerik /
+                                            _vm.items.quiz_detail.length) *
+                                            100
+                                        ) +
                                         "%"
                                     )
                                   ]),
@@ -64888,7 +64900,11 @@ var render = function() {
                                   _c("li", { staticClass: "list-group-item" }, [
                                     _vm._v(
                                       "Sanguinis = " +
-                                        _vm._s(_vm.result[0].Sanguinis) +
+                                        _vm._s(
+                                          (_vm.result[0].Sanguinis /
+                                            _vm.items.quiz_detail.length) *
+                                            100
+                                        ) +
                                         "%"
                                     )
                                   ])

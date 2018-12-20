@@ -63,6 +63,32 @@
                 <td>{{ $province.' - '.$city.' - '.$disctric }} - {{$member->address}} {{$member->postal_code}}</td>
             </tr>
             <tr>
+                <td>Tipe Kepribadian</td>
+                <td>
+                    @php
+                        $melankolis=0;
+                        $kolerik = 0;
+                        $sanguinis = 0;
+                        $plegmatis = 0;
+                            foreach ( $personality as $field ) {
+                                if($field->type_of_choice == 'Melankolis'){
+                                    $melankolis ++ ;
+                                }else if ($field->type_of_choice == 'Kolerik'){
+                                    $kolerik++;
+                                }else if($field->type_of_choice == 'Sanguinis'){
+                                    $sanguinis++;
+                                }else if($field->type_of_choice == 'Plegmati'){
+                                    $plegmatis++;
+                                }
+                            }
+                    @endphp
+                    <p>Melankolis: {{ $melankolis / count($personality) * 100}}</p>
+                    <p>Kolerik: {{ $kolerik / count($personality) * 100}}</p>
+                    <p>Sanguinis: {{ $sanguinis / count($personality) * 100}}</p>
+                    <p>Plegmati: {{ $plegmatis / count($personality) * 100}}</p>
+                </td>
+            </tr>
+            <tr>
                 <td>Foto diri</td>
                 <td><img src="{{$member->getFirstMediaUrl('img_profile','thumb')}}" class="img-thumbnail"></td>
             </tr>

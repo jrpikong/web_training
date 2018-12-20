@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\ResultPersonalQuiz;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Laravolt\Indonesia\Indonesia;
 
 class MemberController extends Controller
@@ -55,6 +57,7 @@ class MemberController extends Controller
 
     public function getMemberByID($id)
     {
+        //ResultPersonalQuiz::with('personality_detail')->where('user_id', '=', $id)->get();
 
         $member = User::find($id);
         $indonesia = new Indonesia();
@@ -64,6 +67,9 @@ class MemberController extends Controller
         $city = $city->name;
         $disctric = $indonesia->findDistrict($member->districts);
         $disctric = $disctric->name;
-        return view('admin.members.view', compact('member','province','city','disctric'));
+        $personality = DB::table('result_personal_quizzes')
+            ->join('result_personal_quiz_details', 'result_personal_quizzes.id', '=', 'result_personal_quiz_details.quiz_result_id')
+            ->get();
+        return view('admin.members.view', compact('member','province','city','disctric','personality'));
     }
 }

@@ -26,14 +26,14 @@
                         </div>
 
                         <div class="form-group row" v-if="result.length > 0">
-                            <label class="col-form-label col-lg-2">Hasil</label>
+                            <label class="col-form-label col-lg-2">Hasil {{items.length}}</label>
                             <div class="col-lg-10">
                                 <div class="card">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">Melankolis = {{result[0].Melankolis}} %</li>
-                                        <li class="list-group-item">Plegmati = {{result[0].Plegmati}}%</li>
-                                        <li class="list-group-item">Kolerik = {{result[0].Kolerik}}%</li>
-                                        <li class="list-group-item">Sanguinis = {{result[0].Sanguinis}}%</li>
+                                        <li class="list-group-item">Melankolis = {{result[0].Melankolis / items.quiz_detail.length * 100}} %</li>
+                                        <li class="list-group-item">Plegmati = {{result[0].Plegmati / items.quiz_detail.length * 100}}%</li>
+                                        <li class="list-group-item">Kolerik = {{result[0].Kolerik / items.quiz_detail.length * 100}}%</li>
+                                        <li class="list-group-item">Sanguinis = {{result[0].Sanguinis / items.quiz_detail.length * 100}}%</li>
                                     </ul>
                                 </div>
                             </div>

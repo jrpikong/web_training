@@ -14,4 +14,9 @@ class ResultPersonalQuizDetail extends Model
         'answers',
         'type_of_choice',
     ];
+
+    public function result_personal_quiz()
+    {
+        return $this->hasMany(ResultPersonalQuiz::class);
+    }
 }
