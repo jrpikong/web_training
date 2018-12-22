@@ -125,6 +125,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('log_transactions') }}" class="nav-link">
+                            <i class="icon-coin-dollar"></i>
+                            <span>Log Transaction</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="icon-switch2"></i> Logout
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

@@ -23,6 +23,7 @@ Route::get('/products/{id}', 'ProductController@getDetailProduct')->name('produc
 Route::get('/term_and_condition', 'HomeController@term_and_condition')->name('term_and_condition');
 Route::post('/term_and_condition_pos', 'HomeController@term_and_condition_post')->name('term_and_condition_pos');
 Route::put('/update_bank_account/{id}', 'HomeController@updateBankAccount')->name('update_bank_account');
+Route::get('/transaction', 'HomeController@transaction')->name('transaction');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/admin')->group(function () {
@@ -44,6 +45,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit_faq/{id}', 'FaqController@edit')->name('edit_faq');
         Route::put('/update_faq/{id}', 'FaqController@update')->name('update_faq');
         Route::delete('/delete_faq/{id}', 'FaqController@destroy')->name('delete_faq');
+
+        Route::resource('log_transactions', 'LogTransactionController', [
+            'names' => [
+                'index' => 'log_transactions',
+                'show' => 'show_transactions'
+            ]
+        ]);
 
         Route::resource('pages', 'PageController',[
             'names' => [

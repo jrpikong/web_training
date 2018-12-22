@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\LogTransaction;
 use App\Page;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use Laravolt\Indonesia\Indonesia;
 use Spatie\MediaLibrary\Models\Media;
 
@@ -101,5 +103,16 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         return view('ssa_agreement',compact('user'));
+    }
+
+    public function transaction()
+    {
+        $id = Auth::user()->id;
+        $log_transaction = new LogTransaction();
+        $log_transaction->user_id = $id;
+        $log_transaction->total = 1;
+        $log_transaction->save();
+        $url = 'https://www.blibli.com/promosi/pel-student-promotor-samsung';
+        return Redirect::away($url);
     }
 }
