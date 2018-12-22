@@ -132,6 +132,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('report_training') }}" class="nav-link">
+                            <i class="icon-quill4"></i>
+                            <span>Report Training</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="icon-switch2"></i> Logout
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

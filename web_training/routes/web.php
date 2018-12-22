@@ -70,6 +70,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/list_quiz', 'QuizController@index')->name('list_quiz');
         Route::get('/add_quiz', 'QuizController@form')->name('add_quiz');
         Route::post('/post_quiz', 'QuizController@submitSoal')->name('post_quiz');
+        Route::get('/report_training', 'TrainingController@reportTraining')->name('report_training');
+        Route::get('/show_training_report/{id}', 'TrainingController@showTrainingReport')->name('show_training_report');
 
         /*Product*/
         Route::get('/list_product', 'ProductController@index')->name('list_product');
