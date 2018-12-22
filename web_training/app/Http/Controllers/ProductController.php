@@ -6,6 +6,7 @@ use App\Product;
 use App\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Spatie\MediaLibrary\Models\Media;
 
 class ProductController extends Controller
 {
@@ -53,11 +54,52 @@ class ProductController extends Controller
     }
     public function update(Request $request,$id)
     {
-        $n = $request->file('productImages');
+        $productImages = $request->file('productImages');
+        $productTecnology = $request->file('productTecnologyImages');
+
+        $product = Product::find($id);
+        $product->product_name = $request->input('product_name');
+        $product->category_id = $request->input('product_category');
+        $product->price = $request->input('price');
+        $product->sort_descriptions = $request->input('sort_descriptions');
+        $product->product_video = $request->input('product_video');
+        $product->descriptions = $request->input('descriptions');
+        $product->spesifications =$request->input('spesifications');
+        $product->save();
+
+        if ($productImages) {
+            $media = $product->getMedia('product_images');
+            $media->each->delete();
+            foreach ($productImages as $key => $productImage) {
+                $product->addMedia($productImage)->toMediaCollection('product_images');
+            }
+        }
+
+        if($productTecnology){
+            $media = $product->getMedia('product_tecnology_images');
+            $media->each->delete();
+            foreach ($productTecnology as $key => $productTecnologyImage) {
+                $product->addMedia($productTecnologyImage)->toMediaCollection('product_tecnology_images');
+            }
+        }
+
+        if(!$product){
+            return response()->json([
+                'status' => '04',
+                'message' => 'Insert Failed',
+                'data' => $product,
+            ]);
+        }
+        return response()->json([
+            'status' => '00',
+            'message' => 'Insert Success',
+            'data' => $product,
+        ]);
+
+
     }
     public function store(Request $request)
     {
-        Log::info($request);
         $product = new Product();
         $product->product_name = $request->input('product_name');
         $product->category_id = $request->input('product_category');

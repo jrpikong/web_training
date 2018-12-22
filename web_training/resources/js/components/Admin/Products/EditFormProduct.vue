@@ -210,8 +210,8 @@
                         this.sort_descriptions = response.data.data.products.sort_descriptions;
                         this.descriptions = response.data.data.products.descriptions;
                         this.spesifications =JSON.parse(response.data.data.products.spesifications);
-                        this.productImages =  response.data.data.product_images;
-                        this.productTecnologyImages =  response.data.data.product_tecnology_images;
+                        // this.productImages =  response.data.data.product_images;
+                        // this.productTecnologyImages =  response.data.data.product_tecnology_images;
 
                     }
                 });

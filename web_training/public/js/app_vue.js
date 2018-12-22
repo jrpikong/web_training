@@ -66653,8 +66653,8 @@ var options = {
                     _this3.sort_descriptions = response.data.data.products.sort_descriptions;
                     _this3.descriptions = response.data.data.products.descriptions;
                     _this3.spesifications = JSON.parse(response.data.data.products.spesifications);
-                    _this3.productImages = response.data.data.product_images;
-                    _this3.productTecnologyImages = response.data.data.product_tecnology_images;
+                    // this.productImages =  response.data.data.product_images;
+                    // this.productTecnologyImages =  response.data.data.product_tecnology_images;
                 }
             });
         },
