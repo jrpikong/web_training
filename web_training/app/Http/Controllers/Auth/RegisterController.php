@@ -81,7 +81,7 @@ class RegisterController extends Controller
             'phone_number' => 'required|unique:users',
 //            'university' => 'required',
 //            'type_of_university' => 'required',
-//            'id_identity' => 'required',
+            'id_identity' => 'required|unique:users',
 //            'id_university' => 'requiotal View Minggu Inired',
 //            'img_profile' => 'required|mimes:jpeg,jpg,png',
 //            'img_student_card' => 'required|mimes:jpeg,jpg,png',
