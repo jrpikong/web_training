@@ -134,6 +134,11 @@
                                             @endguest
                                             @auth
                                                 <li class="dropdown-full-color dropdown-secondary">
+                                                    <a class="nav-link " href="/login">
+                                                        My Account
+                                                    </a>
+                                                </li>
+                                                <li class="dropdown-full-color dropdown-secondary">
                                                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                         <i class="icon-switch2"></i> Logout
                                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
