@@ -69,27 +69,29 @@
             <tr>
                 <td>Tipe Kepribadian</td>
                 <td>
-                    @php
-                        $melankolis=0;
-                        $kolerik = 0;
-                        $sanguinis = 0;
-                        $plegmatis = 0;
-                            foreach ( $personality as $field ) {
-                                if($field->type_of_choice == 'Melankolis'){
-                                    $melankolis ++ ;
-                                }else if ($field->type_of_choice == 'Kolerik'){
-                                    $kolerik++;
-                                }else if($field->type_of_choice == 'Sanguinis'){
-                                    $sanguinis++;
-                                }else if($field->type_of_choice == 'Plegmati'){
-                                    $plegmatis++;
+                    @if(!$personality->isEmpty())
+                        @php
+                            $melankolis=0;
+                            $kolerik = 0;
+                            $sanguinis = 0;
+                            $plegmatis = 0;
+                                foreach ( $personality as $field ) {
+                                    if($field->type_of_choice == 'Melankolis'){
+                                        $melankolis ++ ;
+                                    }else if ($field->type_of_choice == 'Kolerik'){
+                                        $kolerik++;
+                                    }else if($field->type_of_choice == 'Sanguinis'){
+                                        $sanguinis++;
+                                    }else if($field->type_of_choice == 'Plegmati'){
+                                        $plegmatis++;
+                                    }
                                 }
-                            }
-                    @endphp
-                    <p>Melankolis: {{ round($melankolis / count($personality) * 100)}} %</p>
-                    <p>Kolerik: {{ round($kolerik / count($personality) * 100)}} %</p>
-                    <p>Sanguinis: {{ round($sanguinis / count($personality) * 100)}} %</p>
-                    <p>Plegmati: {{ round($plegmatis / count($personality) * 100)}} %</p>
+                        @endphp
+                        <p>Melankolis: {{ round($melankolis / count($personality) * 100)}} %</p>
+                        <p>Kolerik: {{ round($kolerik / count($personality) * 100)}} %</p>
+                        <p>Sanguinis: {{ round($sanguinis / count($personality) * 100)}} %</p>
+                        <p>Plegmati: {{ round($plegmatis / count($personality) * 100)}} %</p>
+                    @endif
                 </td>
             </tr>
             <tr>

@@ -116,7 +116,6 @@
                     <th>Email</th>
                     <th>Gender</th>
                     <th>Phone Number</th>
-                    <th>Postal Code</th>
                     <th>Address</th>
                     <th>Action</th>
                 </tr>
@@ -131,7 +130,6 @@
                     <td> {{item.email}}</td>
                     <td> {{item.gender}}</td>
                     <td> {{item.phone_number}}</td>
-                    <td> {{item.postal_code}}</td>
                     <td> {{item.address}}</td>
                     <td>
                         <a :href="'get_member/'+item.id" class="nav-link"> Detail</a>

@@ -89,6 +89,7 @@ class MemberController extends Controller
         $disctric = $disctric->name;
         $personality = DB::table('result_personal_quizzes')
             ->join('result_personal_quiz_details', 'result_personal_quizzes.id', '=', 'result_personal_quiz_details.quiz_result_id')
+            ->where('user_id','=',$id)
             ->get();
         return view('admin.members.view', compact('member','province','city','disctric','personality'));
     }

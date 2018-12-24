@@ -118,7 +118,7 @@ class TrainingController extends Controller
 
     public function showTrainingReport($id)
     {
-        $reports = TrainingQuizResult::with('users','quiz')->orderBy('created_at')->paginate(15);
+        $reports = TrainingQuizResult::where('user_id','=',$id)->with('users','quiz')->orderBy('created_at')->paginate(15);
 
         return view('admin.training.show_report',compact('reports'));
     }

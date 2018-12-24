@@ -59,7 +59,7 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
+        gtag('cookieDomain', 'none');
         gtag('config', 'UA-131315576-1');
     </script>
 

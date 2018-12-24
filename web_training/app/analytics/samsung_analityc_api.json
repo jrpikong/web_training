@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "samsungstudentambassador",
+  "private_key_id": "2e8e986007034b7559dc0db43bc6f28f49bd2d36",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCy83Ds7z9NVryl\nglDz1eHrlvurEyqQ/Nx7esS4Hf7HZWFyw5NjrOkO+C23O4BIbTviNq273/cmLH0U\nqw5JmgX/4d0olt/n/kFKOerlwFkwnMC0hVmdKothYzC/qj2T8BWP0QOsCVfB0Gri\njwEXviIFfhXtO/pHumdyCJbGc+tseWwcenu8dxx21CQTAM1ei7oo2YjjavxswmKj\nkWZ0E8V6OYCfRNJfnGTJZfRljET5/TDlTU16wvv/dusEMsJafE/3NgPwPV+I8tGe\nkzy5gDN/bfEVz7APfW4elnPS8m4qKomnHJg9Q1RyyOHQi88RuTBELF5PyJ04HGrO\nYJkVwZLjAgMBAAECggEAFpG4cNF9yNnDIhas8gvMGgPpSrq4mB+kCRjDPbteujQx\nlaFP8fbJT/+B+IWTGM9aCZ4+zB6jk5dx0Qz/2M2JqyuH0oowxBgfkOZ8FyzqssRa\nU4or8rP+bzJs4AdvC7zwYzqHvYdSH5oTGO7TQvTSYqHzzv9NAgXi7RFjPrU5AG2b\nRT46Z0adqfsHM/rSqY1z5cebLXe5r1ee7M1BICnDrcLD6eW9KVacIH5ZKmuDXaHg\nJW8Lu6VWnBiJwQq8EyGlsM+Lg6dBTpZZ4t6GghLCeiINul43YLIhvXeB70sx5bEC\nJFMzFdMPK/6CVszESL6gAWBX5dSyNK96s5hzDkPX9QKBgQD7CCpUTJjyEGMJpBOr\nVxVa3vkYan9B0W0IUx5pFktB0trOHyABBoCsbKv3fmx1+CGXu4stlF3x1MZ3Ns9a\nULzkVI4ckLSjGY6jKthD34vBvBhVSIjbi5oB7eXnWIb3U3GBrZK3CDVcVFBayaga\nWesx1/j/5qD1N65C8bgejZSr9wKBgQC2fhU5nhPfhaffKvz4g8/WMuUx5BJklGLd\nJJJV8vq1oGMuzVZLPIcxyQF7amTeGgYpLIJFOx3flQcGKJYG1hRSDcAJV+wQm1IE\nYpcMWGPlXqiaSWI3pOeDTs1m/hvz8EsN6TyXckgucUTm8B8ngBK6jBdUnkDxoEWK\nDoS/ZEwddQKBgQCySvtdgkXC71aYG1wI/sHhF6rN553YznjlR7u6oaXz62GSslKV\nx9uOG2UMVFOOehzJ2t8gEVekEh6fv2MIX325okCJE1Ho4ZcIVr7hfh2SDRkvQWRK\nol1Q73mxlZPOiAp/MxuYOhFEMXIc+UsW5DSC40Ur488AO3reezXtJVupwwKBgQCw\nCmiHMEqTcOdDjMCDKwQu6OHXgt+LTukf0sunRcE7vABxgXshEL6J9BEN8NBkwE35\nIgp4plJm/+fKtRQkfBcWIFWDreD3FB3GRSTYr9uNxAZ47xlj/BuouzfBhpeIdeCx\nBrGAlqmyw2loLXKgNBfdBI7s/cxASg9K4j6EMkiKkQKBgQDQgFFoRB1+Uqkz+1y9\nNPfKGGUC93WcqabQ+ilxFq7HThsZy/O+V7fBCDqNSpaLCuldAqLtLX+JXwq1vYd+\nO5Dw+sjXN89iVpJC3Xwg4nsg7NP0TEQaWYe+0m6lFaLfZ5631vlrfQO8JO2uXzR4\nbMwbbsyvTLTEPVAQ0VYIXikjvQ==\n-----END PRIVATE KEY-----\n",
+  "client_email": "google-api-a@samsungstudentambassador.iam.gserviceaccount.com",
+  "client_id": "115231708156085686197",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/google-api-a%40samsungstudentambassador.iam.gserviceaccount.com"
+}

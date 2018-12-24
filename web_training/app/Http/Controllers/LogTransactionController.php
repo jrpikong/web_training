@@ -28,7 +28,7 @@ class LogTransactionController extends Controller
      */
     public function show($logTransaction)
     {
-        $detailLogs = LogTransaction::with('users')->orderBy('created_at','desc')->paginate(15);
+        $detailLogs = LogTransaction::where('user_id',$logTransaction)->with('users')->orderBy('created_at','desc')->paginate(15);
 
         return view('admin.logs.view',compact('detailLogs'));
     }
