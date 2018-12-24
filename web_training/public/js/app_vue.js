@@ -61598,6 +61598,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -62762,7 +62766,7 @@ var render = function() {
           _c("div", { staticClass: "col-md-6" }, [
             _c("div", { staticClass: "form-group row" }, [
               _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                _vm._v("Jurusan")
+                _vm._v("Tahun Lahir")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-10" }, [
@@ -62771,19 +62775,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.search.jurusan,
-                      expression: "search.jurusan"
+                      value: _vm.search.tahun_lahir,
+                      expression: "search.tahun_lahir"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.search.jurusan },
+                  domProps: { value: _vm.search.tahun_lahir },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.search, "jurusan", $event.target.value)
+                      _vm.$set(_vm.search, "tahun_lahir", $event.target.value)
                     }
                   }
                 })
@@ -62822,7 +62826,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form-group row" }, [
               _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                _vm._v("Phone Number")
+                _vm._v("Jurusan")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-10" }, [
@@ -62831,19 +62835,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.search.phone_number,
-                      expression: "search.phone_number"
+                      value: _vm.search.jurusan,
+                      expression: "search.jurusan"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.search.phone_number },
+                  domProps: { value: _vm.search.jurusan },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.search, "phone_number", $event.target.value)
+                      _vm.$set(_vm.search, "jurusan", $event.target.value)
                     }
                   }
                 })
@@ -62917,7 +62921,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form-group row" }, [
               _c("label", { staticClass: "col-form-label col-lg-2" }, [
-                _vm._v("Tahun Lahir")
+                _vm._v("Phone Number")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-10" }, [
@@ -62926,19 +62930,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.search.tahun_lahir,
-                      expression: "search.tahun_lahir"
+                      value: _vm.search.phone_number,
+                      expression: "search.phone_number"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.search.tahun_lahir },
+                  domProps: { value: _vm.search.phone_number },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.search, "tahun_lahir", $event.target.value)
+                      _vm.$set(_vm.search, "phone_number", $event.target.value)
                     }
                   }
                 })

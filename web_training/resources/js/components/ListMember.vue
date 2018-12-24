@@ -58,9 +58,9 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Jurusan</label>
+                        <label class="col-form-label col-lg-2">Tahun Lahir</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" v-model="search.jurusan">
+                            <input type="text" class="form-control" v-model="search.tahun_lahir">
                         </div>
                     </div>
 
@@ -70,12 +70,14 @@
                             <input type="text" class="form-control" v-model="search.university">
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Phone Number</label>
+                        <label class="col-form-label col-lg-2">Jurusan</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" v-model="search.phone_number">
+                            <input type="text" class="form-control" v-model="search.jurusan">
                         </div>
                     </div>
+
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">IPK</label>
                         <div class="col-lg-10">
@@ -89,12 +91,14 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Tahun Lahir</label>
+                        <label class="col-form-label col-lg-2">Phone Number</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" v-model="search.tahun_lahir">
+                            <input type="text" class="form-control" v-model="search.phone_number">
                         </div>
                     </div>
+
                     <div class="text-right">
                         <button type="submit" class="btn btn-primary">Search <i class="icon-search4"></i></button>
                     </div>

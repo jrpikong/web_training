@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/analytic', 'DashBoardController@analytic');
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/faq', 'WelcomeController@faq')->name('faq');
