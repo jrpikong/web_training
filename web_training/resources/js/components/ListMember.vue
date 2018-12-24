@@ -100,6 +100,14 @@
                     </div>
 
                     <div class="text-right">
+                        <download-excel
+                                class="btn btn-success"
+                                :data   = "items"
+                                name="report_users.xls">
+                            Download Data
+                            <i class="icon-file-excel"></i>
+                        </download-excel>
+
                         <button type="submit" class="btn btn-primary">Search <i class="icon-search4"></i></button>
                     </div>
                 </div>
@@ -146,6 +154,9 @@
 </template>
 
 <script>
+    import Vue from 'vue'
+    import JsonExcel from 'vue-json-excel'
+    Vue.component('downloadExcel', JsonExcel)
     import vSelect from 'vue-select'
 
     Vue.component('v-select', vSelect)
