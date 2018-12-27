@@ -86,28 +86,29 @@
                             </table>
                         </div>
                         <div class="tab-pane p-4" id="productTecnology">
-                            <div class="owl-carousel owl-theme owl-loaded owl-drag owl-carousel-init" data-plugin-options="{'items': 1}" style="height: auto;">
+                            <iframe style="width: 100%; height: 500px; object-fit: cover"  src="https://www.youtube.com/embed/{{$product->product_video}}?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
+                            @if(!$product_tecnology_images->isEmpty())
+                                <div class="owl-carousel owl-theme owl-loaded owl-drag owl-carousel-init" data-plugin-options="{'items': 1}" style="height: auto;">
 
-                                <div class="owl-stage-outer">
-                                    <div class="owl-stage" >
-                                        @foreach($product_tecnology_images as $product_tecnology_image)
-                                            <div class="owl-item" style="width: 540px;">
-                                                <div>
-                                                    <img alt="" class="img-fluid" src="{{$product_tecnology_image->getUrl()}}">
+                                    <div class="owl-stage-outer">
+                                        <div class="owl-stage" >
+                                            @foreach($product_tecnology_images as $product_tecnology_image)
+                                                <div class="owl-item" style="width: 540px;">
+                                                    <div>
+                                                        <img alt="" class="img-fluid" src="{{$product_tecnology_image->getUrl()}}">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
 
+                                        </div>
+                                    </div>
+
+                                    <div class="owl-nav disabled">
+                                        <button type="button" role="presentation" class="owl-prev"></button>
+                                        <button type="button" role="presentation" class="owl-next"></button>
                                     </div>
                                 </div>
-
-                                <div class="owl-nav disabled">
-                                    <button type="button" role="presentation" class="owl-prev"></button>
-                                    <button type="button" role="presentation" class="owl-next"></button>
-                                </div>
-                                <iframe style="width: 100%; height: 500px; object-fit: cover"  src="https://www.youtube.com/embed/{{$product->product_video}}?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
-
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -32,11 +32,13 @@
                             </a>
                         </div>
                         <div class="col-md-4 text-center">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4>Transaction</h4>
+                            <a href="{{ route('transaction') }}" target="_blank">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4>Transaction</h4>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-md-4 text-center">
                             <a href="{{ route('trainings') }}">

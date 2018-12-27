@@ -8,6 +8,10 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
+import VueGoogleCharts from 'vue-google-charts'
+Vue.use(VueGoogleCharts)
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -26,6 +30,7 @@ Vue.component('training-quiz-form', require('./components/Admin/Training/Trainin
 Vue.component('training-quiz-edit', require('./components/Admin/Training/TrainingQuizEdit'));
 Vue.component('form-add-page', require('./components/Admin/Page/formAddPage'));
 Vue.component('form-edit-page', require('./components/Admin/Page/formEditPage'));
+Vue.component('dashboard', require('./components/Admin/Dashboards/DashBoard'));
 
 const app_vue = new Vue({
     el: '#app'

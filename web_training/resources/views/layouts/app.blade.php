@@ -26,6 +26,14 @@
     <script src="{{asset('limitless/assets/js/global_assets/js/main/jquery.min.js')}}"></script>
     <script src="{{asset('limitless/assets/js/global_assets/js/main/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('limitless/assets/js/global_assets/js/plugins/loaders/blockui.min.js')}}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131315576-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-131315576-1');
+    </script>
     <!-- /core JS files -->
 
     <!-- Theme JS files -->

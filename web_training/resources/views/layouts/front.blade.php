@@ -53,6 +53,15 @@
     @stack('style')
     <!-- Head Libs -->
     <script src="{{asset('porto/vendor/modernizr/modernizr.min.js')}}"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131315576-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('cookieDomain', 'none');
+        gtag('config', 'UA-131315576-1');
+    </script>
 
     <!-- WhatsHelp.io widget -->
     <script type="text/javascript">
@@ -133,6 +142,11 @@
                                             </li>
                                             @endguest
                                             @auth
+                                                <li class="dropdown-full-color dropdown-secondary">
+                                                    <a class="nav-link " href="/login">
+                                                        My Account
+                                                    </a>
+                                                </li>
                                                 <li class="dropdown-full-color dropdown-secondary">
                                                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                         <i class="icon-switch2"></i> Logout

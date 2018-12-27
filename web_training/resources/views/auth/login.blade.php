@@ -40,12 +40,18 @@
                 </div>
 
                 <div class="form-group d-flex align-items-center">
-                    <div class="form-check mb-0">
-                        <label class="form-check-label">
-                            <input type="checkbox" name="remember" class="form-input-styled"  {{ old('remember') ? 'checked' : '' }}>
-                            {{ __('Remember Me') }}
-                        </label>
-                    </div>
+                    {{--<div class="form-check mb-0">--}}
+                        {{--<label class="form-check-label">--}}
+                            {{--<input type="checkbox" name="remember" class="form-input-styled"  {{ old('remember') ? 'checked' : '' }}>--}}
+                            {{--{{ __('Remember Me') }}--}}
+                        {{--</label>--}}
+                    {{--</div>--}}
+                    @if (Route::has('password.request'))
+                        <a class="btn btn-link" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
+
                 </div>
 
                 <div class="form-group">

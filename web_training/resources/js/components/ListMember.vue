@@ -37,7 +37,37 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Provinces</label>
                         <div class="col-lg-10">
-                            <v-select v-model="search.selected"  :options="options"></v-select>
+                            <v-select v-model="search.selected" :onChange="getCitiesList" :options="options"></v-select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">City</label>
+                        <div class="col-lg-10">
+                            <v-select v-model="search.city" label="name" :onChange="getDistricList" :options="cities"></v-select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Disctric</label>
+                        <div class="col-lg-10">
+                            <v-select v-model="search.distric" label="name" :options="districts"></v-select>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Tahun Lahir</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="search.tahun_lahir">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">University</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" v-model="search.university">
                         </div>
                     </div>
 
@@ -48,20 +78,6 @@
                         </div>
                     </div>
 
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2">University</label>
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control" v-model="search.university">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Phone Number</label>
-                        <div class="col-lg-10">
-                            <input type="text" class="form-control" v-model="search.phone_number">
-                        </div>
-                    </div>
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">IPK</label>
                         <div class="col-lg-10">
@@ -75,13 +91,23 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-form-label col-lg-2">Tahun Lahir</label>
+                        <label class="col-form-label col-lg-2">Phone Number</label>
                         <div class="col-lg-10">
-                            <input type="text" class="form-control" v-model="search.tahun_lahir">
+                            <input type="text" class="form-control" v-model="search.phone_number">
                         </div>
                     </div>
+
                     <div class="text-right">
+                        <download-excel
+                                class="btn btn-success"
+                                :data   = "items"
+                                name="report_users.xls">
+                            Download Data
+                            <i class="icon-file-excel"></i>
+                        </download-excel>
+
                         <button type="submit" class="btn btn-primary">Search <i class="icon-search4"></i></button>
                     </div>
                 </div>
@@ -98,7 +124,6 @@
                     <th>Email</th>
                     <th>Gender</th>
                     <th>Phone Number</th>
-                    <th>Postal Code</th>
                     <th>Address</th>
                     <th>Action</th>
                 </tr>
@@ -113,7 +138,6 @@
                     <td> {{item.email}}</td>
                     <td> {{item.gender}}</td>
                     <td> {{item.phone_number}}</td>
-                    <td> {{item.postal_code}}</td>
                     <td> {{item.address}}</td>
                     <td>
                         <a :href="'get_member/'+item.id" class="nav-link"> Detail</a>
@@ -130,6 +154,9 @@
 </template>
 
 <script>
+    import Vue from 'vue'
+    import JsonExcel from 'vue-json-excel'
+    Vue.component('downloadExcel', JsonExcel)
     import vSelect from 'vue-select'
 
     Vue.component('v-select', vSelect)
@@ -145,9 +172,13 @@
                     gender: '',
                     university: '',
                     phone_number: '',
-                    selected: ''
+                    selected: '',
+                    city:'',
+                    distric:''
                 },
-                options:[]
+                options:[],
+                cities: [],
+                districts: []
             }
         },
         created() {
@@ -155,6 +186,9 @@
             this.fetchProvincesList()
         },
         methods: {
+            des(v) {
+              console.log(v)
+            },
             delete_data (id) {
                 if(confirm("Are you sure you want to delete this?")){
                     axios.get('delete_member/'+id).then((response)=>{
@@ -182,8 +216,22 @@
                     axios.get('get_province').then((response)=>{
                         this.options = response.data.data
                     });
-                },500)
-            }
+                },10)
+            },
+            async getCitiesList(val) {
+                setTimeout(() => {
+                    axios.get('/api/cities?province='+val.id).then((response)=>{
+                        this.cities = response.data.cities
+                    });
+                },1)
+            },
+            async getDistricList(val) {
+                setTimeout(() => {
+                    axios.get('/api/districts?city='+val.id).then((response)=>{
+                        this.districts = response.data.districts
+                    });
+                },1)
+            },
         }
     }
 </script>

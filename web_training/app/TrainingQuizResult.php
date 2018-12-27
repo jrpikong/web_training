@@ -17,4 +17,9 @@ class TrainingQuizResult extends Model
     {
         return $this->belongsTo(TrainingQuiz::class, 'quiz_id', 'id');
     }
+
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id')->orderBy('name','DESC');
+    }
 }

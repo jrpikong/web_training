@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/analytic', 'DashBoardController@analytic');
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::get('/faq', 'WelcomeController@faq')->name('faq');
@@ -23,6 +24,7 @@ Route::get('/products/{id}', 'ProductController@getDetailProduct')->name('produc
 Route::get('/term_and_condition', 'HomeController@term_and_condition')->name('term_and_condition');
 Route::post('/term_and_condition_pos', 'HomeController@term_and_condition_post')->name('term_and_condition_pos');
 Route::put('/update_bank_account/{id}', 'HomeController@updateBankAccount')->name('update_bank_account');
+Route::get('/transaction', 'HomeController@transaction')->name('transaction');
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/admin')->group(function () {
@@ -45,6 +47,13 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/update_faq/{id}', 'FaqController@update')->name('update_faq');
         Route::delete('/delete_faq/{id}', 'FaqController@destroy')->name('delete_faq');
 
+        Route::resource('log_transactions', 'LogTransactionController', [
+            'names' => [
+                'index' => 'log_transactions',
+                'show' => 'show_transactions'
+            ]
+        ]);
+
         Route::resource('pages', 'PageController',[
             'names' => [
                 'index' => 'pages',
@@ -62,6 +71,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/list_quiz', 'QuizController@index')->name('list_quiz');
         Route::get('/add_quiz', 'QuizController@form')->name('add_quiz');
         Route::post('/post_quiz', 'QuizController@submitSoal')->name('post_quiz');
+        Route::get('/report_training', 'TrainingController@reportTraining')->name('report_training');
+        Route::get('/show_training_report/{id}', 'TrainingController@showTrainingReport')->name('show_training_report');
 
         /*Product*/
         Route::get('/list_product', 'ProductController@index')->name('list_product');

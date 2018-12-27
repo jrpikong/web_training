@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Training;
 use App\TrainingQuiz;
+use App\TrainingQuizResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class TrainingController extends Controller
@@ -97,5 +99,27 @@ class TrainingController extends Controller
         } catch (Exception $e) {
             return back()->with('Failed','You have error upload training.');
         }
+    }
+
+    public function reportTraining()
+    {
+        $reports = TrainingQuizResult::select('user_id', DB::raw('count(*) as total'),'users.*')
+        ->join('users', 'users.id', 'training_quiz_results.user_id')->groupBy('user_id')->orderBy('name','asc')->paginate(15);
+
+
+
+
+//        select('user_id', DB::raw('count(*) as total'))->whereHas(['users' => function ($q) {
+//            return $q->orderBy('name', 'desc');
+//        }])->groupBy('user_id')->paginate(15);
+
+        return view('admin.training.report',compact('reports'));
+    }
+
+    public function showTrainingReport($id)
+    {
+        $reports = TrainingQuizResult::where('user_id','=',$id)->with('users','quiz')->orderBy('created_at')->paginate(15);
+
+        return view('admin.training.show_report',compact('reports'));
     }
 }

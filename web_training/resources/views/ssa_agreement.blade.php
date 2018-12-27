@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="card">
 
-                    <div class="card-header">{{ __('PERJANJIAN FREELANCE SAMSUNG STUDENT AMBASADOR') }}</div>
+                    <div class="card-header text-center">{{ __('PERJANJIAN FREELANCE SAMSUNG STUDENT AMBASADOR') }}</div>
 
                     <div class="card-body">
                         @php $dateNow = \Carbon\Carbon::now()->format('d-F-Y'); @endphp

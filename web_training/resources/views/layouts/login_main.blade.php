@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app_vue.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
     <link href="{{asset('limitless/assets/css/icons/icomoon/styles.css')}}" rel="stylesheet" type="text/css">
