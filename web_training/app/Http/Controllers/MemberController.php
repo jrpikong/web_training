@@ -46,7 +46,7 @@ class MemberController extends Controller
             ['grade_point_average', 'like', '%' . $request->ipk . '%'],
             ['birth_date', 'like', '%' . $request->tahun_lahir . '%'],
             ['majors', 'like', '%' . $request->jurusan . '%']
-        ])->get();
+        ])->orderBy('created_at','desc')->get();
 
         return response()->json(
             [
