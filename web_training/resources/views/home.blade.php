@@ -1,12 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Auth::user()->id == 10)
-        @include('dashboard')
-    @endif
+@if(Auth::user()->id == 10)
+    @include('dashboard')
+@endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            @if($gracePeriode)
+                <form action="{{ route('extend_account') }}" method="post">
+                    @csrf
+                    <div class="alert alert-warning alert-styled-right alert-dismissible">
+                        <button type="submit" class="close"><span>Perpanjang</span></button>
+                        <span class="font-weight-semibold">Warning!</span> Akun Anda Akan Habis Masa Aktif Pada Tanggal {{ Auth::user()->date_end }} <a href="{{ route('ssa_agreement') }}" class="alert-link">cek perjanjian</a>
+                    </div>
+                </form>
+            @endif
+
+                @if ($message = Session::get('success'))
+
+                    <div class="alert alert-success alert-block">
+
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+
+                        <strong>{{ $message }}</strong>
+
+                    </div>
+
+                @endif
             <div class="card">
                 <div class="card-body">
                     @if (session('status'))

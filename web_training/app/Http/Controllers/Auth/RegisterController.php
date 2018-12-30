@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -99,6 +100,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $current = Carbon::now();
+        $trialExpires = $current->addMonth(3)->toDateString();
         $user =  User::create([
             'name' => $data['name'],
             'nic_name' => $data['nic_name'],
@@ -124,6 +127,7 @@ class RegisterController extends Controller
             'id_identity' => $data['id_identity'],
             'password' => Hash::make($data['password']),
             'status' => 0,
+            'date_end' => $trialExpires
         ]);
         if (isset($data['img_profile'])) {
             $user->addMediaFromRequest('img_profile')->toMediaCollection('img_profile');

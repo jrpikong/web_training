@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\LogTransaction;
 use App\Page;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -32,13 +33,20 @@ class HomeController extends Controller
     {
         $user = Auth::user();
         $indonesia = new Indonesia();
+        $current = Carbon::now();
         $province = $indonesia->findProvince($user->province);
         $province = $province->name;
         $city = $indonesia->findCity($user->city);
         $city = $city->name;
         $disctric = $indonesia->findDistrict($user->districts);
         $disctric = $disctric->name;
-        return view('home',compact('user','province','city','disctric'));
+        $gracePeriode = false;
+        $alertDate = $current->parse($user->date_end);
+
+        if ($alertDate->subDays(5) <= $current) {
+            $gracePeriode = true;
+        }
+        return view('home',compact('user','province','city','disctric','gracePeriode'));
     }
 
     public function profile()
@@ -114,5 +122,20 @@ class HomeController extends Controller
         $log_transaction->save();
         $url = 'https://www.blibli.com/promosi/pel-student-promotor-samsung';
         return Redirect::away($url);
+    }
+
+    public function extendAccount(Request $request)
+    {
+        $current = Carbon::now();
+        $trialExpires = $current->addMonth(3)->toDateString();
+        $user = User::find(Auth::user()->id);
+        $user->date_end = $trialExpires;
+        $user->save();
+
+        try {
+            return back()->with('success','Akun Anda Berhasil Diperpanjang Sampai. '. $trialExpires);
+        } catch (Exception $e) {
+            return back()->with('Failed','Perpanjang Akun Gagal');
+        }
     }
 }

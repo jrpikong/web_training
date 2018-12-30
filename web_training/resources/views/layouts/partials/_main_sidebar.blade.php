@@ -75,6 +75,13 @@
                         <span>SSA Agreement</span>
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('sales') }}" class="nav-link">
+                        <i class="icon-git-branch"></i>
+                        <span>Sales</span>
+                    </a>
+                </li>
                 @if(Auth::user()->id == 10)
                     <li class="nav-item">
                         <a href="{{ route('list_quiz') }}" class="nav-link">
