@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Product;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $userId = Auth::user()->id;
+        $transactions = Transaction::with('users', 'products')->where('user_id','=',$userId)->paginate(50);
+        return view('admin.transactions.index',compact('transactions'));
     }
 
     /**
@@ -25,6 +28,8 @@ class TransactionController extends Controller
      */
     public function create()
     {
+        $products = Product::all();
+        return view('admin.transactions.form_add',compact('products'));
 
     }
 
@@ -37,6 +42,17 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         //
+        $trx = new Transaction();
+        $trx->user_id = Auth::user()->id;
+        $trx->qty = $request->qty;
+        $trx->product_id = $request->product;
+        $trx->save();
+
+        try {
+            return back()->with('success','You have successfully add transaction.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error add transaction.');
+        }
     }
 
     /**
@@ -86,8 +102,7 @@ class TransactionController extends Controller
 
     public function sales()
     {
-        $userId = Auth::user()->id;
-        $transactions = Transaction::with('users', 'products')->where('user_id','=',$userId)->paginate(50);
+        $transactions = Transaction::with('users', 'products')->paginate(50);
         return view('admin.transactions.index',compact('transactions'));
     }
 }

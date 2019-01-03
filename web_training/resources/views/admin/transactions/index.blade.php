@@ -4,11 +4,13 @@
     <div class="card my-3">
         <div class="card-header header-elements-inline">
             <h5 class="card-title">List Logs Transactions</h5>
+            @if(Auth::user()->id != 10)
             <div class="header-elements">
                 <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
                     <li class="page-item"><a href="{{route('add_sales')}}" class="page-link"><i class="icon-file-plus2"></i> Add New</a></li>
                 </ul>
             </div>
+            @endif
         </div>
 
         <div class="table-responsive">
@@ -29,9 +31,9 @@
                         <tr>
                             <td> {{ $key + 1 }} </td>
                             <td> {{ $trasaction->users->name }} </td>
-                            <td> {{ $trasaction->produts->name }} </td>
+                            <td> {{ $trasaction->products->product_name }} </td>
                             <td> {{ $trasaction->qty }} </td>
-                            <td> {{ $trasaction->product->price }} </td>
+                            <td> {{ $trasaction->products->price }} </td>
                         </tr>
                     @endforeach
                 @endif

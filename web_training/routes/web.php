@@ -93,7 +93,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post_personal_quiz','QuizController@postPersonalQuiz')->name('post_personal_quiz');
     Route::get('/trainings', 'TrainingController@getTraining')->name('trainings');
     Route::get('/sales', 'TransactionController@sales')->name('sales');
-    Route::get('/add_sales', 'TransactionController@sales')->name('add_sales');
+    Route::get('/transactions', 'TransactionController@index')->name('transactions');
+    Route::get('/add_sales', 'TransactionController@create')->name('add_sales');
+    Route::post('/add_sales', 'TransactionController@store')->name('add_sales');
     Route::get('/ssa_agreement', 'HomeController@ssaAgreement')->name('ssa_agreement');
     Route::get('/profile', 'HomeController@profile')->name('profile');
     Route::get('/history_training', 'TrainingQuizResultController@historyTraining')->name('history_training');

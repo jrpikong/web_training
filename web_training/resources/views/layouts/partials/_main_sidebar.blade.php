@@ -42,47 +42,19 @@
             <ul class="nav nav-sidebar" data-nav-type="accordion">
 
                 <!-- Main -->
-                <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link">
-                        <i class="icon-home4"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('start_quiz') }}" class="nav-link">
-                        <i class="icon-lab"></i>
-                        <span>Personality Test</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('trainings') }}" class="nav-link">
-                        <i class="icon-stack"></i>
-                        <span>Training</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('history_training') }}" class="nav-link">
-                        <i class="icon-accessibility"></i>
-                        <span>History Training</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('ssa_agreement') }}" class="nav-link">
-                        <i class="icon-lab"></i>
-                        <span>SSA Agreement</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('sales') }}" class="nav-link">
-                        <i class="icon-git-branch"></i>
-                        <span>Sales</span>
-                    </a>
-                </li>
                 @if(Auth::user()->id == 10)
+                    <li class="nav-item">
+                        <a href="{{ route('home') }}" class="nav-link">
+                            <i class="icon-home4"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('sales') }}" class="nav-link">
+                            <i class="icon-git-branch"></i>
+                            <span>Sales Report</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ route('list_quiz') }}" class="nav-link">
                             <i class="icon-traffic-lights"></i>
@@ -153,6 +125,47 @@
                             </form>
                         </a>
                     </li>
+                @else
+                <li class="nav-item">
+                    <a href="{{ route('home') }}" class="nav-link">
+                        <i class="icon-home4"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('start_quiz') }}" class="nav-link">
+                        <i class="icon-lab"></i>
+                        <span>Personality Test</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('trainings') }}" class="nav-link">
+                        <i class="icon-stack"></i>
+                        <span>Training</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('history_training') }}" class="nav-link">
+                        <i class="icon-accessibility"></i>
+                        <span>History Training</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('ssa_agreement') }}" class="nav-link">
+                        <i class="icon-lab"></i>
+                        <span>SSA Agreement</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('transactions') }}" class="nav-link">
+                        <i class="icon-git-branch"></i>
+                        <span>Transactions</span>
+                    </a>
+                </li>
                 @endif
                 <!-- /main -->
 
