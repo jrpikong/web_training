@@ -111,6 +111,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('trainings') }}" class="nav-link">
+                            <i class="icon-stack"></i>
+                            <span>Training</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('report_training') }}" class="nav-link">
                             <i class="icon-quill4"></i>
                             <span>Report Training</span>
