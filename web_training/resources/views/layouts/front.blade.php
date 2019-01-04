@@ -67,7 +67,7 @@
     <script type="text/javascript">
         (function () {
             var options = {
-                whatsapp: "+6287888015988", // WhatsApp number
+                whatsapp: "+6285212660611", // WhatsApp number
                 company_logo_url: "//warungkomputer.com/wp-content/uploads/2018/12/logo-wa.png", // URL of company logo (png, jpg, gif)
                 greeting_message: "Hello.. ada yang bisa kami bantu?", // Text of greeting message
                 call_to_action: "Klik disini untuk bertanya!", // Call to action
