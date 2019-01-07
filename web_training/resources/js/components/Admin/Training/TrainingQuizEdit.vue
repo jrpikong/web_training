@@ -129,7 +129,44 @@
                 choice:[],
                 questions:[
                 ],
-                pertinyiin : []
+                pertinyiin : [],
+                delete: [],
+                cloning:{
+                    correct_answer:'',
+                    created_at:'',
+                    id:null,
+                    question:'',
+                    quiz_id:null,
+                    updated_at:'',
+                    choice: [{
+                            choice:'',
+                            created_at:'',
+                            id:'',
+                            question_id:'',
+                            updated_at:''
+                        },
+                        {
+                            choice:'',
+                            created_at:'',
+                            id:'',
+                            question_id:'',
+                            updated_at:''
+                        },
+                        {
+                            choice:'',
+                            created_at:'',
+                            id:'',
+                            question_id:'',
+                            updated_at:''
+                        },
+                        {
+                            choice:'',
+                            created_at:'',
+                            id:'',
+                            question_id:'',
+                            updated_at:''
+                        }]
+                }
             }
         },
         created (){
@@ -163,63 +200,71 @@
 
             },
             removeQuestions: function (index) {
+                this.delete.push(index);
                 Vue.delete(this.questions, index);
             },
             addNewApartment: function () {
                 console.log(Vue.util.extend({},this.questions[0]));
 
-                this.questions.push(Vue.util.extend({},this.questions[0]))
+                this.questions.push(Vue.util.extend({},this.cloning))
             },
             sumbitForm: function () {
                 this.questions.forEach((a, index) => {
                     let kunci_paten = '';
-                    if (a.kunci_paten === 'A') {
-                        kunci_paten = a.choice_a;
-                    }else if (a.kunci_paten === 'B') {
-                        kunci_paten = a.choice_b;
-                    }else if (a.kunci_paten === 'C') {
-                        kunci_paten = a.choice_c;
-                    }else if (a.kunci_paten === 'D') {
-                        kunci_paten = a.choice_d
+                    if (a.correct_answer === 'A') {
+                        kunci_paten = a.choice[0].choice;
+                    }else if (a.correct_answer === 'B') {
+                        kunci_paten = a.choice[1].choice;
+                    }else if (a.correct_answer === 'C') {
+                        kunci_paten = a.choice[2].choice;
+                    }else if (a.correct_answer === 'D') {
+                        kunci_paten = a.choice[3].choice
                     }
                     this.pertinyiin[index] = {
-                        'pertanyaan': a.pertanyaan,
-                        'kunci_paten': kunci_paten,
+                        'delete': this.delete,
+                        'id':a.id,
+                        'question': a.question,
+                        'correct_answer': kunci_paten,
                         'pilihan': [
                             {
-                                'value': a.choice_a,
+                                'id': a.choice[0].id,
+                                'value': a.choice[0].choice,
                             },
                             {
-                                'value': a.choice_b,
+                                'id': a.choice[1].id,
+                                'value': a.choice[1].choice,
                             },
                             {
-                                'value': a.choice_c,
+                                'id': a.choice[2].id,
+                                'value': a.choice[2].choice,
                             },
                             {
-                                'value': a.choice_d,
+                                'id': a.choice[3].id,
+                                'value': a.choice[3].choice,
                             }
                         ]
                     };
                 });
 
                 let dataForm = {
+                    training_id:this.dataQuiz.training_id,
                     idQuiz: this.idQuiz,
                     waktu_pengerjaan: this.waktu_pengerjaan,
                     title: this.title,
                     sort_description: this.sort_description,
                     questions: this.pertinyiin
                 };
-                axios.post('/submit_quiz_training', dataForm).then((response) => {
-                    this.alert = true;
-                    if(response.data){
-                        this.alert_info = 'primary';
-                        this.message = response.data.message;
-                        if(response.data.status === '00') {
-                            setTimeout(function () {
-                                window.location = '/trainings';
-                            }, 400)
-                        }
-                    }
+                axios.post('/submit_quiz_training_edit', dataForm).then((response) => {
+                    // this.alert = true;
+                    // if(response.data){
+                    //     this.alert_info = 'primary';
+                    //     this.message = response.data.message;
+                    //     if(response.data.status === '00') {
+                    //         setTimeout(function () {
+                    //             window.location = '/trainings';
+                    //         }, 400)
+                    //     }
+                    // }
                 });
             }
         }

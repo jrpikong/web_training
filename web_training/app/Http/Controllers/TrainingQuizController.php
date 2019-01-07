@@ -71,6 +71,53 @@ class TrainingQuizController extends Controller
         ]);
     }
 
+    public function SubmitQuizTrainingEdit(Request $request)
+    {
+
+        /*Update Quiz*/
+        $training_quizzes = TrainingQuiz::find($request->idQuiz);
+        $training_quizzes->time = $request->waktu_pengerjaan;
+        $training_quizzes->title = $request->title;
+        $training_quizzes->sort_description = $request->sort_description;
+        $training_quizzes->save();
+
+//        if ($request->delete) {
+        dd($request->delete);
+            foreach ($request->delete as $value) {
+                dd($value);
+            }
+//        }
+
+        foreach ($request->questions as $i => $question) {
+            if ($question['id']) {
+                $TrainingQuizQuestion = TrainingQuizQuestion::find($question['id']);
+                $TrainingQuizQuestion->question = $question['question'];
+                $TrainingQuizQuestion->correct_answer = $question['correct_answer'];
+                $TrainingQuizQuestion->save();
+                foreach ($question['pilihan'] as $value){
+                    $TrainingQuizChoice = TrainingQuizChoice::find($value['id']);
+                    $TrainingQuizChoice->choice = $value['value'];
+                    $TrainingQuizChoice->save();
+                }
+            }else{
+                $TrainingQuizQuestion = new TrainingQuizQuestion();
+                $TrainingQuizQuestion->quiz_id = $request->idQuiz;
+                $TrainingQuizQuestion->question = $question['question'];
+                $TrainingQuizQuestion->correct_answer = $question['correct_answer'];
+                $TrainingQuizQuestion->save();
+
+                foreach ($question['pilihan'] as $value){
+                    $TrainingQuizChoice = new TrainingQuizChoice();
+                    $TrainingQuizChoice->question_id = $TrainingQuizQuestion->id;
+                    $TrainingQuizChoice->choice = $value['value'];
+                    $TrainingQuizChoice->save();
+                }
+                
+            }
+        }
+
+    }
+
     public function FollowTest($id)
     {
         $training_quiz = TrainingQuiz::where('training_id',$id)->first();

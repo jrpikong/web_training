@@ -104,6 +104,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/submit_training', 'TrainingController@submitTraining')->name('submit_training');
     Route::get('/add_quiz_training/{id_training}', 'TrainingQuizController@AddQuizTraining')->name('add_quiz_training');
     Route::post('/submit_quiz_training', 'TrainingQuizController@SubmitQuizTraining')->name('submit_quiz_training');
+    Route::post('/submit_quiz_training_edit', 'TrainingQuizController@SubmitQuizTrainingEdit')->name('submit_quiz_training_edit');
     Route::get('/training/{id}', 'TrainingController@edit')->name('edit_training');
     Route::get('/edit_quiz/{id}', 'TrainingQuizController@edit')->name('edit_quiz');
     Route::patch('/update_training/{id}', 'TrainingController@update')->name('update_training');
