@@ -80,7 +80,7 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        $transaction = $transaction->with('users', 'products')->first();
+        $transaction = $transaction->load('users', 'products');
         return view('admin.transactions.view',compact('transaction'));
     }
 
