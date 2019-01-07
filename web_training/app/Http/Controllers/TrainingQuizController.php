@@ -81,12 +81,12 @@ class TrainingQuizController extends Controller
         $training_quizzes->sort_description = $request->sort_description;
         $training_quizzes->save();
 
-//        if ($request->delete) {
-        dd($request->delete);
+        if ($request->delete) {
             foreach ($request->delete as $value) {
-                dd($value);
+                $question = TrainingQuizQuestion::find($value);
+                $question->delete();
             }
-//        }
+        }
 
         foreach ($request->questions as $i => $question) {
             if ($question['id']) {
@@ -115,6 +115,12 @@ class TrainingQuizController extends Controller
                 
             }
         }
+
+        return response()->json([
+            'status' => '00',
+            'message' => 'Insert Success',
+            'data' => '',
+        ]);
 
     }
 

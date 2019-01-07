@@ -69278,7 +69278,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -69487,7 +69487,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         removeQuestions: function removeQuestions(index) {
-            this.delete.push(index);
+            console.log(this.questions[index].id);
+            this.delete.push(this.questions[index].id);
             Vue.delete(this.questions, index);
         },
         addNewApartment: function addNewApartment() {
@@ -69510,7 +69511,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     kunci_paten = a.choice[3].choice;
                 }
                 _this2.pertinyiin[index] = {
-                    'delete': _this2.delete,
+
                     'id': a.id,
                     'question': a.question,
                     'correct_answer': kunci_paten,
@@ -69531,6 +69532,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             var dataForm = {
+                delete: this.delete,
                 training_id: this.dataQuiz.training_id,
                 idQuiz: this.idQuiz,
                 waktu_pengerjaan: this.waktu_pengerjaan,
@@ -69539,16 +69541,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 questions: this.pertinyiin
             };
             axios.post('/submit_quiz_training_edit', dataForm).then(function (response) {
-                // this.alert = true;
-                // if(response.data){
-                //     this.alert_info = 'primary';
-                //     this.message = response.data.message;
-                //     if(response.data.status === '00') {
-                //         setTimeout(function () {
-                //             window.location = '/trainings';
-                //         }, 400)
-                //     }
-                // }
+                _this2.alert = true;
+                if (response.data) {
+                    _this2.alert_info = 'primary';
+                    _this2.message = response.data.message;
+                    if (response.data.status === '00') {
+                        setTimeout(function () {
+                            window.location = '/trainings';
+                        }, 400);
+                    }
+                }
             });
         }
     }

@@ -200,7 +200,8 @@
 
             },
             removeQuestions: function (index) {
-                this.delete.push(index);
+                console.log(this.questions[index].id)
+                this.delete.push(this.questions[index].id);
                 Vue.delete(this.questions, index);
             },
             addNewApartment: function () {
@@ -221,7 +222,7 @@
                         kunci_paten = a.choice[3].choice
                     }
                     this.pertinyiin[index] = {
-                        'delete': this.delete,
+
                         'id':a.id,
                         'question': a.question,
                         'correct_answer': kunci_paten,
@@ -247,6 +248,7 @@
                 });
 
                 let dataForm = {
+                    delete: this.delete,
                     training_id:this.dataQuiz.training_id,
                     idQuiz: this.idQuiz,
                     waktu_pengerjaan: this.waktu_pengerjaan,
@@ -255,16 +257,16 @@
                     questions: this.pertinyiin
                 };
                 axios.post('/submit_quiz_training_edit', dataForm).then((response) => {
-                    // this.alert = true;
-                    // if(response.data){
-                    //     this.alert_info = 'primary';
-                    //     this.message = response.data.message;
-                    //     if(response.data.status === '00') {
-                    //         setTimeout(function () {
-                    //             window.location = '/trainings';
-                    //         }, 400)
-                    //     }
-                    // }
+                    this.alert = true;
+                    if(response.data){
+                        this.alert_info = 'primary';
+                        this.message = response.data.message;
+                        if(response.data.status === '00') {
+                            setTimeout(function () {
+                                window.location = '/trainings';
+                            }, 400)
+                        }
+                    }
                 });
             }
         }

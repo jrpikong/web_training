@@ -13,4 +13,6 @@ class TrainingQuizQuestion extends Model
     {
         return $this->hasMany(TrainingQuizChoice::class, 'question_id', 'id');
     }
+
+
 }
