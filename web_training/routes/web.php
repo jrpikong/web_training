@@ -94,6 +94,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/trainings', 'TrainingController@getTraining')->name('trainings');
     Route::get('/sales', 'TransactionController@sales')->name('sales');
     Route::get('/transactions', 'TransactionController@index')->name('transactions');
+    Route::get('/transactions/{transaction}', 'TransactionController@show')->name('show');
     Route::get('/add_sales', 'TransactionController@create')->name('add_sales');
     Route::post('/add_sales', 'TransactionController@store')->name('add_sales');
     Route::get('/ssa_agreement', 'HomeController@ssaAgreement')->name('ssa_agreement');

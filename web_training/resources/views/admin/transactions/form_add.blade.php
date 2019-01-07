@@ -7,7 +7,7 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('add_sales') }}" method="post">
+            <form action="{{ route('add_sales') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success alert-block">
@@ -17,6 +17,17 @@
 
                 @endif
                 <div class="mb-3">
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Order Code</label>
+                        <div class="col-lg-10">
+                            <input type="text" name="order_code" class="form-control" required>
+                            @if ($errors->has('order_code'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('order_code') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Qty</label>
                         <div class="col-lg-10">
@@ -38,9 +49,21 @@
                                     <option value="{{ $product->id }}">{{ $product->product_name }} -- Rp. {{ number_format($product->price) }}</option>
                                 @endforeach
                             </select>
-                            @if ($errors->has('status'))
+                            @if ($errors->has('product'))
                                 <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('status') }}</strong>
+                                    <strong>{{ $errors->first('product') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Invoice Img</label>
+                        <div class="col-lg-10">
+                            <input type="file" name="invoice_img" required>
+                            @if ($errors->has('invoice_img'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('invoice_img') }}</strong>
                                 </span>
                             @endif
                         </div>

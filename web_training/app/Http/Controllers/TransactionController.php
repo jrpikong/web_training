@@ -6,6 +6,7 @@ use App\Product;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -14,10 +15,16 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $userId = Auth::user()->id;
-        $transactions = Transaction::with('users', 'products')->where('user_id','=',$userId)->paginate(50);
+        $dateStart = ($request->year || $request->month || $request->date) ? $request->year . '-'.$request->month . '-' . $request->date :'';
+        $dateEnd = ($request->year2 || $request->month2 || $request->date2) ? $request->year2 . '-'.$request->month2 . '-' . $request->date2 :'';
+        $transactions = Transaction::with('users', 'products')->where('user_id','=',$userId);
+        if (!empty($dateStart) && !empty($dateEnd)) {
+            $transactions = $transactions->whereBetween(DB::raw('DATE(created_at)'),[$dateStart,$dateEnd]);
+        }
+        $transactions = $transactions->paginate(50);
         return view('admin.transactions.index',compact('transactions'));
     }
 
@@ -41,12 +48,22 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $fileName = '';
+        if ($request->invoice_img) {
+            $request->validate([
+                'file_module' => 'file|max:10120',
+            ]);
+            $fileName = "module".time().'.'.request()->invoice_img->getClientOriginalExtension();
+            $pathName = $request->invoice_img->storeAs('public/invoice',$fileName);
+        }
         $trx = new Transaction();
         $trx->user_id = Auth::user()->id;
         $trx->qty = $request->qty;
         $trx->product_id = $request->product;
+        $trx->invoice_img = 'invoice/'.$fileName;
+        $trx->order_code = $request->order_code;
         $trx->save();
+
 
         try {
             return back()->with('success','You have successfully add transaction.');
@@ -63,46 +80,20 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
+        $transaction = $transaction->with('users', 'products')->first();
+        return view('admin.transactions.view',compact('transaction'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Transaction $transaction)
+    public function sales(Request $request)
     {
-        //
-    }
+        $dateStart = ($request->year || $request->month || $request->date) ? $request->year . '-'.$request->month . '-' . $request->date :'';
+        $dateEnd = ($request->year2 || $request->month2 || $request->date2) ? $request->year2 . '-'.$request->month2 . '-' . $request->date2 :'';
+        $transactions = Transaction::with('users', 'products');
+        if (!empty($dateStart) && !empty($dateEnd)) {
+            $transactions = $transactions->whereBetween(DB::raw('DATE(created_at)'),[$dateStart,$dateEnd]);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Transaction  $transaction
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Transaction $transaction)
-    {
-        //
-    }
-
-    public function sales()
-    {
-        $transactions = Transaction::with('users', 'products')->paginate(50);
+        $transactions = $transactions->paginate(50);
         return view('admin.transactions.index',compact('transactions'));
     }
 }

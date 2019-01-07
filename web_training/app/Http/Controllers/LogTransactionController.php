@@ -13,10 +13,18 @@ class LogTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = LogTransaction::select('user_id', DB::raw('count(*) as total'))
-        ->with('users')->groupBy('user_id')->paginate(15);
+        $dateStart = ($request->year || $request->month || $request->date) ? $request->year . '-'.$request->month . '-' . $request->date :'';
+        $dateEnd = ($request->year2 || $request->month2 || $request->date2) ? $request->year2 . '-'.$request->month2 . '-' . $request->date2 :'';
+
+        $users = LogTransaction::select('user_id', DB::raw('count(*) as total'))->with('users');
+
+        if (!empty($dateStart) && !empty($dateEnd)) {
+            $users = $users->whereBetween(DB::raw('DATE(created_at)'),[$dateStart,$dateEnd]);
+        }
+
+        $users = $users->groupBy('user_id')->paginate(15);
         return view('admin.logs.index',compact('users'));
     }
 

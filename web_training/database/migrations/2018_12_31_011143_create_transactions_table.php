@@ -17,6 +17,8 @@ class CreateTransactionsTable extends Migration
             $table->increments('id');
             $table->integer('user_id',false,true);
             $table->integer('product_id', false, true);
+            $table->text('invoice_img')->nullable();
+            $table->string('order_code')->nullable();
             $table->integer('qty');
             $table->timestamps();
         });

@@ -66,7 +66,7 @@
                                     @endphp
                                     @foreach(range(1, 31) as $day)
                                         @php $selected = ($day == date('j', $now)) ? ' selected="selected"' : ''; @endphp
-                                        <option value="{{ $day}} {{$selected}}">{{$day}}</option>
+                                        <option value="{{ $day}}" {{$selected}}>{{$day}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -95,7 +95,7 @@
                                     @endphp
                                     @foreach(range($startyear, $endyear) as $year) {
                                         @php $selected = ($year == date('Y', $now)) ? 'selected="selected"' : ''; @endphp
-                                        <option value="{{$year}} {{$selected}}">{{ $year }}</option>
+                                        <option value="{{$year}}" {{$selected}}>{{ $year }}</option>
                                     @endforeach
                                 </select>
                             </div>
