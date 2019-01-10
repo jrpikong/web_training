@@ -5,7 +5,7 @@
         <div class="card-header header-elements-inline">
             <h5 class="card-title">SSA FAQ</h5>
             <div class="header-elements">
-                @if(Auth::user()->id == 10)
+                @if(Auth::user()->role_id == 2)
                     <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
                         <li class="page-item"><a href="{{route('add_faq')}}" class="page-link"><i class="icon-file-plus2"></i> Add New</a></li>
                     </ul>
@@ -32,7 +32,9 @@
                     <th>Title</th>
                     <th>Description</th>
                     <th>Status</th>
+                    @if(Auth::user()->role_id == 2)
                     <th>Actions</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +45,7 @@
                             <td> {{ $item->title }} </td>
                             <td> {{ $item->description }}</td>
                             <td> @if($item->status) Active @else In Active @endif </td>
+                            @if(Auth::user()->role_id == 2)
                             <td> <a href="{{route('edit_faq',$item->id)}}" class="btn btn-outline-primary btn-block mb-2" >Edit</a>
                                 <form action="{{ route('delete_faq', $item->id)}}" method="post">
                                     @csrf
@@ -50,6 +53,7 @@
                                     <button class="btn btn-outline-danger btn-block" type="submit">Delete</button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 @endif

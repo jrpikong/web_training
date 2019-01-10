@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Laravolt\Indonesia\Indonesia;
+use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
@@ -45,7 +46,8 @@ class MemberController extends Controller
             ['districts', 'like', '%'.$distric ],
             ['grade_point_average', 'like', '%' . $request->ipk . '%'],
             ['birth_date', 'like', '%' . $request->tahun_lahir . '%'],
-            ['majors', 'like', '%' . $request->jurusan . '%']
+            ['majors', 'like', '%' . $request->jurusan . '%'],
+            ['role_id','=',1]
         ])->orderBy('created_at','desc')->get();
         $members->map(function ($data) {
             $data['province'] = $data->provinces[0]->name;
@@ -127,4 +129,78 @@ class MemberController extends Controller
             ->get();
         return view('admin.members.view', compact('member','province','city','disctric','personality'));
     }
+
+    public function index_user()
+    {
+        $users = User::wherein('role_id', [2, 3,])->get();
+        return view('admin.users.index',compact('users'));
+    }
+
+    public function create()
+    {
+        return view('admin.users.form_add');
+
+    }
+
+    public function store(Request $request)
+    {
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->role_id = $request->level;
+        $user->province =31;
+        $user->city =3174;
+        $user->districts = 3174020;
+        $user->save();
+
+        try {
+            return back()->with('success','You have successfully Add User.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error Add User.');
+        }
+    }
+
+    public function edit($id)
+    {
+        $user = User::find($id);
+        return view('admin.users.form_edit',compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        if (empty($request->getPassword())) {
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->role_id = $request->level;
+            $user->save();
+        }else {
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->role_id = $request->level;
+            $user->save();
+        }
+
+        try {
+            return back()->with('success','You have successfully Update User.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error Update User.');
+        }
+    }
+
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+
+        try {
+            return back()->with('success','You have successfully Delete User.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error delete User.');
+        }
+    }
+
 }

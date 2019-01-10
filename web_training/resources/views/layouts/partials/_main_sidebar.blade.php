@@ -42,7 +42,7 @@
             <ul class="nav nav-sidebar" data-nav-type="accordion">
 
                 <!-- Main -->
-                @if(Auth::user()->id == 10)
+                @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
                     <li class="nav-item">
                         <a href="{{ route('home') }}" class="nav-link">
                             <i class="icon-home4"></i>
@@ -65,6 +65,13 @@
                         <a href="{{ route('admin_members') }}" class="nav-link">
                             <i class="icon-traffic-lights"></i>
                             <span>Member Report</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('index_user') }}" class="nav-link">
+                            <i class="icon-user"></i>
+                            <span>User Admin</span>
                         </a>
                     </li>
 

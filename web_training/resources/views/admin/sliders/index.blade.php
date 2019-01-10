@@ -5,7 +5,7 @@
         <div class="card-header header-elements-inline">
             <h5 class="card-title">SSA Slider</h5>
             <div class="header-elements">
-                @if(Auth::user()->id == 10)
+                @if(Auth::user()->role_id == 2)
                     <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
                         <li class="page-item"><a href="{{route('add_sliders')}}" class="page-link"><i class="icon-file-plus2"></i> Add New</a></li>
                     </ul>
@@ -32,7 +32,9 @@
                     <th>Caption</th>
                     <th>Image</th>
                     <th>Status</th>
+                    @if(Auth::user()->role_id == 2)
                     <th>Actions</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +45,7 @@
                             <td> {{ $slider->caption }} </td>
                             <td> <img src="{{ asset( 'storage/'.$slider->image) }}" class="img-thumbnail" width="300px" height="300px"> </td>
                             <td> @if($slider->status) Active @else In Active @endif </td>
+                            @if(Auth::user()->role_id == 2)
                             <td> <a href="{{route('edit_slider',$slider->id)}}" class="btn btn-outline-primary btn-block mb-2" >Edit</a>
                                 <form action="{{ route('delete_slider', $slider->id)}}" method="post">
                                     @csrf
@@ -50,6 +53,7 @@
                                     <button class="btn btn-outline-danger btn-block" type="submit">Delete</button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 @endif

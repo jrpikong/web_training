@@ -20,7 +20,9 @@
                         <th>Price</th>
                         <th>Sort Description</th>
                         <th>Category</th>
+                        @if(Auth::user()->role_id == 2)
                         <th>Action</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
@@ -32,6 +34,7 @@
                                 <td> Rp. {{ number_format($product->price,2) }} </td>
                                 <td> {{ $product->sort_descriptions}} </td>
                                 <td> {{ $product->product_category->category_name }} </td>
+                                @if(Auth::user()->role_id == 2)
                                 <td>
                                     <a class="btn btn-outline-primary btn-block mb-2" href="{{route('edit_product',$product->id)}}" class="">
                                         <i class="icon-pencil4 mr-2"></i>
@@ -42,6 +45,7 @@
                                         <button class="btn btn-outline-danger btn-block" type="submit"><i class="icon-database-remove mr-2"></i>Delete</button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     @endif

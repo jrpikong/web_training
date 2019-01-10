@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@if(Auth::user()->id == 10)
+@if(Auth::user()->role_id == 2 || Auth::user()->role_id == 3)
     @include('dashboard')
 @endif
 <div class="container">

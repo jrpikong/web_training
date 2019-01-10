@@ -29,6 +29,13 @@ Route::get('/transaction', 'HomeController@transaction')->name('transaction');
 Route::middleware(['auth'])->group(function () {
     Route::prefix('/admin')->group(function () {
         Route::get('/members', 'MemberController@index')->name('admin_members');
+        Route::get('/users', 'MemberController@index_user')->name('index_user');
+        Route::get('/create_user', 'MemberController@create')->name('create_user');
+        Route::post('/add_user', 'MemberController@store')->name('add_user');
+        Route::get('/edit_user/{id}', 'MemberController@edit')->name('edit_user');
+        Route::put('/update_user/{id}', 'MemberController@update')->name('update_user');
+        Route::delete('/delete_user/{id}', 'MemberController@destroy')->name('delete_user');
+
         Route::get('/get_province', 'MemberController@get_province')->name('get_province');
         Route::get('/get_members', 'MemberController@getMember');
         Route::get('/get_member/{id}', 'MemberController@getMemberByID');

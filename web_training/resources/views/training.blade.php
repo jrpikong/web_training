@@ -5,7 +5,7 @@
         <div class="card-header header-elements-inline">
             <h5 class="card-title">SSA Training</h5>
             <div class="header-elements">
-                @if(Auth::user()->id == 10)
+                @if(Auth::user()->role_id == 2)
                     <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
                         <li class="page-item"><a href="{{route('add_training')}}" class="page-link"><i class="icon-file-plus2"></i> Add New</a></li>
                     </ul>
@@ -32,7 +32,9 @@
                     <th>Name</th>
                     <th>Level</th>
                     <th>Sort Description</th>
+                    @if(Auth::user()->role_id == 2)
                     <th>Action</th>
+                    @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -43,8 +45,8 @@
                             <td> {{ $training->training_name }} </td>
                             <td> {{ $training->difficulty }} </td>
                             <td width="400"> {{ $training->descriptions }} </td>
+                            @if(Auth::user()->role_id == 2)
                             <td>
-                                @if(Auth::user()->id == 10)
                                 <div class="btn-group ml-2">
                                     <button type="button" class="btn btn-info btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></button>
 
@@ -60,11 +62,9 @@
                                         </form>
                                     </div>
                                 </div>
-                                @endif
-
                                 <a class="" href="{{route('follow_training',$training->id)}}">Ikuti Training</a>
-
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 @endif
