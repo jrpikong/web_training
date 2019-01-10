@@ -102,7 +102,7 @@
                     <div class="text-right">
                         <download-excel
                                 class="btn btn-success"
-                                :data   = "items"
+                                :data   = "json_data"
                                 name="report_users.xls">
                             Download Data
                             <i class="icon-file-excel"></i>
@@ -178,7 +178,8 @@
                 },
                 options:[],
                 cities: [],
-                districts: []
+                districts: [],
+                json_data:[]
             }
         },
         created() {
@@ -207,6 +208,7 @@
                 setTimeout(() => {
                     axios.get('get_members',{params:this.search}).then((response)=>{
                         this.items = response.data.data
+                        this.json_data = response.data.json
                         this.loading = false
                     });
                 },500)

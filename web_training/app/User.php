@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Laravolt\Indonesia\Models\City;
+use Laravolt\Indonesia\Models\District;
+use Laravolt\Indonesia\Models\Province;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Illuminate\Notifications\Notifiable;
@@ -46,5 +49,20 @@ class User extends Authenticatable implements HasMedia
             ->width(150)
             ->height(150)
             ->performOnCollections('img_profile');
+    }
+
+    public function provinces()
+    {
+        return $this->hasMany(Province::class, 'id', 'province');
+    }
+
+    public function cities()
+    {
+        return $this->hasMany(City::class, 'id', 'city');
+    }
+
+    public function district()
+    {
+        return $this->hasMany(District::class, 'id', 'districts');
     }
 }

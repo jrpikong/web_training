@@ -61666,7 +61666,8 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('v-select', __WEBPACK_IMPO
             },
             options: [],
             cities: [],
-            districts: []
+            districts: [],
+            json_data: []
         };
     },
     created: function created() {
@@ -61701,6 +61702,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('v-select', __WEBPACK_IMPO
                                 setTimeout(function () {
                                     axios.get('get_members', { params: _this.search }).then(function (response) {
                                         _this.items = response.data.data;
+                                        _this.json_data = response.data.json;
                                         _this.loading = false;
                                     });
                                 }, 500);
@@ -63610,7 +63612,7 @@ var render = function() {
                   "download-excel",
                   {
                     staticClass: "btn btn-success",
-                    attrs: { data: _vm.items, name: "report_users.xls" }
+                    attrs: { data: _vm.json_data, name: "report_users.xls" }
                   },
                   [
                     _vm._v(

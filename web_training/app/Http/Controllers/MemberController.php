@@ -35,7 +35,7 @@ class MemberController extends Controller
             $distric = $distric->id;
         }
 //        dd($distric);
-        $members = User::where([
+        $members = User::with('provinces','cities','district')->where([
             ['name', 'like', '%' . $request->user_name . '%'],
             ['gender', 'like', '%' . $request->gender . '%'],
             ['university', 'like', '%' . $request->university . '%'],
@@ -47,10 +47,44 @@ class MemberController extends Controller
             ['birth_date', 'like', '%' . $request->tahun_lahir . '%'],
             ['majors', 'like', '%' . $request->jurusan . '%']
         ])->orderBy('created_at','desc')->get();
+        $members->map(function ($data) {
+            $data['province'] = $data->provinces[0]->name;
+            $data['province_of_birth'] = $data->provinces[0]->name;
+            $data['city'] = $data->cities[0]->name;
+            $data['districts'] = $data->district[0]->name;
+            return $data;
+        });
+        $json = $members->map(function ($data) {
+            return $json = [
+                'Nama' => $data->name,
+                'Nama Pendek' => $data->nic_name,
+                'Tanggal Lahir' => $data->birth_date,
+                'Provinsi Lahir' => $data->province_of_birth,
+                'Tempat Lahir' => $data->place_of_birth,
+                'Jenis Kelamin' => $data->gender,
+                'Provinsi' => $data->province,
+                'Kota' => $data->city,
+                'Kecamatan' => $data->districts,
+                'Kode Pos' => $data->postal_code,
+                'Alamat' => $data->address,
+                'No Telepon' => $data->phone_number,
+                'Universitas' => $data->university,
+                'ID Identitas' => $data->id_identity,
+                'ID Universitas' => $data->id_university,
+                'IPK' => $data->grade_point_average,
+                'E-Mail' => $data->email,
+                'Lulusan' => $data->lulusan,
+                'Jurusan' => $data->majors,
+                'Tahun Masuk' => $data->entry_year,
+                'Rekening Bank Mandiri' => $data->bank_account,
+                'Tanggal Berakhir Kontrak' => $data->date_end,
+            ];
+        });
 
         return response()->json(
             [
-                'data' => $members
+                'data' => $members,
+                'json' => $json
             ]
         );
     }
