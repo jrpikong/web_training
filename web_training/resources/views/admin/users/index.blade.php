@@ -23,7 +23,9 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Level</th>
+                    @if(Auth::user()->role_id == 2)
                     <th>Action</th>
+                    @endif
                 </thead>
 
                 <tbody>
@@ -40,6 +42,7 @@
                                     Operator
                                 @endif
                             </td>
+                            @if(Auth::user()->role_id == 2)
                             <td>
                                 <a class="btn btn-outline-primary btn-block mb-2" href="{{route('edit_user',$user->id)}}" class="">
                                     <i class="icon-pencil4 mr-2"></i>
@@ -52,6 +55,7 @@
                                     </button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                     @endforeach
                 @endif
