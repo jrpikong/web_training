@@ -32,7 +32,7 @@
                     <th>Name</th>
                     <th>Level</th>
                     <th>Sort Description</th>
-                    @if(Auth::user()->role_id == 2)
+                    @if(Auth::user()->role_id == 2 || Auth::user()->role_id == 1)
                     <th>Action</th>
                     @endif
                 </tr>
@@ -45,8 +45,9 @@
                             <td> {{ $training->training_name }} </td>
                             <td> {{ $training->difficulty }} </td>
                             <td width="400"> {{ $training->descriptions }} </td>
-                            @if(Auth::user()->role_id == 2)
+
                             <td>
+                                @if(Auth::user()->role_id == 2)
                                 <div class="btn-group ml-2">
                                     <button type="button" class="btn btn-info btn-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="icon-menu7"></i></button>
 
@@ -62,7 +63,9 @@
                                         </form>
                                     </div>
                                 </div>
+                                @elseif (Auth::user()->role_id == 1)
                                 <a class="" href="{{route('follow_training',$training->id)}}">Ikuti Training</a>
+                                @endif
                             </td>
                             @endif
                         </tr>
