@@ -4,11 +4,13 @@
         <div class="card my-3">
             <div class="card-header header-elements-inline">
                 <h5 class="card-title">List Members</h5>
+                @if(Auth::user()->role_id == 2)
                 <div class="header-elements">
                     <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">
                         <li class="page-item"><a href="{{route('add_product')}}" class="page-link"><i class="icon-file-plus2"></i> Add New</a></li>
                     </ul>
                 </div>
+                @endif
             </div>
 
             <div class="table-responsive">
