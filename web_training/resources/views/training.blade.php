@@ -67,7 +67,6 @@
                                 <a class="" href="{{route('follow_training',$training->id)}}">Ikuti Training</a>
                                 @endif
                             </td>
-                            @endif
                         </tr>
                     @endforeach
                 @endif
