@@ -72,6 +72,17 @@ Route::middleware(['auth'])->group(function () {
             ]
         ]);
 
+        Route::resource('videos', 'VideoController',[
+            'names' => [
+                'index' => 'videos',
+                'create' => 'create_video',
+                'store' => 'store_video',
+                'edit' => 'edit_video',
+                'update' => 'update_video',
+                'destroy' => 'destroy_video',
+            ]
+        ]);
+
         Route::get('/page_get_by/{id}', 'PageController@getId');
 
         /*Quize*/

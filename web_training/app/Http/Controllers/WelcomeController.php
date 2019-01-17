@@ -6,6 +6,7 @@ use App\Faq;
 use App\Page;
 use App\Product;
 use App\Slider;
+use App\Video;
 use Illuminate\Http\Request;
 
 class WelcomeController extends Controller
@@ -14,7 +15,8 @@ class WelcomeController extends Controller
     {
         $products = Product::limit(8)->get();
         $sliders = Slider::where('status', '=', 1)->get();
-        return view('welcome', compact('products','sliders'));
+        $videos = Video::whereIn('page', ['all','home'])->get();
+        return view('welcome', compact('products','sliders','videos'));
     }
 
     public function faq()
@@ -26,6 +28,7 @@ class WelcomeController extends Controller
     public function aboutUs()
     {
         $about = Page::where('slug', 'like', '%about%')->first();
-        return view('about_us',compact('about'));
+        $videos = Video::whereIn('page', ['all','about_us'])->get();
+        return view('about_us',compact('about','videos'));
     }
 }

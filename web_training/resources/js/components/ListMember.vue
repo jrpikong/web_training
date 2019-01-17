@@ -37,21 +37,21 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Provinces</label>
                         <div class="col-lg-10">
-                            <v-select v-model="search.selected" :onChange="getCitiesList" :options="options"></v-select>
+                            <v-select :onChange="getCitiesList" :options="options"></v-select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">City</label>
                         <div class="col-lg-10">
-                            <v-select v-model="search.city" label="name" :onChange="getDistricList" :options="cities"></v-select>
+                            <v-select label="name" :onChange="getDistricList" :options="cities"></v-select>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Disctric</label>
                         <div class="col-lg-10">
-                            <v-select v-model="search.distric" label="name" :options="districts"></v-select>
+                            <v-select v-model="search.distric" label="name" :options="districts" ></v-select>
                         </div>
                     </div>
 
@@ -165,15 +165,13 @@
         data : function () {
             return {
                 items:[],
-                provinces: [],
+                provinces: null,
                 loading:true,
                 search:{
                     user_name: '',
                     gender: '',
                     university: '',
                     phone_number: '',
-                    selected: '',
-                    city:'',
                     distric:''
                 },
                 options:[],
@@ -205,6 +203,7 @@
             },
             async fetchEventsList() {
                 this.loading = true
+                // this.search
                 setTimeout(() => {
                     axios.get('get_members',{params:this.search}).then((response)=>{
                         this.items = response.data.data

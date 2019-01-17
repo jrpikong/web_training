@@ -26,48 +26,26 @@
                             <div class="col-lg-12 mx-auto">
                                 <div class="thumb-gallery">
                                     <div class="owl-carousel owl-theme manual thumb-gallery-detail show-nav-hover" id="thumbGalleryDetail">
-                                        <div>
-                                <span class="img-thumbnail img-thumbnail-no-borders d-block">
-                                    <iframe style="width: 100%; height: 100%; object-fit: cover"  src="https://www.youtube.com/embed/o1D7ouNIgTs?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
-                                </span>
-                                        </div>
-                                        <div>
-                                <span class="img-thumbnail img-thumbnail-no-borders d-block">
-                                    <iframe style="width: 100%; height: 100%; object-fit: cover"  src="https://www.youtube.com/embed/U1qLerI9Kzo?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
-                                </span>
-                                        </div>
-                                        <div>
-                                <span class="img-thumbnail img-thumbnail-no-borders d-block">
-                                    <iframe style="width: 100%; height: 100%; object-fit: cover"  src="https://www.youtube.com/embed/be7QGWQnJVg?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
-                                </span>
-                                        </div>
-                                        <div>
-                                <span class="img-thumbnail img-thumbnail-no-borders d-block">
-                                    <iframe style="width: 100%; height: 100%; object-fit: cover"  src="https://www.youtube.com/embed/WOPehPhfHS4?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
-                                </span>
-                                        </div>
+                                        @if(!$videos->isEmpty())
+                                            @foreach($videos as $video)
+                                                <div>
+                                                    <span class="img-thumbnail img-thumbnail-no-borders d-block">
+                                                        <iframe style="width: 100%; height: 100%; object-fit: cover"  src="https://www.youtube.com/embed/{{ $video->url }}?rel=0&hd=1&modestbranding=1" allowfullscreen></iframe>
+                                                    </span>
+                                                </div>
+                                            @endforeach
+                                        @endif
                                     </div>
                                     <div class="owl-carousel owl-theme manual thumb-gallery-thumbs mt" id="thumbGalleryThumbs">
-                                        <div>
-                                <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
-                                   <img alt="Project Image" src="http://img.youtube.com/vi/o1D7ouNIgTs/hqdefault.jpg" class="img-fluid">
-                                </span>
-                                        </div>
-                                        <div>
-                                <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
-                                   <img alt="Project Image" src="http://img.youtube.com/vi/U1qLerI9Kzo/hqdefault.jpg" class="img-fluid">
-                                </span>
-                                        </div>
-                                        <div>
-                                <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
-                                    <img alt="Project Image" src="http://img.youtube.com/vi/be7QGWQnJVg/hqdefault.jpg" class="img-fluid">
-                                </span>
-                                        </div>
-                                        <div>
-                                <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
-                                    <img alt="Project Image" src="http://img.youtube.com/vi/WOPehPhfHS4/hqdefault.jpg" class="img-fluid">
-                                </span>
-                                        </div>
+                                    @if(!$videos->isEmpty())
+                                        @foreach($videos as $video)
+                                            <div>
+                                                    <span class="img-thumbnail img-thumbnail-no-borders d-block cur-pointer">
+                                                       <img alt="Project Image" src="http://img.youtube.com/vi/{{ $video->url }}/hqdefault.jpg" class="img-fluid">
+                                                    </span>
+                                            </div>
+                                        @endforeach
+                                    @endif
                                     </div>
                                 </div>
                             </div>

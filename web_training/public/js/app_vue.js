@@ -61653,15 +61653,13 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('v-select', __WEBPACK_IMPO
     data: function data() {
         return {
             items: [],
-            provinces: [],
+            provinces: null,
             loading: true,
             search: {
                 user_name: '',
                 gender: '',
                 university: '',
                 phone_number: '',
-                selected: '',
-                city: '',
                 distric: ''
             },
             options: [],
@@ -61699,6 +61697,7 @@ __WEBPACK_IMPORTED_MODULE_1_vue___default.a.component('v-select', __WEBPACK_IMPO
                         switch (_context.prev = _context.next) {
                             case 0:
                                 this.loading = true;
+                                // this.search
                                 setTimeout(function () {
                                     axios.get('get_members', { params: _this.search }).then(function (response) {
                                         _this.items = response.data.data;
@@ -63348,17 +63347,7 @@ var render = function() {
                 { staticClass: "col-lg-10" },
                 [
                   _c("v-select", {
-                    attrs: {
-                      onChange: _vm.getCitiesList,
-                      options: _vm.options
-                    },
-                    model: {
-                      value: _vm.search.selected,
-                      callback: function($$v) {
-                        _vm.$set(_vm.search, "selected", $$v)
-                      },
-                      expression: "search.selected"
-                    }
+                    attrs: { onChange: _vm.getCitiesList, options: _vm.options }
                   })
                 ],
                 1
@@ -63379,13 +63368,6 @@ var render = function() {
                       label: "name",
                       onChange: _vm.getDistricList,
                       options: _vm.cities
-                    },
-                    model: {
-                      value: _vm.search.city,
-                      callback: function($$v) {
-                        _vm.$set(_vm.search, "city", $$v)
-                      },
-                      expression: "search.city"
                     }
                   })
                 ],

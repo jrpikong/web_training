@@ -83,6 +83,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ route('videos') }}" class="nav-link">
+                            <i class="icon-youtube"></i>
+                            <span>Videos</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ route('admin_faq') }}" class="nav-link">
                             <i class="icon-address-book"></i>
                             <span>Faq</span>

@@ -21,15 +21,15 @@ class MemberController extends Controller
         $province = '';
         $city = '';
         $distric = '';
-        if (count((array)$request->selected) > 0 ) {
-            $selected = json_decode($request->selected);
-            $province = $selected->id;
-        }
-
-        if (count((array)$request->city) > 0 ) {
-            $city = json_decode($request->city);
-            $city = $city->id;
-        }
+//        if (count((array)$request->selected) > 0 ) {
+//            $selected = json_decode($request->selected);
+//            $province = $selected->id;
+//        }
+//
+//        if (count((array)$request->city) > 0 ) {
+//            $city = json_decode($request->city);
+//            $city = $city->id;
+//        }
 
         if (count((array)$request->distric) > 0 ) {
             $distric = json_decode($request->distric);
