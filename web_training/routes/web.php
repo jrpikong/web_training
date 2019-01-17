@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/get_province', 'MemberController@get_province')->name('get_province');
         Route::get('/get_members', 'MemberController@getMember');
         Route::get('/get_member/{id}', 'MemberController@getMemberByID');
+        Route::get('/edit_member/{id}', 'MemberController@EditMember');
+        Route::PUT('/update_user_member/{id}', 'MemberController@UpdateMember')->name('update_user_member');
         Route::get('/delete_member/{id}', 'MemberController@Delete');
         Route::get('/sliders', 'SliderController@index')->name('admin_sliders');
         Route::get('/add_slider', 'SliderController@addSlider')->name('add_sliders');

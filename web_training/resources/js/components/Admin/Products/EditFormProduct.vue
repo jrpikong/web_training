@@ -91,6 +91,20 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-md-2">
+                            <label class="col-form-label">Video</label>
+                        </div>
+                        <div class="col-md-10">
+
+                            <div class="form-group row">
+                                <div class="col-md-10">
+                                    <input id="productVideo" ref="productVideo" placeholder="input url terakhir youtube ex: mx_dolESHco" type="text" class="form-control" v-model="product_video"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-2">
                             <label class="col-form-label">Spesifications</label>
                         </div>
                         <div class="col-md-10">
@@ -147,6 +161,7 @@
                 descriptions: '',
                 productImages:[],
                 productTecnologyImages:[],
+                product_video:'',
                 spesifications: [
                     {
                         key: '',
@@ -210,6 +225,7 @@
                         this.sort_descriptions = response.data.data.products.sort_descriptions;
                         this.descriptions = response.data.data.products.descriptions;
                         this.spesifications =JSON.parse(response.data.data.products.spesifications);
+                        this.product_video =response.data.data.products.product_video;
                         // this.productImages =  response.data.data.product_images;
                         // this.productTecnologyImages =  response.data.data.product_tecnology_images;
 
@@ -269,6 +285,7 @@
                 formData.append('sort_descriptions', this.sort_descriptions);
                 formData.append('descriptions',this.descriptions);
                 formData.append('spesifications', JSON.stringify(this.spesifications));
+                formData.append('product_video', this.product_video);
                 formData.append('_method', 'PUT');
                 /*
                   Make the request to the POST /select-files URL

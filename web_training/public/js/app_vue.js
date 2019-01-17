@@ -61641,6 +61641,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 //
 //
 //
+//
 
 
 
@@ -63645,6 +63646,15 @@ var render = function() {
                           attrs: { href: "get_member/" + item.id }
                         },
                         [_vm._v(" Detail")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          attrs: { href: "edit_member/" + item.id }
+                        },
+                        [_vm._v(" Edit")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -66833,8 +66843,7 @@ var render = function() {
                         id: "productVideo",
                         placeholder:
                           "input url terakhir youtube ex: mx_dolESHco",
-                        type: "text",
-                        multiple: ""
+                        type: "text"
                       },
                       domProps: { value: _vm.product_video },
                       on: {
@@ -67220,6 +67229,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -67243,6 +67266,7 @@ var options = {
             descriptions: '',
             productImages: [],
             productTecnologyImages: [],
+            product_video: '',
             spesifications: [{
                 key: '',
                 value: ''
@@ -67309,6 +67333,7 @@ var options = {
                     _this3.sort_descriptions = response.data.data.products.sort_descriptions;
                     _this3.descriptions = response.data.data.products.descriptions;
                     _this3.spesifications = JSON.parse(response.data.data.products.spesifications);
+                    _this3.product_video = response.data.data.products.product_video;
                     // this.productImages =  response.data.data.product_images;
                     // this.productTecnologyImages =  response.data.data.product_tecnology_images;
                 }
@@ -67366,6 +67391,7 @@ var options = {
             formData.append('sort_descriptions', this.sort_descriptions);
             formData.append('descriptions', this.descriptions);
             formData.append('spesifications', JSON.stringify(this.spesifications));
+            formData.append('product_video', this.product_video);
             formData.append('_method', 'PUT');
             /*
               Make the request to the POST /select-files URL
@@ -67689,6 +67715,44 @@ var render = function() {
             _c("div", { staticClass: "form-group row" }, [
               _vm._m(3),
               _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-md-10" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.product_video,
+                          expression: "product_video"
+                        }
+                      ],
+                      ref: "productVideo",
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "productVideo",
+                        placeholder:
+                          "input url terakhir youtube ex: mx_dolESHco",
+                        type: "text"
+                      },
+                      domProps: { value: _vm.product_video },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.product_video = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group row" }, [
+              _vm._m(4),
+              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "col-md-10" },
@@ -67801,7 +67865,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(4)
+          _vm._m(5)
         ]
       )
     ])
@@ -67832,6 +67896,14 @@ var staticRenderFns = [
       _c("label", { staticClass: "col-form-label" }, [
         _vm._v("Product Tecnology Images")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-2" }, [
+      _c("label", { staticClass: "col-form-label" }, [_vm._v("Video")])
     ])
   },
   function() {

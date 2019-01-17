@@ -98,7 +98,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-10">
-                                    <input id="productVideo" ref="productVideo" placeholder="input url terakhir youtube ex: mx_dolESHco" type="text" multiple class="form-control" v-model="product_video"/>
+                                    <input id="productVideo" ref="productVideo" placeholder="input url terakhir youtube ex: mx_dolESHco" type="text" class="form-control" v-model="product_video"/>
                                 </div>
                             </div>
                         </div>

@@ -11,6 +11,13 @@ use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
+    protected $indonesia;
+
+    public function __construct()
+    {
+        $this->indonesia = new Indonesia();
+    }
+
     public function index()
     {
         return view('admin.members.index');
@@ -167,6 +174,46 @@ class MemberController extends Controller
         return view('admin.users.form_edit',compact('user'));
     }
 
+    public function EditMember($id)
+    {
+        $user = User::find($id);
+        $provinces = $this->indonesia->allProvinces();
+        return view('admin.users.form_edit_member',compact('user','provinces'));
+    }
+
+    public function UpdateMember(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->nic_name = $request->nic_name;
+        $user->email = $request->email;
+        $user->birth_date = $request->year.'-'.$request->month.'-'.$request->date;
+        $user->province_of_birth = $request->province_of_birth;
+        $user->place_of_birth = $request->place_of_birth;
+        $user->gender = $request->gender;
+        $user->province = $request->province;
+        $user->city = $request->city;
+        $user->districts = $request->districts;
+        $user->postal_code = $request->postal_code;
+        $user->address = $request->address;
+        $user->phone_number =$request->phone_number;
+        $user->lulusan = $request->lulusan;
+        $user->university = $request->university;
+        $user->majors = $request->majors;
+        $user->entry_year = $request->entry_year;
+        $user->grade_point_average = $request->grade_point_average;
+        $user->id_university = $request->id_university;
+        $user->bank_account = $request->bank_account;
+        $user->type_of_university = $request->type_of_university;
+        $user->id_identity = $request->id_identity;
+        $user->save();
+
+        try {
+            return back()->with('success','You have successfully Update User.');
+        } catch (Exception $e) {
+            return back()->with('Failed','You have error Update User.');
+        }
+    }
     public function update(Request $request, $id)
     {
         if (empty($request->getPassword())) {

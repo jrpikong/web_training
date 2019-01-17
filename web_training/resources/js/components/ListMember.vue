@@ -141,6 +141,7 @@
                     <td> {{item.address}}</td>
                     <td>
                         <a :href="'get_member/'+item.id" class="nav-link"> Detail</a>
+                        <a :href="'edit_member/'+item.id" class="nav-link"> Edit</a>
                         <a style="cursor:pointer; color: red;" @click="delete_data(item.id)" class="nav-link"> Delete</a>
                     </td>
                 </tr>
