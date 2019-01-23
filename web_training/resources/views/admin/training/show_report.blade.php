@@ -3,7 +3,7 @@
 @section('content')
     <div class="card my-3">
         <div class="card-header header-elements-inline">
-            <h5 class="card-title">List Logs Transactions</h5>
+            <h5 class="card-title">List Report Training</h5>
         </div>
 
         <div class="table-responsive">

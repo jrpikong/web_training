@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 To
                             </div>
                             <div class="col-md-2">
@@ -75,7 +75,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <select id="month" class="form-control" name="month2" required autofocus>
                                     <option value="01">January</option>
                                     <option value="02">February</option>
@@ -104,8 +104,9 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <button class="btn btn-primary" type="submit">Filter</button>
+                                <button name="export" value="export" class="btn btn-primary" type="submit">Download</button>
                             </div>
                         </div>
                     </div>

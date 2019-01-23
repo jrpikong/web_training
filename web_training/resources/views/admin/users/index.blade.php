@@ -3,7 +3,7 @@
 @section('content')
     <div class="card my-3">
         <div class="card-header header-elements-inline">
-            <h5 class="card-title">List Logs Transactions</h5>
+            <h5 class="card-title">List Users</h5>
             @if(Auth::user()->role_id == 2)
                 <div class="header-elements">
                     <ul class="pagination pagination-sm pagination-pager justify-content-between mt-2 mt-sm-0">

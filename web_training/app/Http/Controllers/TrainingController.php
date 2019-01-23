@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TrainingQuizExport;
 use App\Training;
 use App\TrainingQuiz;
 use App\TrainingQuizResult;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class TrainingController extends Controller
 {
@@ -101,25 +104,33 @@ class TrainingController extends Controller
         }
     }
 
-    public function reportTraining()
+    public function reportTraining(Request $request)
     {
+        if ($request->export) {
+            return $this->exportExcel($request);
+        }
         $reports = TrainingQuizResult::select('user_id', DB::raw('count(*) as total'),'users.*')
         ->join('users', 'users.id', 'training_quiz_results.user_id')->groupBy('user_id')->orderBy('name','asc')->paginate(15);
-
-
-
-
-//        select('user_id', DB::raw('count(*) as total'))->whereHas(['users' => function ($q) {
-//            return $q->orderBy('name', 'desc');
-//        }])->groupBy('user_id')->paginate(15);
-
         return view('admin.training.report',compact('reports'));
     }
 
     public function showTrainingReport($id)
     {
         $reports = TrainingQuizResult::where('user_id','=',$id)->with('users','quiz')->orderBy('created_at')->paginate(15);
-
         return view('admin.training.show_report',compact('reports'));
+    }
+
+    /**
+     * @param $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    private function exportExcel($request)
+    {
+        $fileName = Carbon::now()->toDateTimeString().'.xls';
+//        return Excel::download(new TrainingQuizExport($request), $fileName.'.csv');
+
+        Excel::store(new TrainingQuizExport($request), $fileName,'public');
+        return redirect( Storage::url("{$fileName}" ));
     }
 }
