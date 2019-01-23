@@ -36,7 +36,7 @@
 
         <div class="card-footer">
             <ul class="pagination align-self-center">
-{{--                {{ $reports->links() }}--}}
+                {{ $reports->links() }}
             </ul>
         </div>
     </div>
